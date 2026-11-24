@@ -1,0 +1,25 @@
+{
+  "device": "Messi-05",
+  "strip": "VV75",
+  "timestamp": "2026-10-09T20:24:24",
+  "points": 40,
+  "reps": 3,
+  "config": "zb0",
+  "switches_off": {
+    "S1": [],
+    "S2": [
+      1
+    ],
+    "S3": [
+      1
+    ],
+    "S4": [
+      1
+    ],
+    "S5": [
+      1
+    ]
+  },
+  "note": "ZB en cortocircuito (todo S1 en ON): offset en serie",
+  "vv_spacing_mm": 75
+}

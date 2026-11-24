@@ -1,0 +1,147 @@
+#include <zephyr/dt-bindings/regulator/npm13xx.h>
+
+&uicr {
+	nfct-pins-as-gpios;
+};
+
+&spi4 {
+	status = "disabled";
+};
+
+&pinctrl {
+	spi2_default: spi2_default {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 9)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 13)>,
+				<NRF_PSEL(SPIM_MISO, 0, 19)>;
+		};
+	};
+	spi2_sleep: spi2_sleep {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 9)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 13)>,
+				<NRF_PSEL(SPIM_MISO, 0, 19)>;
+			low-power-enable;
+		};
+	};
+	i2c1_default: i2c1_default {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SCL, 0, 24)>,
+				<NRF_PSEL(TWIM_SDA, 0, 26)>;
+			bias-pull-up;
+		};
+	};
+	i2c1_sleep: i2c1_sleep {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SCL, 0, 24)>,
+				<NRF_PSEL(TWIM_SDA, 0, 26)>;
+			low-power-enable;
+		};
+	};
+};
+
+&spi2 {
+	compatible = "nordic,nrf-spim";
+	status = "okay";
+	pinctrl-0 = <&spi2_default>;
+	pinctrl-1 = <&spi2_sleep>;
+	pinctrl-names = "default", "sleep";
+	/delete-property/ cs-gpios;
+};
+
+&i2c1 {
+	compatible = "nordic,nrf-twim";
+	status = "okay";
+	pinctrl-0 = <&i2c1_default>;
+	pinctrl-1 = <&i2c1_sleep>;
+	pinctrl-names = "default", "sleep";
+	clock-frequency = <I2C_BITRATE_FAST>;
+
+	npm1304_pmic: pmic@6b {
+		compatible = "nordic,npm1304";
+		reg = <0x6b>;
+		host-int-gpios = <&gpio0 28 GPIO_ACTIVE_LOW>;
+		pmic-int-pin = <3>;
+		ship-to-active-time-ms = <96>;
+		long-press-reset = "one-button";
+
+		npm1304_gpio: gpio-controller {
+			compatible = "nordic,npm1304-gpio";
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <5>;
+		};
+
+		npm1304_regulators: regulators {
+			compatible = "nordic,npm1304-regulator";
+
+			npm1304_buck1: BUCK1 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-boot-on;
+			};
+
+			npm1304_buck2: BUCK2 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+			};
+
+			npm1304_ldo1: LDO1 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+			};
+
+			npm1304_ldo2: LDO2 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+			};
+		};
+
+		npm1304_charger: charger {
+			compatible = "nordic,npm1304-charger";
+			term-microvolt = <4150000>;
+			term-warm-microvolt = <4000000>;
+			current-microamp = <100000>;
+			vbus-limit-microamp = <500000>;
+			thermistor-ohms = <10000>;
+			thermistor-beta = <3380>;
+			charging-enable;
+		};
+	};
+};
+
+/ {
+	aliases {
+		led0 = &status_led;
+		sw0 = &power_button;
+	};
+
+	ad5940_gpios {
+		compatible = "gpio-leds";
+		cs_pin: cs_pin {
+			gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
+		};
+		rst_pin: rst_pin {
+			gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
+		};
+		int_pin: int_pin {
+			gpios = <&gpio0 3 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		status_led: status_led {
+			gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
+			label = "Status LED";
+		};
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+		power_button: power_button {
+			gpios = <&gpio1 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "nPM1304 power button";
+		};
+	};
+};

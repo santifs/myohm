@@ -1,0 +1,542 @@
+<resources>
+    <string name="app_name">Myohm</string>
+
+    <!-- Navigation -->
+    <string name="nav_subjects">Sujetos</string>
+    <string name="nav_history">Historial</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <!-- Sujetos / flujo simplificado -->
+    <string name="subjects_title">Sujetos</string>
+    <string name="subjects_new">Nuevo sujeto</string>
+    <string name="subjects_new_title">Nuevo sujeto</string>
+    <string name="subjects_name_label">Nombre</string>
+    <string name="subjects_empty_title">Aún no hay sujetos</string>
+    <string name="subjects_empty_description">Crea tu primer sujeto para empezar a medir.</string>
+    <string name="subjects_last_measurement">Última: %1$s</string>
+    <string name="subjects_last_measurement_never">Sin medidas aún</string>
+    <string name="subject_measure_label_label">Fase de la sesión</string>
+    <string name="subject_measure_label_placeholder">Toca un chip o escribe</string>
+    <string name="subject_measure_button">MEDIR</string>
+    <string name="subject_measure_connected">Conectado: %1$s</string>
+    <string name="subject_measure_not_connected">Dispositivo no conectado</string>
+    <string name="subject_measure_change_device">Cambiar dispositivo</string>
+    <string name="result_title">Resultado</string>
+    <string name="result_no_data">No hay datos de medida</string>
+    <string name="result_point_count">%1$d puntos</string>
+    <string name="measurement_screen_title">Medida</string>
+    <string name="history_unknown_subject">Sujeto desconocido</string>
+    <string name="subjects_action_rename">Renombrar</string>
+    <string name="subjects_action_delete">Eliminar</string>
+    <string name="subjects_rename_title">Renombrar sujeto</string>
+    <string name="subjects_delete_title">¿Eliminar sujeto?</string>
+    <string name="subjects_delete_warning">Se eliminarán también todas sus medidas. Esta acción no se puede deshacer.</string>
+    <string name="common_save">Guardar</string>
+    <string name="common_delete">Eliminar</string>
+    <string name="result_chart_magnitude">Magnitud</string>
+    <string name="result_chart_magnitude_unit">|Z| (Ω) vs log(frecuencia)</string>
+    <string name="result_chart_phase">Fase</string>
+    <string name="result_chart_phase_unit">Fase (°) vs log(frecuencia)</string>
+    <string name="result_new_measurement">Nueva medida</string>
+    <string name="result_change_subject">Cambiar sujeto</string>
+    <string name="common_create">Crear</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="settings_measurement_section">Medida</string>
+    <string name="settings_frequency_sweep">Barrido de frecuencia</string>
+    <string name="settings_frequency_sweep_subtitle">Configurar rango y puntos</string>
+    <string name="settings_active_study">Estudio activo</string>
+    <string name="settings_active_study_none">Sin configurar</string>
+    <string name="settings_change_study_title">Cambiar estudio</string>
+    <string name="settings_change_study_message">Las próximas medidas se etiquetarán como %1$s. ¿Confirmas?</string>
+    <string name="action_confirm">Confirmar</string>
+    <string name="action_change">Cambiar</string>
+    <string name="study_required_hint">Configura el estudio en Ajustes antes de medir.</string>
+    <string name="borg_question">Esfuerzo percibido (RPE)</string>
+    <string name="borg_scale_hint">0 = nada · 5 = duro · 10 = máximo absoluto</string>
+    <string name="borg_continue">Continuar</string>
+
+    <!-- Dashboard -->
+    <string name="stat_total_measurements">Total Mediciones</string>
+    <string name="stat_day_streak">Racha de Días</string>
+    <string name="stat_days_active">Días Activos</string>
+    <string name="latest_measurement">Última Medición</string>
+    <string name="view_details">Ver Detalles</string>
+    <string name="new_measurement">Nueva Medición</string>
+    <string name="frequency_points_format">%d puntos de frecuencia</string>
+
+    <!-- Measurement Screen - Disconnected -->
+    <string name="ready_to_measure">Listo para Medir</string>
+    <string name="connect_to_device_description">Conecta tu dispositivo para comenzar el análisis de bioimpedancia</string>
+    <string name="scan_for_devices">Buscar Dispositivos</string>
+
+    <!-- Measurement Screen - Bluetooth Disabled -->
+    <string name="bluetooth_disabled">Bluetooth Desactivado</string>
+    <string name="bluetooth_disabled_description">Por favor activa el Bluetooth para conectar tu dispositivo de bioimpedancia.</string>
+    <string name="enable_bluetooth">Activar Bluetooth</string>
+
+    <!-- Measurement Screen - Device Selection -->
+    <string name="available_devices">Dispositivos Disponibles</string>
+    <string name="select_device_description">Selecciona un dispositivo para conectar</string>
+    <string name="connecting">Conectando…</string>
+    <string name="please_wait">Por favor espera</string>
+    <string name="searching_devices">Buscando dispositivos cercanos…</string>
+    <string name="unknown_device">Dispositivo Desconocido</string>
+    <string name="connect">Conectar</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Measurement Screen - Connected -->
+    <string name="connected">Conectado</string>
+    <string name="biomess_device">Dispositivo Myohm</string>
+    <string name="patient_information">Información del Paciente</string>
+    <string name="patient_name_label">Nombre del Paciente *</string>
+    <string name="exercise_name_label">Nombre del Ejercicio *</string>
+    <string name="exercise_placeholder">ej., Press Banca, Sentadilla</string>
+    <string name="age_label">Edad *</string>
+    <string name="gender_label">Género</string>
+    <string name="gender_male">Masculino</string>
+    <string name="gender_female">Femenino</string>
+    <string name="gender_other">Otro</string>
+    <string name="height_label">Altura (cm) *</string>
+    <string name="weight_label">Peso (kg) *</string>
+    <string name="bmi_format">IMC: %1$.1f (%2$s)</string>
+    <string name="patient_data_complete">Datos del paciente completos</string>
+    <string name="please_complete_fields">Por favor completa todos los campos requeridos (*)</string>
+
+    <!-- Measurement Instructions -->
+    <string name="measurement_instructions">Instrucciones de Medición</string>
+    <string name="instruction_1">Coloca los electrodos sobre el músculo</string>
+    <string name="instruction_2">Asegura buen contacto con la piel</string>
+    <string name="instruction_3">Permanece quieto durante la medición</string>
+    <string name="instruction_4">Tiempo total: ~10 segundos</string>
+    <string name="start_measurement">Iniciar Medición</string>
+    <string name="configure">Configurar</string>
+    <string name="stored_data">Datos Guardados</string>
+    <string name="disconnect">Desconectar</string>
+
+    <!-- Measuring View -->
+    <string name="measuring_bioimpedance">Midiendo Bioimpedancia</string>
+    <string name="phase_initializing">Inicializando…</string>
+    <string name="phase_starting">Iniciando medición…</string>
+    <string name="phase_collecting">Recolectando datos…</string>
+    <string name="phase_processing">Procesando…</string>
+    <string name="phase_finalizing">Finalizando…</string>
+    <string name="please_remain_still">Por favor permanece quieto</string>
+
+    <!-- Results View -->
+    <string name="measurement_captured">Medición Capturada</string>
+    <string name="raw_data_captured">Datos en bruto capturados</string>
+    <string name="data_points">Puntos de Datos</string>
+    <string name="frequency_range">Rango de Frecuencia</string>
+    <string name="impedance_range">Rango de Impedancia</string>
+    <string name="take_another_measurement">Tomar Otra Medición</string>
+    <string name="view_history">Ver Historial</string>
+    <string name="done">Hecho</string>
+
+    <!-- Error View -->
+    <string name="connection_error">Error de Conexión</string>
+    <string name="try_again">Reintentar</string>
+    <string name="back_to_main_menu">Volver al Menú Principal</string>
+    <string name="error_bluetooth_not_available">Bluetooth no está disponible en este dispositivo</string>
+    <string name="error_measurement_failed">La medición falló</string>
+
+    <!-- Settings Screen -->
+    <string name="device_connection">Conexión de Dispositivo</string>
+    <string name="measurement_section">Medición</string>
+    <string name="auto_measurement">Medición Automática</string>
+    <string name="auto_measurement_description">Configura sesiones de medición automáticas</string>
+    <string name="sync_stored_data">Sincronizar Datos</string>
+    <string name="sync_stored_data_description">Descargar mediciones del almacenamiento del dispositivo</string>
+    <string name="about">Acerca de</string>
+    <string name="version_format">Versión %s</string>
+    <string name="scanning">Escaneando…</string>
+    <string name="not_connected">No Conectado</string>
+    <string name="searching_for_devices">Buscando dispositivos</string>
+    <string name="tap_to_connect">Toca para conectar</string>
+    <string name="stop">Detener</string>
+    <string name="language">Idioma</string>
+    <string name="language_description">Cambiar idioma de la aplicación</string>
+    <string name="english">Inglés</string>
+    <string name="spanish">Español</string>
+
+    <!-- History Screen -->
+    <string name="history_title">Historial</string>
+    <string name="selected_count_format">%d seleccionados</string>
+    <string name="close_selection">Cerrar selección</string>
+    <string name="export_selected">Exportar seleccionados</string>
+    <string name="select_measurements">Seleccionar mediciones</string>
+    <string name="export">Exportar</string>
+    <string name="export_current_filter">Exportar filtro actual</string>
+    <string name="select_and_export">Seleccionar y exportar</string>
+
+    <!-- History Filters -->
+    <string name="filter_all">Todos</string>
+    <string name="filter_processed">Procesados</string>
+    <string name="filter_raw">En bruto</string>
+
+    <!-- History Status -->
+    <string name="status_complete">Completo</string>
+    <string name="status_processing">Procesando</string>
+    <string name="status_pending">Pendiente</string>
+    <string name="status_failed">Fallido</string>
+    <string name="awaiting_processing">Esperando procesamiento</string>
+
+    <!-- History Empty State -->
+    <string name="no_measurements_yet">Sin mediciones aún</string>
+    <string name="empty_history_description">Tus futuras mediciones aparecerán aquí.</string>
+    <string name="no_patient_info">Sin info del paciente</string>
+
+    <!-- Export -->
+    <string name="no_measurements_to_export">No hay mediciones para exportar</string>
+    <string name="volumhealth_export">Exportación Bioimp</string>
+    <string name="export_measurements">Exportar mediciones</string>
+    <string name="failed_to_export">Error al exportar mediciones</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Permiso Requerido</string>
+    <string name="bluetooth_permission_description">Bioimp necesita permiso de Bluetooth para descubrir y conectar tu dispositivo de bioimpedancia.</string>
+    <string name="location_permission_description">Bioimp necesita permiso de ubicación para buscar dispositivos Bluetooth cercanos. Android lo requiere para la búsqueda de dispositivos.</string>
+    <string name="permission_denied">El permiso fue denegado. Por favor concédelo para usar la app.</string>
+    <string name="grant_permission">Conceder Permiso</string>
+    <string name="bluetooth_is_disabled">Bluetooth está desactivado</string>
+    <string name="permissions_required">Permisos requeridos</string>
+    <string name="enable">Activar</string>
+    <string name="grant">Conceder</string>
+
+    <!-- BMI Categories -->
+    <string name="bmi_underweight">Bajo peso</string>
+    <string name="bmi_normal">Normal</string>
+    <string name="bmi_overweight">Sobrepeso</string>
+    <string name="bmi_obese">Obeso</string>
+
+    <!-- Units -->
+    <string name="unit_ohm">Ohm</string>
+    <string name="unit_hz">Hz</string>
+    <string name="unit_khz">kHz</string>
+    <string name="unit_nf">nF</string>
+    <string name="unit_hours">horas</string>
+
+    <!-- Auth -->
+    <string name="auth_sign_in">Iniciar Sesión</string>
+    <string name="auth_sign_up">Registrarse</string>
+    <string name="auth_create_account">Crear Cuenta</string>
+    <string name="auth_email">Correo electrónico</string>
+    <string name="auth_password">Contraseña</string>
+    <string name="auth_already_have_account">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="auth_no_account">¿No tienes cuenta? Regístrate</string>
+    <string name="auth_sign_out">Cerrar Sesión</string>
+
+    <!-- Account & Sync -->
+    <string name="account">Cuenta</string>
+    <string name="not_signed_in">No has iniciado sesión</string>
+    <string name="cloud_sync">Sincronización en la Nube</string>
+
+    <!-- Athletes -->
+    <string name="athletes_title">Atletas</string>
+    <string name="athletes_empty">Sin atletas aún</string>
+    <string name="athletes_empty_hint">Crea tu primer perfil de atleta para empezar a medir</string>
+    <string name="athletes_create_first">Crear Atleta</string>
+
+    <!-- Wizard -->
+    <string name="wizard_title">Nuevo Atleta</string>
+    <string name="wizard_step_basic">Información Básica</string>
+    <string name="wizard_step_anthropometrics">Antropometría</string>
+    <string name="wizard_step_medical">Historial Médico</string>
+    <string name="wizard_full_name">Nombre Completo</string>
+    <string name="wizard_select_dob">Seleccionar Fecha de Nacimiento</string>
+    <string name="wizard_dominant_leg">Pierna Dominante</string>
+    <string name="wizard_biological_sex">Sexo Biológico (Opcional)</string>
+    <string name="wizard_biological_sex_hint">Usado para seguimiento del ciclo menstrual</string>
+    <string name="wizard_prefer_not_say">Prefiero no decir</string>
+    <string name="wizard_anthropometrics_optional">Estos campos son opcionales pero ayudan con el análisis</string>
+    <string name="wizard_height">Altura</string>
+    <string name="wizard_weight">Peso</string>
+    <string name="wizard_medical_optional">Toda la información médica es opcional</string>
+    <string name="wizard_medical_history">Historial Médico</string>
+    <string name="wizard_medications">Medicamentos Actuales</string>
+    <string name="wizard_back">Atrás</string>
+    <string name="wizard_next">Siguiente</string>
+    <string name="wizard_save">Guardar Atleta</string>
+
+    <!-- Pre-Session Form -->
+    <string name="presession_title">Iniciar Medición</string>
+    <string name="presession_start_btn">Comenzar Mediciones</string>
+    <string name="presession_activity_section">Actividad Reciente</string>
+    <string name="presession_activity_type">Tipo de actividad</string>
+    <string name="presession_rest_section">Descanso</string>
+    <string name="presession_fatigue_section">Fatiga General</string>
+
+    <!-- Sleep Quality -->
+    <string name="sleep_insufficient">Insuficiente</string>
+    <string name="sleep_regular">Regular</string>
+    <string name="sleep_good">Bueno</string>
+    <string name="sleep_excellent">Excelente</string>
+
+    <!-- Session Summary -->
+    <string name="summary_title">Sesión Completada</string>
+    <string name="summary_measurements">Mediciones</string>
+    <string name="summary_avg_fatigue">Fatiga Promedio</string>
+    <string name="summary_duration">Duración</string>
+    <string name="summary_level">Nivel</string>
+    <string name="summary_level_low">Bajo</string>
+    <string name="summary_level_moderate">Moderado</string>
+    <string name="summary_level_high">Alto</string>
+    <string name="summary_breakdown">Detalle de Mediciones</string>
+    <string name="summary_bilateral">Análisis Bilateral</string>
+    <string name="summary_warnings">Alertas</string>
+    <string name="summary_imbalance_warning">Una diferencia de 3 o más puntos entre lados puede indicar un desequilibrio que requiere atención.</string>
+    <string name="summary_new_session">Nueva Sesión</string>
+    <string name="summary_view_history">Ver Historial</string>
+
+    <!-- Fatigue Levels -->
+    <string name="fatigue_none">Sin fatiga</string>
+    <string name="fatigue_mild">Fatiga leve</string>
+    <string name="fatigue_moderate">Fatiga moderada</string>
+    <string name="fatigue_high">Fatiga alta</string>
+    <string name="fatigue_extreme">Fatiga extrema</string>
+    <string name="fatigue_level_format">Nivel: %d / 10</string>
+
+    <!-- Step Flow -->
+    <string name="step_next">Siguiente</string>
+    <string name="step_skip">Omitir</string>
+    <string name="step_finish">Finalizar</string>
+    <string name="step_back">Atrás</string>
+
+    <!-- Quick Start -->
+    <string name="quick_start_title">Inicio Rápido</string>
+    <string name="quick_start_subtitle">Utiliza los datos de tu última sesión o actualízalos antes de empezar</string>
+    <string name="quick_start_use_same">Usar mismos valores</string>
+    <string name="quick_start_update">Actualizar valores</string>
+
+    <!-- Pre-Session Steps -->
+    <string name="presession_activity_title">Última actividad física</string>
+    <string name="presession_rest_title">Descanso nocturno</string>
+    <string name="presession_fatigue_title">Fatiga percibida</string>
+    <string name="presession_physio_title">Fisioterapia</string>
+    <string name="presession_issues_title">Observaciones</string>
+    <string name="presession_cycle_title">Ciclo menstrual</string>
+    <string name="presession_activity_subtitle">¿Hace cuántas horas fue tu último entrenamiento?</string>
+    <string name="presession_rest_subtitle">¿Cuántas horas has dormido esta noche?</string>
+    <string name="presession_fatigue_subtitle">Valora cómo de cansado te encuentras hoy</string>
+    <string name="presession_physio_subtitle">¿Has recibido algún tratamiento en las últimas horas?</string>
+    <string name="presession_issues_subtitle">Cualquier molestia, dolor o novedad relevante</string>
+    <string name="presession_cycle_subtitle">Selecciona la fase actual de tu ciclo</string>
+    <string name="presession_physio_hours_label">Horas desde el tratamiento</string>
+    <string name="presession_legs_question">¿Incluía trabajo de piernas?</string>
+    <string name="presession_legs_zone">¿Qué zona?</string>
+    <string name="presession_legs_quadriceps">Cuádriceps</string>
+    <string name="presession_legs_hamstrings">Isquiotibiales</string>
+    <string name="presession_legs_both">Ambos</string>
+
+    <!-- Wizard Steps -->
+    <string name="wizard_name_title">Nombre</string>
+    <string name="wizard_dob_title">Fecha de nacimiento</string>
+    <string name="wizard_sex_title">Sexo biológico</string>
+    <string name="wizard_leg_title">Pierna dominante</string>
+    <string name="wizard_weight_height_title">Peso y altura</string>
+    <string name="wizard_right_thigh">Muslo derecho</string>
+    <string name="wizard_left_thigh">Muslo izquierdo</string>
+    <string name="wizard_right_thigh_subtitle">Longitud y circunferencia</string>
+    <string name="wizard_left_thigh_subtitle">Longitud y circunferencia</string>
+    <string name="wizard_copy_right">Copiar del derecho</string>
+    <string name="wizard_create_athlete">Crear Atleta</string>
+    <string name="wizard_add_details">Añadir más detalles</string>
+    <string name="wizard_diet_title">Dieta</string>
+    <string name="wizard_allergies_title">Alergias</string>
+    <string name="wizard_activities_title">Actividades</string>
+    <string name="wizard_injuries_title">Lesiones</string>
+    <string name="wizard_thigh_length">Longitud</string>
+    <string name="wizard_thigh_circ">Circunferencia</string>
+    <string name="wizard_thigh_length_instruction">Desde el pliegue inguinal hasta el borde superior de la rótula</string>
+    <string name="wizard_thigh_circ_instruction">En el punto más ancho del muslo (zona media)</string>
+    <string name="yes_option">Sí</string>
+    <string name="no_option">No</string>
+    <string name="dialog_accept">Aceptar</string>
+    <string name="wizard_male">Hombre</string>
+    <string name="wizard_female">Mujer</string>
+    <string name="wizard_bmi_label">IMC</string>
+    <string name="wizard_medical_placeholder">Cirugías previas, condiciones crónicas, etc.</string>
+    <string name="wizard_medications_placeholder">Medicamentos que toma actualmente</string>
+    <string name="wizard_daily_calories">Calorías diarias</string>
+    <string name="wizard_injury_label">Describe la lesión</string>
+    <string name="wizard_injury_placeholder">Tipo de lesión, zona afectada, tiempo…</string>
+
+    <!-- Wizard: Diet options -->
+    <string name="wizard_diet_omnivore">Omnívora</string>
+    <string name="wizard_diet_vegetarian">Vegetariana</string>
+    <string name="wizard_diet_vegan">Vegana</string>
+    <string name="wizard_diet_ketogenic">Cetogénica</string>
+    <string name="wizard_diet_paleo">Paleo</string>
+    <string name="wizard_diet_mediterranean">Mediterránea</string>
+    <string name="wizard_diet_gluten_free">Sin gluten</string>
+    <string name="wizard_diet_other">Otra</string>
+
+    <!-- Wizard: Allergy options -->
+    <string name="wizard_allergy_gluten">Gluten</string>
+    <string name="wizard_allergy_lactose">Lactosa</string>
+    <string name="wizard_allergy_nuts">Frutos secos</string>
+    <string name="wizard_allergy_shellfish">Mariscos</string>
+    <string name="wizard_allergy_eggs">Huevos</string>
+    <string name="wizard_allergy_soy">Soja</string>
+
+    <!-- Wizard: Activity options -->
+    <string name="wizard_activity_football">Fútbol</string>
+    <string name="wizard_activity_running">Running</string>
+    <string name="wizard_activity_gym">Gimnasio</string>
+    <string name="wizard_activity_cycling">Ciclismo</string>
+    <string name="wizard_activity_swimming">Natación</string>
+    <string name="wizard_activity_tennis">Tenis</string>
+    <string name="wizard_activity_crossfit">CrossFit</string>
+    <string name="wizard_activity_yoga">Yoga</string>
+    <string name="wizard_activity_basketball">Baloncesto</string>
+
+    <!-- Measurement Flow Screen -->
+    <string name="measurement_flow_error_title">Error</string>
+    <string name="measurement_flow_error_ok">OK</string>
+    <string name="measurement_flow_select_athlete_title">Selecciona un Atleta</string>
+    <string name="measurement_flow_select_athlete_description">Para comenzar una sesión de medición, primero selecciona un atleta de tu lista.</string>
+    <string name="measurement_flow_select_athlete_button">Seleccionar Atleta</string>
+    <string name="measurement_flow_selected_athlete_label">Atleta seleccionado</string>
+    <string name="measurement_flow_change_athlete">Cambiar</string>
+    <string name="measurement_flow_start_session_title">Iniciar Sesión de Medición</string>
+    <string name="measurement_flow_start_session_description">Completa el cuestionario pre-sesión para contextualizar las mediciones.</string>
+    <string name="measurement_flow_start_session_button">Iniciar Sesión</string>
+    <string name="measurement_flow_select_other_athlete">Seleccionar Otro Atleta</string>
+
+    <!-- Muscle Selection Screen -->
+    <string name="muscle_selection_title">Seleccionar Músculo</string>
+    <string name="muscle_selection_muscle_group">Grupo Muscular</string>
+    <string name="muscle_selection_completed_count">%1$d/%2$d</string>
+    <string name="muscle_selection_side">Lado</string>
+    <string name="muscle_selection_completed">Completado</string>
+    <string name="muscle_selection_perceived_fatigue">Fatiga Percibida</string>
+    <string name="muscle_selection_fatigue_question">¿Cómo sientes este músculo?</string>
+    <string name="muscle_selection_measure_button">Medir %s</string>
+    <string name="muscle_selection_finish_session">Finalizar Sesión</string>
+    <string name="muscle_selection_progress">Progreso</string>
+    <string name="muscle_selection_progress_count">%1$d/%2$d</string>
+    <string name="muscle_selection_badge_frontal">F</string>
+    <string name="muscle_selection_badge_posterior">P</string>
+
+    <!-- Frequency Configuration Screen -->
+    <string name="freq_config_title">Configuración de Medición</string>
+    <string name="freq_config_back">Atrás</string>
+    <string name="freq_config_device_connected">Dispositivo Conectado</string>
+    <string name="freq_config_ready_to_configure">Listo para configurar</string>
+    <string name="freq_config_connecting">Conectando…</string>
+    <string name="freq_config_wait_pairing">Espera mientras emparejamos</string>
+    <string name="freq_config_scanning">Escaneando…</string>
+    <string name="freq_config_searching_devices">Buscando dispositivos Volum</string>
+    <string name="freq_config_measuring">Midiendo</string>
+    <string name="freq_config_active_session">Sesión activa en curso</string>
+    <string name="freq_config_device_disconnected">Dispositivo Desconectado</string>
+    <string name="freq_config_connect_to_sync">Conecta para sincronizar ajustes</string>
+    <string name="freq_config_error">Error</string>
+    <string name="freq_config_quick_presets">Preajustes rápidos</string>
+    <string name="freq_config_repetitions">Repeticiones</string>
+    <string name="freq_config_estimated_duration">Duración estimada</string>
+    <string name="freq_config_frequency_range">Rango de Frecuencia</string>
+    <string name="freq_config_start">Inicio</string>
+    <string name="freq_config_stop">Fin</string>
+    <string name="freq_config_range">Rango</string>
+    <string name="freq_config_measurement_points">Puntos de Medición</string>
+    <string name="freq_config_measurement_summary">Resumen de Medición</string>
+    <string name="freq_config_total_points">Puntos Totales</string>
+    <string name="freq_config_data_per_sweep">Datos por Barrido</string>
+    <string name="freq_config_points_value">%d puntos</string>
+    <string name="freq_config_sweeps">Barridos</string>
+    <string name="freq_config_duration">Duración</string>
+    <string name="freq_config_quality">Calidad</string>
+    <string name="freq_config_applying">Aplicando…</string>
+    <string name="freq_config_apply_configuration">Aplicar Configuración</string>
+    <string name="freq_config_connect_device_hint">Conecta tu dispositivo Volum para sincronizar ajustes.</string>
+
+    <!-- Measurement Detail Screen -->
+    <string name="measurement_detail_title">Detalles de medición</string>
+    <string name="measurement_detail_back">Atrás</string>
+    <string name="measurement_detail_resistance">Resistencia</string>
+    <string name="measurement_detail_resistance_desc">Barrido medido frente al ajuste del modelo Cole</string>
+    <string name="measurement_detail_reactance">Reactancia</string>
+    <string name="measurement_detail_reactance_desc">Reactancia negativa (respuesta capacitiva)</string>
+    <string name="measurement_detail_export_subject">Medición %s</string>
+    <string name="measurement_detail_export_chooser">Exportar medición</string>
+    <string name="measurement_detail_export_error">Error al exportar medición</string>
+    <string name="measurement_detail_export_button">Exportar medición</string>
+    <string name="measurement_detail_no_patient">Sin perfil de paciente</string>
+    <string name="measurement_detail_processing_tier">Nivel de procesamiento: %s</string>
+    <string name="measurement_detail_pending">Pendiente</string>
+    <string name="measurement_detail_extracellular">Extracelular</string>
+    <string name="measurement_detail_intracellular">Intracelular</string>
+    <string name="measurement_detail_membrane_capacitance">Capacitancia de membrana</string>
+    <string name="measurement_detail_characteristic_frequency">Frecuencia característica</string>
+    <string name="measurement_detail_raw_points">Puntos en bruto</string>
+
+    <!-- Raw Measurement Screen -->
+    <string name="raw_measurement_title">Medición en bruto</string>
+    <string name="raw_measurement_back">Atrás</string>
+    <string name="raw_measurement_bioimpedance">Bioimpedancia en bruto</string>
+    <string name="raw_measurement_repetitions">Repeticiones</string>
+    <string name="raw_measurement_quality_percent">Calidad %d%%</string>
+    <string name="raw_measurement_previous_repetition">Repetición anterior</string>
+    <string name="raw_measurement_repetition_number">Repetición %d</string>
+    <string name="raw_measurement_of_total">de %d</string>
+    <string name="raw_measurement_next_repetition">Repetición siguiente</string>
+    <string name="raw_measurement_summary">Resumen</string>
+    <string name="raw_measurement_points">Puntos</string>
+    <string name="raw_measurement_sweep_range">Rango de barrido</string>
+    <string name="raw_measurement_sweep_range_value">%1$d – %2$d Hz</string>
+    <string name="raw_measurement_magnitude">Magnitud</string>
+    <string name="raw_measurement_phase">Fase</string>
+    <string name="raw_measurement_processing_status">Estado de Procesamiento</string>
+    <string name="raw_measurement_processing_desc">Esta medición aún no ha sido procesada. El ajuste Cole se ejecutará cuando las tareas pendientes se completen.</string>
+    <string name="raw_measurement_processing_complete">Procesamiento completado</string>
+    <string name="raw_measurement_processing_complete_desc">Esta medición ya tiene parámetros de Cole y métricas de calidad disponibles.</string>
+    <string name="raw_measurement_selected_point">Punto seleccionado: %1$s, %2$s</string>
+    <string name="raw_measurement_value_ohms">Magnitud en ohmios</string>
+    <string name="raw_measurement_value_degrees">Fase en grados</string>
+    <string name="raw_measurement_touch_hint">Toca o arrastra sobre la gráfica para inspeccionar cada punto.</string>
+
+    <!-- Fatigue (additional) -->
+    <string name="fatigue_level_label">Nivel:</string>
+    <string name="fatigue_max_value">/ 10</string>
+    <string name="fatigue_rested">Descansado</string>
+    <string name="fatigue_moderate_short">Moderada</string>
+    <string name="fatigue_exhausted">Agotado</string>
+    <string name="fatigue_value_format">%d/10</string>
+    <string name="fatigue_unknown">---</string>
+
+    <!-- Sync Status -->
+    <string name="sync_status_pending">Pendiente de sincronizar</string>
+    <string name="sync_status_synced">Sincronizado</string>
+    <string name="sync_status_modified">Modificado</string>
+    <string name="sync_status_failed">Error de sincronización</string>
+    <string name="sync_status_syncing">Sincronizando…</string>
+    <string name="sync_error_title">Error de sincronización</string>
+    <string name="sync_pending_count">%d elementos pendientes de sincronizar</string>
+    <string name="sync_all_synced">Todo sincronizado</string>
+    <string name="sync_button">Sincronizar</string>
+    <string name="subject_measure_resumable">Continuará sesión existente · %1$d medidas</string>
+
+    <!-- Pickers de pantalla de medición -->
+    <string name="measurement_pick_muscle">Músculo</string>
+    <string name="measurement_pick_side">Lado</string>
+    <string name="measurement_side_right">Derecha</string>
+    <string name="measurement_side_left">Izquierda</string>
+    <string name="scan_empty_title">Sin dispositivos</string>
+    <string name="scan_empty_old_android">Tu versión de Android exige que la Localización esté ENCENDIDA en Ajustes del sistema (no basta con conceder el permiso) para escanear Bluetooth. Si está apagada, el escaneo devuelve vacío en silencio.</string>
+    <string name="scan_empty_new_android">Comprueba: (1) Bluetooth encendido, (2) el dispositivo Volum encendido y a menos de 5 m, (3) el permiso de Bluetooth concedido para esta app.</string>
+    <string name="scan_empty_open_location">Abrir ajustes de Localización</string>
+    <string name="scan_empty_open_app_settings">Abrir permisos de la app</string>
+    <string name="myohm_local">Local</string>
+    <string name="myohm_local_storage">Solo en este dispositivo. Sin cuenta ni sincronización en la nube. Exporta tus datos antes de desinstalar.</string>
+    <string name="nav_laboratory">Laboratorio</string>
+    <string name="lab_description">Sin atleta ni cuestionario. Cada captura se guarda en este dispositivo. Abre el historial para ver las gráficas y exportar.</string>
+    <string name="lab_configure">Barrido</string>
+    <string name="measurement_flow_session_type_title">Tipo de sesión</string>
+    <string name="measurement_flow_session_type_description">Selecciona el tipo de sesión de medida.</string>
+    <string name="measurement_flow_basal_title">Basal</string>
+    <string name="measurement_flow_basal_subtitle">Medida en reposo</string>
+    <string name="measurement_flow_match_title">Partido</string>
+    <string name="measurement_flow_match_subtitle">Previa / Descanso / Final</string>
+    <string name="device_preparing">Preparando el dispositivo…</string>
+    <string name="device_waiting">Esperando al dispositivo…</string>
+</resources>

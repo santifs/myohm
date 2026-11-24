@@ -1,0 +1,13 @@
+identifier: biomess_nrf5340/nrf5340/cpunet
+name: BioMess-nRF5340-network-MCU
+type: mcu
+arch: arm
+toolchain:
+  - gnuarmemb
+  - zephyr
+ram: 64
+flash: 256
+supported:
+  - gpio
+  - watchdog
+vendor: biomess

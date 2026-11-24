@@ -1,0 +1,407 @@
+import SwiftUI
+import Charts
+import Foundation
+import Darwin
+#if os(iOS)
+import UIKit
+#endif
+
+/// Detailed view showing measurement analysis with Bode plots and Cole parameters
+/// REDISEÑADO para BioMess
+public struct MeasurementDetailView: View {
+    let parameters: ColeParameters
+
+    public init(parameters: ColeParameters) {
+        self.parameters = parameters
+    }
+
+    public var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                // Header con fecha y calidad (rediseñado)
+                BioMessHeaderSection(parameters: parameters)
+
+                // Cole Parameters (rediseñados con cards grandes)
+                BioMessParameterSection(parameters: parameters)
+
+                // Bode Plots - RESISTENCIA Y REACTANCIA
+                BodePlotsSection(parameters: parameters)
+
+                // Export options
+                ExportSection(parameters: parameters)
+            }
+            .padding()
+        }
+        .background(Color.lightBackground)
+        .navigationTitle("Análisis de Medición")
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.large)
+        #endif
+    }
+}
+
+// MARK: - Header Section
+
+private struct HeaderSection: View {
+    let parameters: ColeParameters
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Bioimpedance Analysis")
+                        .font(.title2)
+                        .fontWeight(.bold)
+
+                    Text(parameters.timestamp, style: .date)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+
+                    HStack {
+                        Text(parameters.timestamp, style: .time)
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+
+                        Text("•")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+
+                        MeasurementTypeBadge(type: parameters.measurementType)
+                    }
+                }
+                
+                Spacer()
+                
+                QualityBadge(score: parameters.quality.score)
+            }
+        }
+        .padding()
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+    }
+}
+
+// MARK: - Parameter Section
+
+private struct ParameterSection: View {
+    let parameters: ColeParameters
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Cole Parameters")
+                .font(.headline)
+                .fontWeight(.semibold)
+
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 16) {
+                ParameterCard(
+                    title: "Extracellular Resistance",
+                    value: String(format: "%.1f Ω", parameters.Re),
+                    subtitle: "Re",
+                    color: .blue
+                )
+
+                ParameterCard(
+                    title: "Intracellular Resistance",
+                    value: String(format: "%.1f Ω", parameters.Ri),
+                    subtitle: "Ri",
+                    color: .green
+                )
+
+                ParameterCard(
+                    title: "Low Freq Resistance (ECW)",
+                    value: String(format: "%.1f Ω", parameters.R0),
+                    subtitle: "R0",
+                    color: .cyan
+                )
+
+                ParameterCard(
+                    title: "High Freq Resistance (TBW)",
+                    value: String(format: "%.1f Ω", parameters.Rinf),
+                    subtitle: "R∞",
+                    color: .indigo
+                )
+
+                ParameterCard(
+                    title: "Membrane Capacitance",
+                    value: String(format: "%.2f nF", parameters.Cm),
+                    subtitle: "Cm",
+                    color: .orange
+                )
+
+                ParameterCard(
+                    title: "Characteristic Frequency",
+                    value: String(format: "%.1f kHz", parameters.fc),
+                    subtitle: "fc",
+                    color: .purple
+                )
+            }
+        }
+        .padding()
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+    }
+}
+
+private struct ParameterCard: View {
+    let title: String
+    let value: String
+    let subtitle: String
+    let color: Color
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(subtitle)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundStyle(color)
+                Spacer()
+            }
+            
+            Text(value)
+                .font(.title3)
+                .fontWeight(.bold)
+            
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.leading)
+        }
+        .padding()
+        .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: 8))
+    }
+}
+
+// MARK: - Quality Section
+
+private struct QualitySection: View {
+    let parameters: ColeParameters
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Analysis Quality")
+                .font(.headline)
+                .fontWeight(.semibold)
+            
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Fit Quality Score")
+                        .font(.subheadline)
+                    Text(String(format: "%.3f", parameters.quality.score))
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(qualityColor)
+                }
+                
+                Spacer()
+                
+                VStack(alignment: .trailing, spacing: 4) {
+                    Text("Confidence Level")
+                        .font(.subheadline)
+                    Text(confidenceText)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(qualityColor)
+                }
+            }
+            
+            // Quality interpretation
+            Text(qualityInterpretation)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .padding(.top, 4)
+        }
+        .padding()
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+    }
+    
+    private var qualityColor: Color {
+        let score = parameters.quality.score
+        if score >= 0.9 { return .green }
+        if score >= 0.7 { return .blue }
+        if score >= 0.5 { return .orange }
+        return .red
+    }
+    
+    private var confidenceText: String {
+        let score = parameters.quality.score
+        if score >= 0.9 { return "Excellent" }
+        if score >= 0.7 { return "Good" }
+        if score >= 0.5 { return "Fair" }
+        return "Poor"
+    }
+    
+    private var qualityInterpretation: String {
+        let score = parameters.quality.score
+        if score >= 0.9 {
+            return "Excellent fit quality. Results are highly reliable for clinical interpretation."
+        } else if score >= 0.7 {
+            return "Good fit quality. Results are suitable for most applications."
+        } else if score >= 0.5 {
+            return "Fair fit quality. Results may have some uncertainty."
+        } else {
+            return "Poor fit quality. Consider repeating the measurement for better results."
+        }
+    }
+}
+
+// MARK: - Chart Display Mode
+
+private struct BioMessHeaderSection: View {
+    let parameters: ColeParameters
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Análisis de Bioimpedancia")
+                        .font(.title2)
+                        .fontWeight(.bold)
+
+                    Text(parameters.timestamp, style: .date)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+
+                    HStack(spacing: 8) {
+                        Text(parameters.timestamp, style: .time)
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+
+                        Text("•").font(.caption).foregroundStyle(.tertiary)
+
+                        MeasurementTypeBadge(type: parameters.measurementType)
+                    }
+                }
+
+                Spacer()
+
+                QualityBadgeLarge(score: parameters.quality.score)
+            }
+        }
+        .padding()
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+    }
+}
+
+private struct BioMessParameterSection: View {
+    let parameters: ColeParameters
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Parámetros Cole")
+                .font(.sectionTitle)
+
+            VStack(spacing: 16) {
+                ParameterCardLarge(
+                    icon: "drop.fill",
+                    title: "Re - Extracelular",
+                    value: String(format: "%.1f Ω", parameters.Re),
+                    subtitle: "Agua fuera de las células",
+                    color: .extraCellularBlue,
+                    interpretation: interpretRe(parameters.Re)
+                )
+
+                ParameterCardLarge(
+                    icon: "circle.hexagongrid.fill",
+                    title: "Ri - Intracelular",
+                    value: String(format: "%.1f Ω", parameters.Ri),
+                    subtitle: "Agua dentro de las células",
+                    color: .intraCellularGreen,
+                    interpretation: interpretRi(parameters.Ri)
+                )
+
+                ParameterCardLarge(
+                    icon: "bolt.fill",
+                    title: "Cm - Membrana",
+                    value: String(format: "%.2f nF", parameters.Cm),
+                    subtitle: "Capacidad de la membrana celular",
+                    color: .membraneOrange,
+                    interpretation: interpretCm(parameters.Cm)
+                )
+
+                ParameterCardLarge(
+                    icon: "waveform",
+                    title: "fc - Frecuencia",
+                    value: String(format: "%.1f kHz", parameters.fc),
+                    subtitle: "Punto de transición",
+                    color: .frequencyPurple,
+                    interpretation: interpretFc(parameters.fc)
+                )
+
+                // Parámetros adicionales compactos
+                HStack(spacing: 12) {
+                    CompactParameterCard(
+                        title: "α",
+                        value: String(format: "%.3f", parameters.alpha),
+                        color: .alphaPink
+                    )
+
+                    CompactParameterCard(
+                        title: "Error",
+                        value: String(format: "%.2f%%", parameters.error),
+                        color: parameters.error < 5 ? .qualityExcellent : .qualityFair
+                    )
+
+                    CompactParameterCard(
+                        title: "R0 (ECW)",
+                        value: String(format: "%.1f Ω", parameters.R0),
+                        color: .bioMessBlue
+                    )
+
+                    CompactParameterCard(
+                        title: "R∞ (TBW)",
+                        value: String(format: "%.1f Ω", parameters.Rinf),
+                        color: .fieldGreen
+                    )
+                }
+            }
+        }
+    }
+
+    func interpretRe(_ value: Float) -> String {
+        if value < 30 { return "⬇️ Bajo - Mayor fluido extracelular" }
+        if value < 50 { return "➡️ Normal - Rango típico" }
+        return "⬆️ Alto - Menor fluido extracelular"
+    }
+
+    func interpretRi(_ value: Float) -> String {
+        if value < 20 { return "⬇️ Bajo - Células más conductivas" }
+        if value < 40 { return "➡️ Normal - Rango típico" }
+        return "⬆️ Alto - Células menos conductivas"
+    }
+
+    func interpretCm(_ value: Float) -> String {
+        if value < 1.0 { return "⬇️ Bajo - Membranas más rígidas" }
+        if value < 3.0 { return "➡️ Normal - Rango típico" }
+        return "⬆️ Alto - Membranas más flexibles"
+    }
+
+    func interpretFc(_ value: Float) -> String {
+        if value < 30 { return "⬇️ Baja - Células más grandes" }
+        if value < 80 { return "➡️ Normal - Tamaño celular típico" }
+        return "⬆️ Alta - Células más pequeñas"
+    }
+}
+
+private struct CompactParameterCard: View {
+    let title: String
+    let value: String
+    let color: Color
+
+    var body: some View {
+        VStack(spacing: 6) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            Text(value)
+                .font(.caption)
+                .fontWeight(.bold)
+                .foregroundStyle(color)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
+        .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: 10))
+    }
+}

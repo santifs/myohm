@@ -1,0 +1,27 @@
+{
+  "device": "Messi-05",
+  "strip": "VV150_2026-10-07",
+  "timestamp": "2026-10-07T13:00:12",
+  "points": 40,
+  "reps": 3,
+  "config": "zb100",
+  "switches_off": {
+    "S1": [
+      1
+    ],
+    "S2": [
+      1
+    ],
+    "S3": [
+      1
+    ],
+    "S4": [
+      1
+    ],
+    "S5": [
+      1
+    ]
+  },
+  "note": "referencia",
+  "vv_spacing_mm": 150
+}

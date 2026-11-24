@@ -1,0 +1,9 @@
+board:
+  name: biomess_nrf5340
+  full_name: BioMess nRF5340 PCB
+  vendor: biomess
+  socs:
+  - name: 'nrf5340'
+    variants:
+    - name: 'ns'
+      cpucluster: 'cpuapp'

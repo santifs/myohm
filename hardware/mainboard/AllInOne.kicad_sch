@@ -1,0 +1,190 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "727bdb35-d4b9-467c-9892-6a1d2569df8d")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 187.96 77.47)
+		(size 30.48 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "4c7acffc-1e77-490e-bfef-8a218bea49a2")
+		(property "Sheetname" "Connectors and Mounting"
+			(at 187.96 76.7584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "connectors.kicad_sch"
+			(at 187.96 103.4546 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "AllInOne"
+				(path "/727bdb35-d4b9-467c-9892-6a1d2569df8d"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 115.57 77.47)
+		(size 27.94 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "7cb16779-c0f2-4366-9627-c34d39f526d7")
+		(property "Sheetname" "Micro"
+			(at 115.57 76.7584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "micro.kicad_sch"
+			(at 115.57 103.4546 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "AllInOne"
+				(path "/727bdb35-d4b9-467c-9892-6a1d2569df8d"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 81.28 77.47)
+		(size 25.4 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "af466f8e-24ef-4574-ae64-4a03700778a9")
+		(property "Sheetname" "AD5941"
+			(at 81.28 76.7584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "ad5941.kicad_sch"
+			(at 81.28 103.4546 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(property "Field2" ""
+			(at 81.28 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "AllInOne"
+				(path "/727bdb35-d4b9-467c-9892-6a1d2569df8d"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 152.4 77.47)
+		(size 27.94 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "bb3568e6-1dbe-4ba0-b168-902edce19be8")
+		(property "Sheetname" "Power"
+			(at 152.4 76.7584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power.kicad_sch"
+			(at 152.4 103.4546 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "AllInOne"
+				(path "/727bdb35-d4b9-467c-9892-6a1d2569df8d"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

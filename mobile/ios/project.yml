@@ -1,0 +1,36 @@
+name: Myohm
+options:
+  deploymentTarget:
+    iOS: '17.0'
+packages:
+  BioMessAppFeature:
+    path: BioMessAppPackage
+targets:
+  Myohm:
+    type: application
+    platform: iOS
+    sources:
+      - path: BioMessApp
+        excludes: [Info.plist]
+    dependencies:
+      - package: BioMessAppFeature
+    info:
+      path: Myohm-Info.plist
+      properties:
+        CFBundleDisplayName: Myohm
+        NSBluetoothAlwaysUsageDescription: Conectar con Myohm para realizar medidas de bioimpedancia.
+        UIBackgroundModes: [bluetooth-central]
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.myohm.mobile
+      TARGETED_DEVICE_FAMILY: '1,2'
+      SWIFT_VERSION: '6.0'
+      MARKETING_VERSION: '0.4.0'
+      CURRENT_PROJECT_VERSION: 5
+schemes:
+  Myohm:
+    build:
+      targets:
+        Myohm: all

@@ -1,0 +1,655 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-08T11:41:05",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.3",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d",
+            "violations": [
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'P0.04/AIN0'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.9398
+                            },
+                            "uuid": "610d1502-26bf-42ff-ae46-e8630ac639a2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'P0.10/TRACEDATA1'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.0922
+                            },
+                            "uuid": "695d6b4d-9d2e-4a70-a284-d3571a2c1552"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'GPIO2'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.9906
+                            },
+                            "uuid": "48483ea9-2f31-4628-84a9-1b948349af14"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'GPIO3'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.016
+                            },
+                            "uuid": "f72b0b70-0835-4824-8517-0bbd8cc5b527"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'GPIO4'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.0414
+                            },
+                            "uuid": "091b3c41-e24e-48cf-822f-15641f6f261f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                }
+            ]
+        },
+        {
+            "path": "/AD5941/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d/af466f8e-24ef-4574-ae64-4a03700778a9",
+            "violations": [
+                {
+                    "description": "Both AVDD_2 and DVDD are attached to the same items; AVDD_2 will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AVDD_2'",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.7874
+                            },
+                            "uuid": "5f91700b-dc5a-41ae-861d-635e9ca14433"
+                        },
+                        {
+                            "description": "Global Label 'DVDD'",
+                            "pos": {
+                                "x": 1.1684,
+                                "y": 1.2319
+                            },
+                            "uuid": "8cac16c5-06cf-4c11-a069-9c1e96e04248"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                }
+            ]
+        },
+        {
+            "path": "/Micro/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d/7cb16779-c0f2-4366-9627-c34d39f526d7",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin A19 [VDD, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.6731
+                            },
+                            "uuid": "746b482a-9004-4c96-8f60-bfd0e3636908"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 104 [VSS_PAD, Power input, Line]",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.5748
+                            },
+                            "uuid": "350a79d9-4df4-477d-9d23-5b15897a5326"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Both RESET_AD and P0.02{slash}NFC1 are attached to the same items; RESET_AD will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'RESET_AD'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.889
+                            },
+                            "uuid": "1d65eb98-9e4b-4cf9-ada9-5f54d48fe428"
+                        },
+                        {
+                            "description": "Label 'P0.02/NFC1'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.889
+                            },
+                            "uuid": "784e1514-e39b-4aa7-b578-5cb173c7c1b0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_INT and P0.03{slash}NFC2 are attached to the same items; AD_INT will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_INT'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.9144
+                            },
+                            "uuid": "3cb9ec6d-f38c-4458-a376-c19659e57e37"
+                        },
+                        {
+                            "description": "Label 'P0.03/NFC2'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.9144
+                            },
+                            "uuid": "bd0b55d4-a9e6-4960-bf15-3815cc3b1eed"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_SCLK and P0.09{slash}TRACEDATA2 are attached to the same items; AD_SCLK will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_SCLK'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.0668
+                            },
+                            "uuid": "0082a2ad-ce7a-4dab-b457-0148cdfdf49f"
+                        },
+                        {
+                            "description": "Label 'P0.09/TRACEDATA2'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.0668
+                            },
+                            "uuid": "05ab0fd9-e4cc-4d7d-b4f7-74648b7abd83"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_MOSI and P0.13{slash}QSPI0 are attached to the same items; AD_MOSI will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_MOSI'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.1684
+                            },
+                            "uuid": "06cc3fad-b27d-412c-bf5c-e00ec4c591cb"
+                        },
+                        {
+                            "description": "Label 'P0.13/QSPI0'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.1684
+                            },
+                            "uuid": "31449330-7d88-4c4a-9bd1-1741d1b3f4d5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_CS and P0.16{slash}QSPI3 are attached to the same items; AD_CS will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_CS'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.2446
+                            },
+                            "uuid": "8614f37a-c1dc-4c1e-9b04-f9f0a8d96273"
+                        },
+                        {
+                            "description": "Label 'P0.16/QSPI3'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.2446
+                            },
+                            "uuid": "841a0415-e8c2-4750-997c-31b83a5adb6c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_MISO and P0.19 are attached to the same items; AD_MISO will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_MISO'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.3208
+                            },
+                            "uuid": "e008bed6-bff0-4728-bb96-0fe0c8facf74"
+                        },
+                        {
+                            "description": "Label 'P0.19'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.3208
+                            },
+                            "uuid": "a9534a16-a5a7-42b1-817c-2986df0c473a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both SCL_nPM and P0.24 are attached to the same items; SCL_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'SCL_nPM'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.4478
+                            },
+                            "uuid": "1ed24672-3816-43fe-8d65-087f8f53358e"
+                        },
+                        {
+                            "description": "Label 'P0.24'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.4478
+                            },
+                            "uuid": "2854f672-4172-4e67-aafe-38672f2da9fe"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both SDA_nPM and P0.26{slash}AIN5 are attached to the same items; SDA_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'SDA_nPM'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.4986
+                            },
+                            "uuid": "37a23a32-8c9b-4538-9c46-67962e6c6ce5"
+                        },
+                        {
+                            "description": "Label 'P0.26/AIN5'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.4986
+                            },
+                            "uuid": "43260b56-f78d-4e34-b2e5-df2570232014"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both INT_nPM and P0.28{slash}AIN7 are attached to the same items; INT_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'INT_nPM'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.5494
+                            },
+                            "uuid": "2d67286d-b19a-45f8-8353-38e85c24bdc3"
+                        },
+                        {
+                            "description": "Label 'P0.28/AIN7'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.5494
+                            },
+                            "uuid": "18ccdf52-e02d-40d8-9e4e-0bf603548a43"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both PWR_BTN_nPM and P1.06 are attached to the same items; PWR_BTN_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'PWR_BTN_nPM'",
+                            "pos": {
+                                "x": 3.302,
+                                "y": 1.0033
+                            },
+                            "uuid": "a2c28dc7-1611-45c7-87f0-0c0aed981767"
+                        },
+                        {
+                            "description": "Label 'P1.06'",
+                            "pos": {
+                                "x": 3.302,
+                                "y": 1.0033
+                            },
+                            "uuid": "d4d3cb70-7946-4776-9c8f-40161b2047f4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                }
+            ]
+        },
+        {
+            "path": "/Power/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d/bb3568e6-1dbe-4ba0-b168-902edce19be8",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR058 Hidden pin  [VBAT, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.7366
+                            },
+                            "uuid": "fad5c3d7-d2e7-483d-8414-4aef351932a7"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 21 [VBUS, Power input, Line]",
+                            "pos": {
+                                "x": 1.1938,
+                                "y": 0.5334
+                            },
+                            "uuid": "6df8815e-33ce-4798-ab7b-c07f79775448"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 25 [LED0, Output, Line]",
+                            "pos": {
+                                "x": 1.1938,
+                                "y": 1.0922
+                            },
+                            "uuid": "1cf4ac92-2514-45f6-b2b6-80fffdc15e2b"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 26 [LED1, Output, Line]",
+                            "pos": {
+                                "x": 1.1938,
+                                "y": 1.1176
+                            },
+                            "uuid": "c12b0ec7-e6a1-410f-a8e3-f11bf515da04"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 27 [LED2, Output, Line]",
+                            "pos": {
+                                "x": 1.1938,
+                                "y": 1.143
+                            },
+                            "uuid": "9d92d838-008b-4b62-babb-b2c7ac3cd930"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 3 [SW1, Power output, Line]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 0.8636
+                            },
+                            "uuid": "3e4b7d81-0e6b-49a3-9f10-3caa852837ec"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 6 [PVSS2, Power input, Line]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 1.143
+                            },
+                            "uuid": "26793a83-0003-4f42-b670-af28468377db"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Both SCL_nPM and SCL are attached to the same items; SCL_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'SCL_nPM'",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.3716
+                            },
+                            "uuid": "d953bf11-7b02-4ae3-99ad-9a47c0b208db"
+                        },
+                        {
+                            "description": "Label 'SCL'",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.3716
+                            },
+                            "uuid": "f4d85858-be5a-4960-99cc-483830f5c739"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both SDA_nPM and SDA are attached to the same items; SDA_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'SDA_nPM'",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.397
+                            },
+                            "uuid": "ffad440c-cdb2-44b7-9834-ff746af1503d"
+                        },
+                        {
+                            "description": "Label 'SDA'",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.397
+                            },
+                            "uuid": "b072fd0b-3ac7-4f7a-9aa8-0258136c4eb4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both INT_nPM and GPIO0 are attached to the same items; INT_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'INT_nPM'",
+                            "pos": {
+                                "x": 1.0668,
+                                "y": 0.9398
+                            },
+                            "uuid": "8f0d80c9-4307-4696-b56f-a99431c8810b"
+                        },
+                        {
+                            "description": "Label 'GPIO0'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.9398
+                            },
+                            "uuid": "77f0df56-df3c-41b5-8b26-8a42a2c6385f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both PWR_BTN_nPM and GPIO1 are attached to the same items; PWR_BTN_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'PWR_BTN_nPM'",
+                            "pos": {
+                                "x": 1.0668,
+                                "y": 0.9652
+                            },
+                            "uuid": "b4f7d9a3-ea64-4deb-b288-7ff21545b604"
+                        },
+                        {
+                            "description": "Label 'GPIO1'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.9652
+                            },
+                            "uuid": "0cd8a403-7c92-438b-925e-70ae1ab67a7b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both GND and VSET1 are attached to the same items; GND will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR054 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 0.4699,
+                                "y": 1.4732
+                            },
+                            "uuid": "f99552ce-0729-4ada-aef3-5686270d7c4d"
+                        },
+                        {
+                            "description": "Label 'VSET1'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.1938
+                            },
+                            "uuid": "7e4f2e75-7ae6-4802-bba3-4d06bd1f255f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                }
+            ]
+        },
+        {
+            "path": "/Connectors and Mounting/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d/4c7acffc-1e77-490e-bfef-8a218bea49a2",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR085 Hidden pin  [VBUS', Power input, Line]",
+                            "pos": {
+                                "x": 2.2606,
+                                "y": 0.3683
+                            },
+                            "uuid": "a0b900d9-087b-4a64-8bac-7b2f333fa7d1"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        }
+    ],
+    "source": "AllInOne.kicad_sch"
+}

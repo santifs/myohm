@@ -1,0 +1,4336 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-17T11:54:15",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.3",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d",
+            "violations": [
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR01 [+3.3V-Volum]",
+                            "pos": {
+                                "x": 0.2921,
+                                "y": 1.2827
+                            },
+                            "uuid": "81026c01-03c7-4330-93df-be2be666125b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'SP3002-04JTG'",
+                    "items": [
+                        {
+                            "description": "Symbol IC1 [SP3002-04JTG]",
+                            "pos": {
+                                "x": 0.6477,
+                                "y": 1.3081
+                            },
+                            "uuid": "847f43cc-fae8-45c9-a1a7-88765846bfd1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR02 [AGND-Volum]",
+                            "pos": {
+                                "x": 0.7366,
+                                "y": 1.2827
+                            },
+                            "uuid": "bc6b9aa2-bf7d-4662-a5c2-99f87ca7ca79"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR024 [+3.3V-Volum]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.2192
+                            },
+                            "uuid": "6c2dc88e-bc4e-4e29-a765-fc6fa05b5c76"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C16 [C-Device-Volum]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.27
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e693a7d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR025 [AGND-Volum]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.3208
+                            },
+                            "uuid": "750d5553-068c-42d9-82de-f994417b58c3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C1 [C-Device-Volum]",
+                            "pos": {
+                                "x": 0.9652,
+                                "y": 0.8255
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e63c898"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR03 [AGND-Volum]",
+                            "pos": {
+                                "x": 0.9652,
+                                "y": 0.8636
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e63fb4b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C2 [C-Device-Volum]",
+                            "pos": {
+                                "x": 0.9906,
+                                "y": 0.4953
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e638de3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C3 [C-Device-Volum]",
+                            "pos": {
+                                "x": 0.9906,
+                                "y": 0.635
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e639d67"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C4 [C-Device-Volum]",
+                            "pos": {
+                                "x": 0.9906,
+                                "y": 0.7366
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e63a6b3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C5 [C-Device-Volum]",
+                            "pos": {
+                                "x": 0.9906,
+                                "y": 1.0287
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e637b33"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C6 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.0414,
+                                "y": 1.27
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005eb32024"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR04 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.0541,
+                                "y": 0.8636
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e63f183"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol RL1 [R-Device-Volum]",
+                            "pos": {
+                                "x": 1.0668,
+                                "y": 1.0287
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e646b28"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C7 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.8382
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e6262c2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR05 [+3.3V-Volum]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.2319
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005eb3203c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR06 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.3081
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005eb32030"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR07 [DGND-Volum]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 1.0033
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e755636"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C8 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.143,
+                                "y": 1.27
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005eb3202a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C9 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.3081,
+                                "y": 1.1684
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060230254"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol U3 [AD5941BCPZ-Volum]",
+                            "pos": {
+                                "x": 1.3589,
+                                "y": 1.0922
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e62d978"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C10 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.3843,
+                                "y": 1.2065
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e6449ad"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol RCAL1 [R-Device-Volum]",
+                            "pos": {
+                                "x": 1.4224,
+                                "y": 0.5207
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e609bb6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C11 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 1.2065
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e6a17bd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR08 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.4732,
+                                "y": 1.2827
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e6a17c3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR09 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.4859,
+                                "y": 0.4572
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e5f7e10"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C12 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.4859,
+                                "y": 0.4953
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e5ef974"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C13 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.5113,
+                                "y": 1.2065
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e5eed86"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR010 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.5367,
+                                "y": 0.5842
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e64a81e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR011 [+3.3V-Volum]",
+                            "pos": {
+                                "x": 1.5494,
+                                "y": 0.3048
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005eb12e93"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C14 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.5494,
+                                "y": 0.3429
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e693060"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR012 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.5494,
+                                "y": 0.381
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e694395"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C15 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 1.2065
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e5fd8c3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR013 [DGND-Volum]",
+                            "pos": {
+                                "x": 1.6383,
+                                "y": 0.5842
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e64a140"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C17 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.7145,
+                                "y": 0.5207
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006026eead"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C18 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.7272,
+                                "y": 1.2954
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e65c088"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR014 [+3.3V-Volum]",
+                            "pos": {
+                                "x": 1.7526,
+                                "y": 0.4826
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006027c9d5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR015 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.7526,
+                                "y": 0.5588
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006028a6a9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C19 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.7907,
+                                "y": 0.5207
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060275618"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR016 [DGND-Volum]",
+                            "pos": {
+                                "x": 1.8034,
+                                "y": 1.1811
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e6616cd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol Y1 [Crystal_16M-7pF-Volum]",
+                            "pos": {
+                                "x": 1.8034,
+                                "y": 1.2319
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005ec63fdf"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR017 [DGND-Volum]",
+                            "pos": {
+                                "x": 1.8034,
+                                "y": 1.3335
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e660db6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C20 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 1.2954
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e65c08e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR018 [DGND-Volum]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.7366
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e649306"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR019 [DGND-Volum]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.9906
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e648a57"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR020 [+3.3V-Volum]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.6858
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e94babf"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol R1 [R-Device-Volum]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.7239
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e94bab9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol C21 [C-Device-Volum]",
+                            "pos": {
+                                "x": 1.9685,
+                                "y": 1.0033
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006024d60a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR021 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.9685,
+                                "y": 1.0414
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006025427b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR022 [AGND-Volum]",
+                            "pos": {
+                                "x": 1.9939,
+                                "y": 1.4605
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005ec38bec"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR023 [DGND-Volum]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 1.4605
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005ec3979d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR028 [VDD_nRF53_BAR]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 0.6731
+                            },
+                            "uuid": "ba926259-6232-4407-90a0-53f0a671ec2c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C22 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 0.7366
+                            },
+                            "uuid": "1e710df5-908e-4393-b66b-60fcc75a7c33"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR029 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 0.8128
+                            },
+                            "uuid": "75f5270d-30f7-407c-9ad9-bdd0ba1256a4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR030 [VDD_nRF53_BAR]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 0.9779
+                            },
+                            "uuid": "ab2c9df7-af02-4a8d-8365-55242cc01389"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C23 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 1.1049
+                            },
+                            "uuid": "f1cbcb7b-3c5a-44ca-a194-893cbdb38d94"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR031 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 1.1176
+                            },
+                            "uuid": "d845652f-6ec6-4744-b9fe-e64a56a46aba"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR032 [VDD_nRF53_BAR]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 1.2573
+                            },
+                            "uuid": "86143ea9-d242-46ac-b2ef-320fffaaf054"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C24 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 1.3843
+                            },
+                            "uuid": "5dedf5e8-9f6a-49e7-9db0-79ce39907477"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR033 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.508,
+                                "y": 1.397
+                            },
+                            "uuid": "1145334d-a756-41f8-bfba-7901dfd1e5f7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C26 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.6096,
+                                "y": 1.6129
+                            },
+                            "uuid": "9b996f2f-5474-4723-8b16-012924e8a86f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR035 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.6096,
+                                "y": 1.6891
+                            },
+                            "uuid": "b2bc5303-8fbe-491d-9355-fc702b24b598"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol L1 [root_1_IND_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.6604,
+                                "y": 0.7747
+                            },
+                            "uuid": "53b2bda0-9b0c-4e64-b1f7-26b92daef86d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR036 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.6604,
+                                "y": 0.8763
+                            },
+                            "uuid": "1673046e-73e9-4397-88f1-df6fa1a9fd14"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C27 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.6604,
+                                "y": 0.8763
+                            },
+                            "uuid": "3960188b-392b-489c-8fbe-4cd0aa4593aa"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C28 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.7112,
+                                "y": 1.6129
+                            },
+                            "uuid": "e18edccd-9a32-460d-85ff-521c86dd5ff6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR037 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.7112,
+                                "y": 1.6891
+                            },
+                            "uuid": "92a08651-4bf0-4da2-9d62-6c078efefe6d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C29 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.8128,
+                                "y": 0.8001
+                            },
+                            "uuid": "e84eb8d4-c2da-461a-a92a-4c9f09b31537"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR038 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.8128,
+                                "y": 0.8763
+                            },
+                            "uuid": "790a5837-899c-47a5-bb9c-7925b55e0915"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol L2 [root_1_IND_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.8128,
+                                "y": 1.0795
+                            },
+                            "uuid": "ad6eb132-b209-439e-bc4b-aff6e76c5fb8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C30 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.8128,
+                                "y": 1.1557
+                            },
+                            "uuid": "19c20f76-e4e2-47f3-b9e6-e69ce4795b83"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR039 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.8128,
+                                "y": 1.1557
+                            },
+                            "uuid": "7ad66f03-86c4-4cc0-b227-c44d23e82ace"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol L3 [root_1_IND_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.8128,
+                                "y": 1.2573
+                            },
+                            "uuid": "eea14812-1495-4f08-98a5-3fe50fa48cc6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR040 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.8128,
+                                "y": 1.6891
+                            },
+                            "uuid": "a23c78fa-f59d-4dfa-ba9c-f3a51055ce65"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C31 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.8128,
+                                "y": 1.6891
+                            },
+                            "uuid": "c048c475-8d00-4215-9e7c-6cb3c774c8ea"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [root_0_nRF5340_QKAA_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.9652,
+                                "y": 0.6477
+                            },
+                            "uuid": "78937c67-0723-4d6a-a062-0a7ab7a9d4d0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C32 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.5621,
+                                "y": 0.6731
+                            },
+                            "uuid": "b63b64a6-8df6-4f93-bf18-061b5f6d4b92"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR041 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.5621,
+                                "y": 0.7493
+                            },
+                            "uuid": "c1c343d7-b76d-4902-b252-2d8b4e59689d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C33 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.5621,
+                                "y": 0.8509
+                            },
+                            "uuid": "7e660a4f-f503-47e2-89f5-1e1bea32f04e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR042 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.5621,
+                                "y": 0.9271
+                            },
+                            "uuid": "10fc656b-4e3d-45af-bfc2-f244ba6080b2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol X1 [root_1_XTAL_4-pin_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.5621,
+                                "y": 1.1049
+                            },
+                            "uuid": "5fbee580-1803-455e-8e37-4375dcf21e0e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol R12 [root_3_mirrored_RES_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 1.2065
+                            },
+                            "uuid": "5c142018-1d43-4b57-917b-694641d9745d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR093 [VDD_nRF53_BAR]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 1.2065
+                            },
+                            "uuid": "79ad9704-2e23-4109-a274-11c60981c155"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C34 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.6637,
+                                "y": 0.6731
+                            },
+                            "uuid": "f5891319-44f5-41cf-873e-4c05d7f6cfff"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR043 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.6637,
+                                "y": 0.7493
+                            },
+                            "uuid": "959e9a2f-9d8b-493b-8d1c-71f006973875"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C35 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.6637,
+                                "y": 0.8509
+                            },
+                            "uuid": "486f925b-93c3-4ffa-8dcc-5e4cacc18d4c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR044 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.6637,
+                                "y": 0.9271
+                            },
+                            "uuid": "df89cebe-5dc6-41d6-be7a-16ed1bbefb97"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR045 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.7018,
+                                "y": 1.0668
+                            },
+                            "uuid": "652e7ff0-8728-4a01-80c4-ba9d8c3b70df"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C36 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.7653,
+                                "y": 0.6731
+                            },
+                            "uuid": "8aa7bb90-e249-4c1a-9bac-7a0bbbc19fec"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR046 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.7653,
+                                "y": 0.7493
+                            },
+                            "uuid": "b08c9350-d8eb-4f7c-85a6-2fcc02144892"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C37 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.7653,
+                                "y": 0.8509
+                            },
+                            "uuid": "427aaf1a-2e46-426f-baf7-a404f9cc7817"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR047 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.7653,
+                                "y": 0.9271
+                            },
+                            "uuid": "2a4f7fcb-084d-46e8-8e74-9f13ff1a9628"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C38 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.778,
+                                "y": 1.2319
+                            },
+                            "uuid": "7433b2ab-762b-45cb-a57d-5ce6b0a48aea"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR048 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.778,
+                                "y": 1.2319
+                            },
+                            "uuid": "e39c6a56-9a99-4a46-8e0e-c695304648c9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR049 [VDD_nRF53_BAR]",
+                            "pos": {
+                                "x": 1.8669,
+                                "y": 0.6731
+                            },
+                            "uuid": "17308ac8-dd42-4d51-84d7-a137e87d23c2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C39 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.8669,
+                                "y": 0.6731
+                            },
+                            "uuid": "3bf58642-9ae5-4c0a-a4c0-782632296e7a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR050 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.8669,
+                                "y": 0.7493
+                            },
+                            "uuid": "5e07702b-0bfd-45bd-8152-9e637302ab71"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C40 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.8669,
+                                "y": 0.8509
+                            },
+                            "uuid": "cd5a9b7a-eed1-457e-8714-72a66bfce29f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR051 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.8669,
+                                "y": 0.9271
+                            },
+                            "uuid": "21cc13b6-baf2-4e35-95dd-39f535a08c10"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol L4 [root_0_mirrored_IND_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 1.1557
+                            },
+                            "uuid": "921e6b00-36bd-40c1-b6aa-73658abad3d4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C41 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 1.2319
+                            },
+                            "uuid": "0f5376b7-b53d-44f5-b497-eafd19a78e40"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR052 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 1.2319
+                            },
+                            "uuid": "ff416e90-c9e0-488a-95ae-935ef2f5a5cc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol X2 [root_3_XTAL_2-pin_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.2225,
+                                "y": 0.7747
+                            },
+                            "uuid": "fd0cb187-bca4-448e-aa4e-02a4c7f902f2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'P0.04/AIN0'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.9398
+                            },
+                            "uuid": "610d1502-26bf-42ff-ae46-e8630ac639a2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'P0.10/TRACEDATA1'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.0922
+                            },
+                            "uuid": "695d6b4d-9d2e-4a70-a284-d3571a2c1552"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [root_0_nRF5340_QKAA_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.7305,
+                                "y": 0.8128
+                            },
+                            "uuid": "6878b0b4-1977-404f-8545-73c7ec996742"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR027 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 3.1369,
+                                "y": 1.1176
+                            },
+                            "uuid": "6b6abd01-c847-4a9b-b319-f4ca1f1d165a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol R2 [root_3_mirrored_RES_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 3.302,
+                                "y": 1.1049
+                            },
+                            "uuid": "11fc1976-fa5d-4dec-9488-a0e3f51cdc0c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet2_nrf5340_mcu-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR053 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.6002
+                            },
+                            "uuid": "c59263a7-3857-4e89-a5e9-390b0b23705c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [root_0_nRF5340_QKAA_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 3.4798,
+                                "y": 0.8255
+                            },
+                            "uuid": "1c962d43-0de3-491f-987e-0bd03c00ef58"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [root_0_nRF5340_QKAA_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 3.4798,
+                                "y": 1.397
+                            },
+                            "uuid": "1cba0b1b-18a4-40e1-84e3-e1f674026663"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol 'TS24CA' doesn't match copy in library 'US'",
+                    "items": [
+                        {
+                            "description": "Symbol SW1 [TS24CA]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 1.3716
+                            },
+                            "uuid": "410f1b59-a24a-478e-ae41-a63d0ae3ef00"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR054 [DGND-Volum]",
+                            "pos": {
+                                "x": 0.4699,
+                                "y": 1.4732
+                            },
+                            "uuid": "00000000-0000-0000-0000-00005e6fd289"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR055 [VOUT1_BAR]",
+                            "pos": {
+                                "x": 0.5461,
+                                "y": 1.1557
+                            },
+                            "uuid": "eebdb7cc-ffea-4ab4-b85d-839de71637eb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol R4 [R-Device-Volum]",
+                            "pos": {
+                                "x": 0.5461,
+                                "y": 1.2192
+                            },
+                            "uuid": "657e6e82-77e4-4b54-83c8-7c458427e634"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR056 [VBUSIN_BAR]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.5334
+                            },
+                            "uuid": "b7d783cf-4b49-4977-8344-e83379773ff4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C42 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.6096
+                            },
+                            "uuid": "1c920641-37c8-4205-820c-6e8abdf40ea2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR057 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.6096
+                            },
+                            "uuid": "44f24594-a643-4a14-a419-77ce83ae689c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR058 [VBAT_BAR]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.7366
+                            },
+                            "uuid": "bf71e7d5-2bc5-4e9a-bcb3-428af104b3ab"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C43 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.8382
+                            },
+                            "uuid": "0cb8e94b-97be-4730-8b5b-dd723619801e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR059 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.8382
+                            },
+                            "uuid": "ed987725-d6c1-4abe-80d1-15d413d5488f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR060 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.2954
+                            },
+                            "uuid": "9b959916-3af9-4107-85ed-24a1b3689147"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C44 [root_3_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.4986
+                            },
+                            "uuid": "53e9a8ab-a460-47d4-a42a-ec323a7ab8b1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR026 [VOUT1_BAR]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.4986
+                            },
+                            "uuid": "5af69b70-4d20-4a51-9c40-7faacc3e0a32"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR062 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.5748
+                            },
+                            "uuid": "819d33d7-c04a-4a88-8d11-f79395d38eb2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol R5 [root_3_mirrored_RES_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 0.9652,
+                                "y": 1.2192
+                            },
+                            "uuid": "2c4d1097-5f45-4896-838a-05f5031102c6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR063 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 0.9652,
+                                "y": 1.2954
+                            },
+                            "uuid": "627c84ca-95f5-46ce-8ee3-3a948730a79a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR064 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 0.8382
+                            },
+                            "uuid": "1ec572e0-c9c6-4cd8-b2db-2329e0066048"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'GPIO2'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.9906
+                            },
+                            "uuid": "48483ea9-2f31-4628-84a9-1b948349af14"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'GPIO3'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.016
+                            },
+                            "uuid": "f72b0b70-0835-4824-8517-0bbd8cc5b527"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'GPIO4'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.0414
+                            },
+                            "uuid": "091b3c41-e24e-48cf-822f-15641f6f261f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol R6 [root_3_RES_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.4097
+                            },
+                            "uuid": "f5ffb7d4-cca7-48db-9dda-8ccc3066bdc8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR065 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.1557,
+                                "y": 0.8382
+                            },
+                            "uuid": "31fe8f31-20de-4275-8b37-ec3282181ba9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol R8 [root_3_RES_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.1684,
+                                "y": 1.4097
+                            },
+                            "uuid": "046c7fb5-1ea1-4614-8b30-bf9bb7c5916c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol U2 [root_0_nPM1304_QEAA_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.27,
+                                "y": 0.508
+                            },
+                            "uuid": "687000bb-5820-4a59-9f9c-d34b5f13c4ea"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR066 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 1.524
+                            },
+                            "uuid": "a445a382-0613-45f2-8a47-c7bfa662ff8e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR067 [VSYS_BAR]",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 0.7874
+                            },
+                            "uuid": "fb1c90e7-45cf-4bb5-b4e4-99c8ce6f4b9a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR068 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 0.889
+                            },
+                            "uuid": "869fa2af-1863-405e-a871-3a39123535e3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR069 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 1.3208
+                            },
+                            "uuid": "8cd525e6-91fa-407d-9e67-a3edffbab1e6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR070 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 1.4224
+                            },
+                            "uuid": "7945d1bd-32da-461b-861a-f993ff27dc0a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C45 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.6604
+                            },
+                            "uuid": "ac4da6c1-165c-4cd0-a4f9-03b766de6cdc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR071 [PVSS1_BAR]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.6604
+                            },
+                            "uuid": "dbc1296d-e637-4cb8-a3b1-721bb67728e0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol L5 [root_3_IND_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 1.0414
+                            },
+                            "uuid": "6b50938b-8c1a-4a68-bf2c-310ffe5a23a4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol TP3 [root_1_TESTPAD_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 1.9939,
+                                "y": 1.0414
+                            },
+                            "uuid": "d34d3231-f8d0-4aa9-9684-6509290b2a19"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR072 [VSYS_BAR]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 0.5842
+                            },
+                            "uuid": "474ce8ba-12bc-4889-bf1f-5a8f749e1748"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR073 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 0.6604
+                            },
+                            "uuid": "21d95aab-f5d6-4a31-b7c5-f16cd0ec897f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C46 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 0.6604
+                            },
+                            "uuid": "b7dabcb0-6381-4ae8-94df-5661b2efab42"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR074 [VOUT1_BAR]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 1.0414
+                            },
+                            "uuid": "99721ba5-b7f3-400f-b80c-21cc151e0fba"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C47 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 1.1303
+                            },
+                            "uuid": "9bb3fc0c-7c9f-43d8-b80b-ba2aa3d0e62f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR075 [PVSS1_BAR]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 1.143
+                            },
+                            "uuid": "2558e8d2-2121-49a1-8787-2a4bc9b427c9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol NT1 [root_2_2 pin starpoint_AltiumLib.D...]",
+                            "pos": {
+                                "x": 2.1082,
+                                "y": 1.143
+                            },
+                            "uuid": "9eddba5b-0693-40cf-82b5-14a50a243d19"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR076 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 2.159,
+                                "y": 1.143
+                            },
+                            "uuid": "68c62d10-eb97-479e-acef-b4163a5a184a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR081 [+3.3V-Volum]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 0.6223
+                            },
+                            "uuid": "961ac6fd-ea54-4307-a784-3b84db08c036"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Volum-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR082 [DGND-Volum]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 0.6731
+                            },
+                            "uuid": "d0b083f0-588e-4ed7-881e-b09c331bd8e6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C48 [root_0_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.0193,
+                                "y": 0.9398
+                            },
+                            "uuid": "0a65041b-7b52-4294-994a-1534b72007c8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol R9 [root_0_RES_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.0193,
+                                "y": 1.0287
+                            },
+                            "uuid": "fc102cb2-90c4-4bc2-ba3c-2436c1665ff5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol 'USB_C_Receptacle_PowerOnly_6P' doesn't match copy in library 'Connector'",
+                    "items": [
+                        {
+                            "description": "Symbol J1 [USB_C_Receptacle_PowerOnly_6P]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 0.6731
+                            },
+                            "uuid": "9e10c003-500f-47fc-9903-65d5c0de895d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol TP1 [root_1_TESTPAD_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.1844,
+                                "y": 0.8636
+                            },
+                            "uuid": "e457f8c6-e833-4eab-b414-a0994b5d43dd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet6_interface-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR083 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 2.1844,
+                                "y": 1.0287
+                            },
+                            "uuid": "0d942d5a-71b6-465b-8735-73ad8bfd45ed"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet6_interface-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR084 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 2.2098,
+                                "y": 0.889
+                            },
+                            "uuid": "62fdeef6-ff72-4fbf-9721-4fedc0efe8ec"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet6_interface-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR085 [VBUS'_BAR]",
+                            "pos": {
+                                "x": 2.2606,
+                                "y": 0.3683
+                            },
+                            "uuid": "416d49e5-7e39-4539-824e-4e384a149c0f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol TP2 [root_2_TESTPAD_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.2606,
+                                "y": 0.5207
+                            },
+                            "uuid": "577c8ab6-aa82-412d-b914-08c8c4189bd6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet6_interface-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR086 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 2.3368,
+                                "y": 0.4445
+                            },
+                            "uuid": "45163d6d-f1ba-4497-8ce4-f9eb7757c854"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C49 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.3368,
+                                "y": 0.4445
+                            },
+                            "uuid": "aa0d7b75-8fe8-4fd8-b133-b57e175f19f2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C50 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.3368,
+                                "y": 0.5969
+                            },
+                            "uuid": "7e06d862-4f34-4bdb-b7e1-2b2825b13aa9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet6_interface-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR087 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 2.3368,
+                                "y": 0.5969
+                            },
+                            "uuid": "a5e95777-4b4c-42f2-9ba0-f7059cbb36a5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol FB1 [root_0_IND_F_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.3749,
+                                "y": 0.3683
+                            },
+                            "uuid": "4a502f69-5f67-42d1-9f3f-63e29126b036"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet6_interface-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR090 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 2.4384,
+                                "y": 0.5969
+                            },
+                            "uuid": "026c6104-e86b-41d1-a77a-8b9400dd2b4a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C51 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.4384,
+                                "y": 0.5969
+                            },
+                            "uuid": "5a01ada5-8c61-48b3-945f-00e25aedf213"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'npm1304_qeaa_config2-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR091 [VBUSIN_BAR]",
+                            "pos": {
+                                "x": 2.5019,
+                                "y": 0.3683
+                            },
+                            "uuid": "6c268a8a-945c-445a-b051-1753194b526c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'pca20053_sheet6_interface-altium-import'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR092 [GND_POWER_GROUND]",
+                            "pos": {
+                                "x": 2.5019,
+                                "y": 0.4445
+                            },
+                            "uuid": "6a85b3d9-3ac0-4fbd-a352-c75aad6a850d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'AltiumLib'",
+                    "items": [
+                        {
+                            "description": "Symbol C52 [root_1_CAP_AltiumLib.DbLib]",
+                            "pos": {
+                                "x": 2.5019,
+                                "y": 0.4445
+                            },
+                            "uuid": "cf23767c-70a6-4ff6-95dc-8f09711350bd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        },
+        {
+            "path": "/AD5941/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d/af466f8e-24ef-4574-ae64-4a03700778a9",
+            "violations": [
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol CN1 Pin 4 [4, Unspecified, Line]",
+                            "pos": {
+                                "x": 0.7747,
+                                "y": 0.6604
+                            },
+                            "uuid": "8bc6878b-e2eb-4f07-bdf4-582e77e56d73"
+                        },
+                        {
+                            "description": "Symbol C4 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 0.9525,
+                                "y": 0.7366
+                            },
+                            "uuid": "c8b93f12-bc5c-4ce5-b954-377d903895f1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol CN1 Pin 3 [3, Unspecified, Line]",
+                            "pos": {
+                                "x": 0.7747,
+                                "y": 0.6858
+                            },
+                            "uuid": "744514cb-c695-4a68-83f8-22e404a91e65"
+                        },
+                        {
+                            "description": "Symbol C2 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 0.9525,
+                                "y": 0.4953
+                            },
+                            "uuid": "dd3da890-32ef-4a5a-aea4-e5d2141f1ff1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol CN1 Pin 2 [2, Unspecified, Line]",
+                            "pos": {
+                                "x": 0.7747,
+                                "y": 0.7112
+                            },
+                            "uuid": "41d2dfd6-53c6-4cee-8633-63e413887fd8"
+                        },
+                        {
+                            "description": "Symbol C3 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 0.9525,
+                                "y": 0.635
+                            },
+                            "uuid": "90d503cf-92b2-4120-a4b0-03a2eddde893"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol CN1 Pin 1 [1, Unspecified, Line]",
+                            "pos": {
+                                "x": 0.7747,
+                                "y": 0.7366
+                            },
+                            "uuid": "77e7968c-a3e1-4a98-9edf-076dd44a54da"
+                        },
+                        {
+                            "description": "Symbol C5 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 0.9525,
+                                "y": 1.0287
+                            },
+                            "uuid": "0f9b475c-adb7-41fc-b827-33d4eaa86b99"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 37 [AIN2, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.6858
+                            },
+                            "uuid": "f87a4771-a0a7-489f-9d85-4574dbea71cc"
+                        },
+                        {
+                            "description": "Symbol C3 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.0287,
+                                "y": 0.635
+                            },
+                            "uuid": "5641be26-f5e9-482f-8616-297f17f4eae2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 38 [AIN1, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.7112
+                            },
+                            "uuid": "7700fef1-de5b-4197-be2d-18385e1e18f9"
+                        },
+                        {
+                            "description": "Symbol C4 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.0287,
+                                "y": 0.7366
+                            },
+                            "uuid": "8afe1dbf-1187-4362-8af8-a90ca839a6b3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 40 [AIN4/LPF0, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.762
+                            },
+                            "uuid": "bcfbc157-43ce-49f7-bd18-6a9e2f2f30a3"
+                        },
+                        {
+                            "description": "Symbol C1 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 0.9652,
+                                "y": 0.7874
+                            },
+                            "uuid": "97cc05bf-4ed5-449c-b0c8-131e5126a7ac"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 41 [AVDD_2, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.7874
+                            },
+                            "uuid": "f931f973-5615-451c-bb04-9a02aede6e6f"
+                        },
+                        {
+                            "description": "Symbol C8 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.143,
+                                "y": 1.2319
+                            },
+                            "uuid": "4c717b47-484c-4d70-8fcd-83c406ff2d17"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Unspecified are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 42 [AGND_2, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.8128
+                            },
+                            "uuid": "25625d99-d45f-4b2f-9e62-009a122611f4"
+                        },
+                        {
+                            "description": "Symbol U3 Pin 44 [AGND_REF, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.8636
+                            },
+                            "uuid": "2edc487e-09a5-4e4e-9675-a7b323f56380"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 43 [VREF_1V8, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.8382
+                            },
+                            "uuid": "d23840a6-3c61-45ca-968a-bc57332fd7a4"
+                        },
+                        {
+                            "description": "Symbol C7 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.8382
+                            },
+                            "uuid": "fcb4f52a-a6cb-4ca0-970a-4c8a2c0f3942"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Power input are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 44 [AGND_REF, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.8636
+                            },
+                            "uuid": "2edc487e-09a5-4e4e-9675-a7b323f56380"
+                        },
+                        {
+                            "description": "Symbol #PWR04 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 1.0541,
+                                "y": 0.8636
+                            },
+                            "uuid": "96ee9b8e-4543-4639-b9ea-44b8baaaf94e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 47 [CE0, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.9398
+                            },
+                            "uuid": "64269ac3-771b-4c0d-91e0-eafc3dc4a07f"
+                        },
+                        {
+                            "description": "Symbol RL1 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 1.0287
+                            },
+                            "uuid": "2765a021-71f1-4136-b72b-81c2c6882946"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Power input are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 49 [EP, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.9906
+                            },
+                            "uuid": "4c6a1dad-7acf-4a52-99b0-316025d1ab04"
+                        },
+                        {
+                            "description": "Symbol #PWR07 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 1.0033
+                            },
+                            "uuid": "e29e8d7d-cee8-47d4-8444-1d7032daf03c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Both AVDD_2 and DVDD are attached to the same items; AVDD_2 will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AVDD_2'",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.7874
+                            },
+                            "uuid": "5f91700b-dc5a-41ae-861d-635e9ca14433"
+                        },
+                        {
+                            "description": "Global Label 'DVDD'",
+                            "pos": {
+                                "x": 1.1684,
+                                "y": 1.2319
+                            },
+                            "uuid": "8cac16c5-06cf-4c11-a069-9c1e96e04248"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 36 [AIN3/BUF_VREF1V8, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.3589,
+                                "y": 0.5842
+                            },
+                            "uuid": "f2c43eeb-76da-49f4-b8e6-cd74ebb3190b"
+                        },
+                        {
+                            "description": "Symbol C2 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.0287,
+                                "y": 0.4953
+                            },
+                            "uuid": "7df9ce6f-7f38-4582-a049-7f92faf1abc9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 2 [RC0_1, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.3843,
+                                "y": 1.0922
+                            },
+                            "uuid": "f321809c-ab7a-4356-9b11-4c0d46c421ba"
+                        },
+                        {
+                            "description": "Symbol C9 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.27,
+                                "y": 1.1684
+                            },
+                            "uuid": "a8a389df-8d18-4e17-a74f-f60d5d77371e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 3 [RC0_0, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.4097,
+                                "y": 1.0922
+                            },
+                            "uuid": "ce55d4e5-cb2b-4927-9979-4a7fc840f632"
+                        },
+                        {
+                            "description": "Symbol C9 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 1.3462,
+                                "y": 1.1684
+                            },
+                            "uuid": "fe431a80-868e-482d-aa91-c96eb8387d6a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 33 [RCAL1, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.4351,
+                                "y": 0.5842
+                            },
+                            "uuid": "61a18b62-4111-4a9d-8fca-04c4c6f90cc3"
+                        },
+                        {
+                            "description": "Symbol RCAL1 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 1.3843,
+                                "y": 0.5207
+                            },
+                            "uuid": "b4fbe1fb-a9a3-4020-9a82-d3fa1900cd85"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 4 [VREF_2V5, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.4351,
+                                "y": 1.0922
+                            },
+                            "uuid": "44e77d57-d16f-4723-a95f-1ac45276c458"
+                        },
+                        {
+                            "description": "Symbol C10 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.3843,
+                                "y": 1.1684
+                            },
+                            "uuid": "83d85a81-e014-4ee9-9433-a9a045c80893"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 32 [RCAL0, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.4605,
+                                "y": 0.5842
+                            },
+                            "uuid": "a6dd3322-fcf5-4e4f-88bb-77a3d82a4d05"
+                        },
+                        {
+                            "description": "Symbol RCAL1 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.4605,
+                                "y": 0.5207
+                            },
+                            "uuid": "bc05cdd5-f72f-4c21-b397-0fa889871114"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 5 [AVDD_REG, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.4605,
+                                "y": 1.0922
+                            },
+                            "uuid": "909d0bdd-8a15-40f2-9dfd-be4a5d2d6b25"
+                        },
+                        {
+                            "description": "Symbol C11 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 1.1684
+                            },
+                            "uuid": "9e5fe65d-f158-4eb5-af93-2b5d0b9a0d55"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 31 [VBIAS_CAP, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.4859,
+                                "y": 0.5842
+                            },
+                            "uuid": "97693043-81ba-44a2-b87b-aca6193e0970"
+                        },
+                        {
+                            "description": "Symbol C12 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 1.4859,
+                                "y": 0.5334
+                            },
+                            "uuid": "017667a9-f5de-49c7-af53-4f9af2f3a311"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 6 [DVDD, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.4859,
+                                "y": 1.0922
+                            },
+                            "uuid": "a46a2b22-69cf-45fb-b1d2-32ac89bbd3c8"
+                        },
+                        {
+                            "description": "Symbol C8 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.143,
+                                "y": 1.2319
+                            },
+                            "uuid": "4c717b47-484c-4d70-8fcd-83c406ff2d17"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 30 [AVDD_1, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.5113,
+                                "y": 0.5842
+                            },
+                            "uuid": "312474c5-a081-4cd1-b2e6-730f0718514a"
+                        },
+                        {
+                            "description": "Symbol C17 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.7145,
+                                "y": 0.4826
+                            },
+                            "uuid": "18e95a1d-9d1d-4b93-8e4c-2d03c344acc0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Power input are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 29 [AGND_1, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.5367,
+                                "y": 0.5842
+                            },
+                            "uuid": "72f9157b-77da-4a6d-9880-0711b21f6e23"
+                        },
+                        {
+                            "description": "Symbol #PWR010 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 1.5367,
+                                "y": 0.5842
+                            },
+                            "uuid": "4f3dc5bc-04e8-4dcc-91dd-8782e84f321d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 8 [VBIAS0, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.5367,
+                                "y": 1.0922
+                            },
+                            "uuid": "b5d84bc0-4d9a-4d1d-a476-5c6b51309fca"
+                        },
+                        {
+                            "description": "Symbol C13 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.5113,
+                                "y": 1.1684
+                            },
+                            "uuid": "f8e92727-5789-4ef6-9dc3-be888ad72e45"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 9 [VZERO0, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.5621,
+                                "y": 1.0922
+                            },
+                            "uuid": "b1240f00-ec43-4c0b-9a41-43264db8a893"
+                        },
+                        {
+                            "description": "Symbol C15 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 1.1684
+                            },
+                            "uuid": "9c2a29da-c83f-4ec8-bbcf-9d775812af04"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Unspecified are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 26 [IOVDD, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.6129,
+                                "y": 0.5842
+                            },
+                            "uuid": "81ab7ed7-7160-4650-b711-4daa2902dc8b"
+                        },
+                        {
+                            "description": "Symbol U3 Pin 30 [AVDD_1, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.5113,
+                                "y": 0.5842
+                            },
+                            "uuid": "312474c5-a081-4cd1-b2e6-730f0718514a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 11 [XTALI, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.6129,
+                                "y": 1.0922
+                            },
+                            "uuid": "3d2a15cb-c492-4d9a-b1dd-7d5f099d2d31"
+                        },
+                        {
+                            "description": "Symbol C18 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.7272,
+                                "y": 1.2573
+                            },
+                            "uuid": "5dbda758-e74b-4ccf-ad68-495d537d68ba"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Power input are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 25 [DGND_3, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.6383,
+                                "y": 0.5842
+                            },
+                            "uuid": "5a010660-4a0b-4680-b361-32d4c3b60537"
+                        },
+                        {
+                            "description": "Symbol #PWR013 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 1.6383,
+                                "y": 0.5842
+                            },
+                            "uuid": "fab985e9-e679-4dd8-a59c-e3195d08506a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 12 [XTALO, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.6383,
+                                "y": 1.0922
+                            },
+                            "uuid": "848901d5-fdee-4920-a04d-fbc03c912e79"
+                        },
+                        {
+                            "description": "Symbol Y1 Pin 3 [3, Passive, Line]",
+                            "pos": {
+                                "x": 1.8415,
+                                "y": 1.2319
+                            },
+                            "uuid": "4b982f8b-ca29-4ebf-88fc-8a50b24e0802"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Power input are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 23 [DGND_2, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.7366
+                            },
+                            "uuid": "771cb5c1-62ba-4cca-999e-cdcbe417213c"
+                        },
+                        {
+                            "description": "Symbol #PWR018 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.7366
+                            },
+                            "uuid": "fd146ca2-8fb8-4c71-9277-84f69bc5d3fc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 22 [~{RESET}, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.762
+                            },
+                            "uuid": "ee9a2826-2513-480e-a552-3d07af5bf8a5"
+                        },
+                        {
+                            "description": "Symbol R1 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.762
+                            },
+                            "uuid": "b31ebd25-cf4c-4c3e-b83d-0ec793b65cd9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Bidirectional are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 19 [GPIO0, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.8382
+                            },
+                            "uuid": "7247fe96-7885-4063-8282-ea2fd2b28b0d"
+                        },
+                        {
+                            "description": "Symbol U1 Pin AA1 [P0.03/NFC2, Bidirectional, Line]",
+                            "pos": {
+                                "x": 2.6543,
+                                "y": 0.9144
+                            },
+                            "uuid": "9cb396c7-65fc-4b62-b5b6-353f0cf4844a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Bidirectional are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 18 [MISO, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.8636
+                            },
+                            "uuid": "b5ffe018-0d06-4a1b-95ee-b5763a35798d"
+                        },
+                        {
+                            "description": "Symbol U1 Pin AL13 [P0.19, Bidirectional, Line]",
+                            "pos": {
+                                "x": 2.6543,
+                                "y": 1.3208
+                            },
+                            "uuid": "a9d58bbe-8a4e-4be3-95df-314e41e64965"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Bidirectional are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 17 [MOSI, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.889
+                            },
+                            "uuid": "1d1a7683-c090-4798-9b40-7ed0d9f3ce3b"
+                        },
+                        {
+                            "description": "Symbol U1 Pin AL5 [P0.13/QSPI[0], Bidirectional, Line]",
+                            "pos": {
+                                "x": 2.6543,
+                                "y": 1.1684
+                            },
+                            "uuid": "cf02f8e2-e31d-4b10-882c-77858bfface5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Bidirectional are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 16 [SCLK, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.9144
+                            },
+                            "uuid": "3d70e675-48ae-4edd-b95d-3ca51e634018"
+                        },
+                        {
+                            "description": "Symbol U1 Pin AJ1 [P0.09/TRACEDATA[2], Bidirectional, Line]",
+                            "pos": {
+                                "x": 2.6543,
+                                "y": 1.0668
+                            },
+                            "uuid": "cf5c6aab-4575-420b-8540-f6e291bdfcdb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Bidirectional are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 15 [~{CS}, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.9398
+                            },
+                            "uuid": "ed247857-b2a3-4b23-90ad-758c01ae5e8e"
+                        },
+                        {
+                            "description": "Symbol U1 Pin AL9 [P0.16/QSPI[3], Bidirectional, Line]",
+                            "pos": {
+                                "x": 2.6543,
+                                "y": 1.2446
+                            },
+                            "uuid": "00734148-a32d-4fb7-a0f1-771c239b7a86"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 14 [DVDD_REG_1V8, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.9652
+                            },
+                            "uuid": "f5a3f95b-1a53-41b4-b208-bf168c9d9c6d"
+                        },
+                        {
+                            "description": "Symbol C21 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.9685,
+                                "y": 0.9652
+                            },
+                            "uuid": "aa288a22-ea1d-474d-8dae-efe971580843"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Power input are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U3 Pin 13 [DGND_1, Unspecified, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.9906
+                            },
+                            "uuid": "926b329f-cd0d-410a-bc4a-e36446f8965a"
+                        },
+                        {
+                            "description": "Symbol #PWR019 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 0.9906
+                            },
+                            "uuid": "2dc66f7e-d85d-4081-ae71-fd8851d6aeda"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                }
+            ]
+        },
+        {
+            "path": "/Micro/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d/7cb16779-c0f2-4366-9627-c34d39f526d7",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin A19 [VDD, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.6731
+                            },
+                            "uuid": "746b482a-9004-4c96-8f60-bfd0e3636908"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin A27 [DECR, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.7747
+                            },
+                            "uuid": "fceae4c2-8161-4400-bfb2-9fddac062023"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin B10 [DCCD, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.0033
+                            },
+                            "uuid": "04bf0b10-4af6-49fc-83db-e05a25450941"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin A15 [DECD, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.0795
+                            },
+                            "uuid": "43589b88-62f7-4989-860e-50ecf58afab9"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin J1 [DCCH, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.3335
+                            },
+                            "uuid": "a6312c19-7dfa-4119-b327-31dc29d844cd"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin B6 [DECUSB, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.5621
+                            },
+                            "uuid": "2381ff01-b2fa-43fa-85b7-67271f49e25a"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin A23 [DECN, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.5875
+                            },
+                            "uuid": "66e158cf-7f0b-4f4b-9ea8-854bb8dacf9c"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin A13 [DECA, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 1.6129
+                            },
+                            "uuid": "e5dd7f15-5b41-4511-a6e2-d67d35a0508c"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 104 [VSS_PAD, Power input, Line]",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.5748
+                            },
+                            "uuid": "350a79d9-4df4-477d-9d23-5b15897a5326"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Both RESET_AD and P0.02{slash}NFC1 are attached to the same items; RESET_AD will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'RESET_AD'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.889
+                            },
+                            "uuid": "1d65eb98-9e4b-4cf9-ada9-5f54d48fe428"
+                        },
+                        {
+                            "description": "Label 'P0.02/NFC1'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.889
+                            },
+                            "uuid": "784e1514-e39b-4aa7-b578-5cb173c7c1b0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_INT and P0.03{slash}NFC2 are attached to the same items; AD_INT will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_INT'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.9144
+                            },
+                            "uuid": "3cb9ec6d-f38c-4458-a376-c19659e57e37"
+                        },
+                        {
+                            "description": "Label 'P0.03/NFC2'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 0.9144
+                            },
+                            "uuid": "bd0b55d4-a9e6-4960-bf15-3815cc3b1eed"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_SCLK and P0.09{slash}TRACEDATA2 are attached to the same items; AD_SCLK will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_SCLK'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.0668
+                            },
+                            "uuid": "0082a2ad-ce7a-4dab-b457-0148cdfdf49f"
+                        },
+                        {
+                            "description": "Label 'P0.09/TRACEDATA2'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.0668
+                            },
+                            "uuid": "05ab0fd9-e4cc-4d7d-b4f7-74648b7abd83"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_MOSI and P0.13{slash}QSPI0 are attached to the same items; AD_MOSI will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_MOSI'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.1684
+                            },
+                            "uuid": "06cc3fad-b27d-412c-bf5c-e00ec4c591cb"
+                        },
+                        {
+                            "description": "Label 'P0.13/QSPI0'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.1684
+                            },
+                            "uuid": "31449330-7d88-4c4a-9bd1-1741d1b3f4d5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_CS and P0.16{slash}QSPI3 are attached to the same items; AD_CS will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_CS'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.2446
+                            },
+                            "uuid": "8614f37a-c1dc-4c1e-9b04-f9f0a8d96273"
+                        },
+                        {
+                            "description": "Label 'P0.16/QSPI3'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.2446
+                            },
+                            "uuid": "841a0415-e8c2-4750-997c-31b83a5adb6c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both AD_MISO and P0.19 are attached to the same items; AD_MISO will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'AD_MISO'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.3208
+                            },
+                            "uuid": "e008bed6-bff0-4728-bb96-0fe0c8facf74"
+                        },
+                        {
+                            "description": "Label 'P0.19'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.3208
+                            },
+                            "uuid": "a9534a16-a5a7-42b1-817c-2986df0c473a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both SCL_nPM and P0.24 are attached to the same items; SCL_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'SCL_nPM'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.4478
+                            },
+                            "uuid": "1ed24672-3816-43fe-8d65-087f8f53358e"
+                        },
+                        {
+                            "description": "Label 'P0.24'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.4478
+                            },
+                            "uuid": "2854f672-4172-4e67-aafe-38672f2da9fe"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both SDA_nPM and P0.26{slash}AIN5 are attached to the same items; SDA_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'SDA_nPM'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.4986
+                            },
+                            "uuid": "37a23a32-8c9b-4538-9c46-67962e6c6ce5"
+                        },
+                        {
+                            "description": "Label 'P0.26/AIN5'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.4986
+                            },
+                            "uuid": "43260b56-f78d-4e34-b2e5-df2570232014"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both INT_nPM and P0.28{slash}AIN7 are attached to the same items; INT_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'INT_nPM'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.5494
+                            },
+                            "uuid": "2d67286d-b19a-45f8-8353-38e85c24bdc3"
+                        },
+                        {
+                            "description": "Label 'P0.28/AIN7'",
+                            "pos": {
+                                "x": 2.413,
+                                "y": 1.5494
+                            },
+                            "uuid": "18ccdf52-e02d-40d8-9e4e-0bf603548a43"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "A pin with a \"no connection\" flag is connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin AJ1 [P0.09/TRACEDATA[2], Bidirectional, Line]",
+                            "pos": {
+                                "x": 2.6543,
+                                "y": 1.0668
+                            },
+                            "uuid": "cf5c6aab-4575-420b-8540-f6e291bdfcdb"
+                        },
+                        {
+                            "description": "No Connect",
+                            "pos": {
+                                "x": 2.6543,
+                                "y": 1.0668
+                            },
+                            "uuid": "4d27fa1e-843e-4dd3-aa7a-b72d6273eee3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "no_connect_connected"
+                },
+                {
+                    "description": "Both PWR_BTN_nPM and P1.06 are attached to the same items; PWR_BTN_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'PWR_BTN_nPM'",
+                            "pos": {
+                                "x": 3.302,
+                                "y": 1.0033
+                            },
+                            "uuid": "a2c28dc7-1611-45c7-87f0-0c0aed981767"
+                        },
+                        {
+                            "description": "Label 'P1.06'",
+                            "pos": {
+                                "x": 3.302,
+                                "y": 1.0033
+                            },
+                            "uuid": "d4d3cb70-7946-4776-9c8f-40161b2047f4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "A pin with a \"no connection\" flag is connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin AL21 [P1.06, Bidirectional, Line]",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.0033
+                            },
+                            "uuid": "6fa067c7-67b1-458b-8971-3be853651532"
+                        },
+                        {
+                            "description": "No Connect",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.0033
+                            },
+                            "uuid": "c98aba85-d1db-4ded-85db-e92f6de47280"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "no_connect_connected"
+                },
+                {
+                    "description": "A pin with a \"no connection\" flag is connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin R31 [P1.10, Bidirectional, Line]",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.1049
+                            },
+                            "uuid": "bda9ffa6-a142-447b-bddb-9712808d271f"
+                        },
+                        {
+                            "description": "No Connect",
+                            "pos": {
+                                "x": 3.4036,
+                                "y": 1.1049
+                            },
+                            "uuid": "c140fd18-ae1c-44da-904a-53fdb426f444"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "no_connect_connected"
+                }
+            ]
+        },
+        {
+            "path": "/Power/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d/bb3568e6-1dbe-4ba0-b168-902edce19be8",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR058 Hidden pin  [VBAT, Power input, Line]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.7366
+                            },
+                            "uuid": "fad5c3d7-d2e7-483d-8414-4aef351932a7"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 21 [VBUS, Power input, Line]",
+                            "pos": {
+                                "x": 1.1938,
+                                "y": 0.5334
+                            },
+                            "uuid": "6df8815e-33ce-4798-ab7b-c07f79775448"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 25 [LED0, Output, Line]",
+                            "pos": {
+                                "x": 1.1938,
+                                "y": 1.0922
+                            },
+                            "uuid": "1cf4ac92-2514-45f6-b2b6-80fffdc15e2b"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 26 [LED1, Output, Line]",
+                            "pos": {
+                                "x": 1.1938,
+                                "y": 1.1176
+                            },
+                            "uuid": "c12b0ec7-e6a1-410f-a8e3-f11bf515da04"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 27 [LED2, Output, Line]",
+                            "pos": {
+                                "x": 1.1938,
+                                "y": 1.143
+                            },
+                            "uuid": "9d92d838-008b-4b62-babb-b2c7ac3cd930"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 1 [VOUT1, Power input, Line]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 0.7874
+                            },
+                            "uuid": "112a244d-fa5f-4501-abf3-b061eb3a8f60"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 3 [SW1, Power input, Line]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 0.8636
+                            },
+                            "uuid": "3e4b7d81-0e6b-49a3-9f10-3caa852837ec"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 3 [SW1, Power input, Line]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 0.8636
+                            },
+                            "uuid": "3e4b7d81-0e6b-49a3-9f10-3caa852837ec"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 5 [SW2, Power input, Line]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 1.1176
+                            },
+                            "uuid": "54e807a9-c1f0-433a-9f22-4a02b087a6e8"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U2 Pin 6 [PVSS2, Power input, Line]",
+                            "pos": {
+                                "x": 1.8542,
+                                "y": 1.143
+                            },
+                            "uuid": "26793a83-0003-4f42-b670-af28468377db"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Pins of type Unspecified and Passive are connected",
+                    "items": [
+                        {
+                            "description": "Symbol SW1 Pin 2 [2, Unspecified, Line]",
+                            "pos": {
+                                "x": 0.4699,
+                                "y": 1.2954
+                            },
+                            "uuid": "ca0112f9-78c5-458b-a05a-345760fd9a81"
+                        },
+                        {
+                            "description": "Symbol R4 Pin 2 [Passive, Line]",
+                            "pos": {
+                                "x": 0.5461,
+                                "y": 1.2573
+                            },
+                            "uuid": "db7eaed8-76a2-4d12-9cd0-dc4f3366513b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Pins of type Unspecified and Power input are connected",
+                    "items": [
+                        {
+                            "description": "Symbol SW1 Pin 1 [1, Unspecified, Line]",
+                            "pos": {
+                                "x": 0.4699,
+                                "y": 1.4478
+                            },
+                            "uuid": "5e8b90e2-d082-4323-8ed7-6ee1a6491fd8"
+                        },
+                        {
+                            "description": "Symbol #PWR054 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 0.4699,
+                                "y": 1.4732
+                            },
+                            "uuid": "f99552ce-0729-4ada-aef3-5686270d7c4d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Both SCL_nPM and SCL are attached to the same items; SCL_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'SCL_nPM'",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.3716
+                            },
+                            "uuid": "d953bf11-7b02-4ae3-99ad-9a47c0b208db"
+                        },
+                        {
+                            "description": "Label 'SCL'",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.3716
+                            },
+                            "uuid": "f4d85858-be5a-4960-99cc-483830f5c739"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both SDA_nPM and SDA are attached to the same items; SDA_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'SDA_nPM'",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.397
+                            },
+                            "uuid": "ffad440c-cdb2-44b7-9834-ff746af1503d"
+                        },
+                        {
+                            "description": "Label 'SDA'",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.397
+                            },
+                            "uuid": "b072fd0b-3ac7-4f7a-9aa8-0258136c4eb4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both INT_nPM and GPIO0 are attached to the same items; INT_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'INT_nPM'",
+                            "pos": {
+                                "x": 1.0668,
+                                "y": 0.9398
+                            },
+                            "uuid": "8f0d80c9-4307-4696-b56f-a99431c8810b"
+                        },
+                        {
+                            "description": "Label 'GPIO0'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.9398
+                            },
+                            "uuid": "77f0df56-df3c-41b5-8b26-8a42a2c6385f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both PWR_BTN_nPM and GPIO1 are attached to the same items; PWR_BTN_nPM will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label 'PWR_BTN_nPM'",
+                            "pos": {
+                                "x": 1.0668,
+                                "y": 0.9652
+                            },
+                            "uuid": "b4f7d9a3-ea64-4deb-b288-7ff21545b604"
+                        },
+                        {
+                            "description": "Label 'GPIO1'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.9652
+                            },
+                            "uuid": "0cd8a403-7c92-438b-925e-70ae1ab67a7b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "Both GND and VSET1 are attached to the same items; GND will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR054 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 0.4699,
+                                "y": 1.4732
+                            },
+                            "uuid": "f99552ce-0729-4ada-aef3-5686270d7c4d"
+                        },
+                        {
+                            "description": "Label 'VSET1'",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.1938
+                            },
+                            "uuid": "7e4f2e75-7ae6-4802-bba3-4d06bd1f255f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                }
+            ]
+        },
+        {
+            "path": "/Connectors and Mounting/",
+            "uuid_path": "/727bdb35-d4b9-467c-9892-6a1d2569df8d/4c7acffc-1e77-490e-bfef-8a218bea49a2",
+            "violations": [
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR085 Hidden pin  [VBUS', Power input, Line]",
+                            "pos": {
+                                "x": 2.2606,
+                                "y": 0.3683
+                            },
+                            "uuid": "a0b900d9-087b-4a64-8bac-7b2f333fa7d1"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                }
+            ]
+        }
+    ],
+    "source": "AllInOne.kicad_sch"
+}

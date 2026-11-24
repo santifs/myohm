@@ -1,0 +1,26 @@
+{
+  "device": "Messi-05",
+  "strip": "VV100",
+  "timestamp": "2026-10-09T20:43:35",
+  "points": 40,
+  "reps": 3,
+  "config": "zb1k",
+  "switches_off": {
+    "S1": [
+      6
+    ],
+    "S2": [
+      1
+    ],
+    "S3": [
+      1
+    ],
+    "S4": [
+      1
+    ],
+    "S5": [
+      1
+    ]
+  },
+  "note": ""
+}

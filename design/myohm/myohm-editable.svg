@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="520" viewBox="0 0 1440 520" role="img" aria-labelledby="title desc">
+  <title id="title">Myohm</title>
+  <desc id="desc">Logotipo vectorial editable. Cinco letras independientes, sin fuentes ni imágenes incrustadas. Las dos m comparten geometría; h es la rotación exacta de y respecto al centro de o. Fondo transparente.</desc>
+  <g id="myohm" fill="none" stroke="#092568" stroke-width="38" stroke-linecap="butt" stroke-linejoin="round">
+    <g id="letter-m-left" aria-label="m">
+      <path d="M 60,360 V 230 C 60,191.340068 91.340068,160 130,160 C 168.659932,160 200,191.340068 200,230 V 360 M 200,230 C 200,191.340068 231.340068,160 270,160 C 308.659932,160 340,191.340068 340,230 V 360"/>
+    </g>
+    <g id="letter-y" aria-label="y">
+      <path d="M 415,160 V 285 C 415,326.421356 448.578644,360 490,360 C 531.421356,360 565,326.421356 565,285 V 160 M 565,285 V 470"/>
+    </g>
+    <g id="letter-o" aria-label="o">
+      <circle cx="710" cy="260" r="100"/>
+    </g>
+    <g id="letter-h" aria-label="h" transform="rotate(180 710 260)">
+      <path d="M 415,160 V 285 C 415,326.421356 448.578644,360 490,360 C 531.421356,360 565,326.421356 565,285 V 160 M 565,285 V 470"/>
+    </g>
+    <g id="letter-m-right" aria-label="m" transform="translate(1020 0)">
+      <path d="M 60,360 V 230 C 60,191.340068 91.340068,160 130,160 C 168.659932,160 200,191.340068 200,230 V 360 M 200,230 C 200,191.340068 231.340068,160 270,160 C 308.659932,160 340,191.340068 340,230 V 360"/>
+    </g>
+  </g>
+</svg>

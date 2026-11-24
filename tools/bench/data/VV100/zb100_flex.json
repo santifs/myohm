@@ -1,0 +1,26 @@
+{
+  "device": "Messi-05",
+  "strip": "VV100",
+  "timestamp": "2026-10-09T20:49:21",
+  "points": 40,
+  "reps": 3,
+  "config": "zb100_flex",
+  "switches_off": {
+    "S1": [
+      1
+    ],
+    "S2": [
+      1
+    ],
+    "S3": [
+      1
+    ],
+    "S4": [
+      1
+    ],
+    "S5": [
+      1
+    ]
+  },
+  "note": "repite la referencia doblando/tocando la cinta"
+}

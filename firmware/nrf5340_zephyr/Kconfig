@@ -1,0 +1,44 @@
+menu "BioMess firmware"
+
+config BIOMESS_SERIAL_NUMBER
+	string "BioMess serial number"
+	default "BM-NRF5340-00"
+	help
+	  Human-readable device serial exposed over the BioMess BLE serial
+	  characteristic. Set this per board together with CONFIG_BT_DEVICE_NAME,
+	  for example Messi-02.
+
+config MYOHM_EXCITATION_MVPP
+	int "AD5941 excitation DAC amplitude (mV peak-to-peak)"
+	range 50 800
+	default 800
+	help
+	  Default sweep amplitude written to AppBIACfg.DacVoltPP, in mV
+	  peak-to-peak at the HSDAC, before the x2 excitation buffer gain
+	  (EXCITBUFGAIN_2). The voltage at CE0 is twice this value and the
+	  current into I+ is limited by the 1 kohm series resistor RL1.
+
+	  800 keeps the setting used for all published Myohm data: 1.6 V pp at
+	  CE0 (0.57 mA rms into a short), outside the +/-607 mV range over
+	  which the AD5941 output is specified. 500 is the recommended value
+	  for measurements on people: 1.0 V pp at CE0, 0.35 mA rms into a
+	  short. BLE clients can override the value through characteristic
+	  0xC018; the override is kept in RAM and returns to this default
+	  after a reset.
+
+config MYOHM_CONTACT_HIGH_OHMS
+	int "Contact check threshold for a high two-wire impedance (ohms)"
+	range 100 1000000
+	default 3000
+	help
+	  BLE command 0x0B measures the two-wire impedance between electrode
+	  pairs at 10 kHz and 100 kHz. An entry whose magnitude, after
+	  subtracting the board series elements (RL1 and the 4.7 uF coupling
+	  capacitors), exceeds this threshold is flagged as high contact.
+	  Each pair includes two contacts plus the tissue between them. The
+	  default sits between a pair of 1 kohm contacts (about 2 kohm) and a
+	  single 4.99 kohm contact (above 5 kohm) on the AD5940 Z test board.
+
+endmenu
+
+source "Kconfig.zephyr"

@@ -1,0 +1,42 @@
+[
+  {
+    "test": "test_protocol_payloads.py",
+    "exit_code": 0,
+    "output": "protocol_payloads_ok=true\n"
+  },
+  {
+    "test": "test_protocol_contract.py",
+    "exit_code": 0,
+    "output": "firmware_web_protocol_contract_ok=true\n"
+  },
+  {
+    "test": "test_hardware_contract.py",
+    "exit_code": 0,
+    "output": "hardware_contract_ok=true\n"
+  },
+  {
+    "test": "test_docs_links.py",
+    "exit_code": 0,
+    "output": "docs_links_ok=true\ndocs_files_checked=19\ndocs_links_checked=34\n"
+  },
+  {
+    "test": "test_python_syntax.py",
+    "exit_code": 0,
+    "output": "python_syntax_ok=true\npython_scripts_checked=34\n"
+  },
+  {
+    "test": "test_board_validation_report.py",
+    "exit_code": 0,
+    "output": "board_validation_report_contract_ok=true\n"
+  },
+  {
+    "test": "test_readiness_report.py",
+    "exit_code": 0,
+    "output": "readiness_report_contract_ok=true\n"
+  },
+  {
+    "test": "test_release_package_fixture.py",
+    "exit_code": 0,
+    "output": "release_fixture_package=firmware/nrf5340_zephyr/build/release-fixture-pf0y822b/releases/biomess-nrf5340-firmware-fixture-20261022T005528Z.zip\nrelease_fixture_package_verify_ok=true\nrelease_package_fixture_ok=true\n"
+  }
+]

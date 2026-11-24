@@ -1,0 +1,784 @@
+{
+  "date": "2026-09-17",
+  "note": "Working-tree snapshot; source hashes before portability edits. No source repository history imported.",
+  "commits": {
+    "VolumHWv3": "db98300654e0e1985a7a3514c5d401b37c0360de",
+    "biomess": "9833c060eda3be772ca42a0f2694b043486d7785"
+  },
+  "files": [
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/AllInOne.kicad_sch",
+      "destination": "hardware/mainboard/AllInOne.kicad_sch",
+      "sha256": "7d9dd19ac3735bb4cb3b6bc9b8adf0351dd1059c810e3515d907c2a5c4ed9974"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/connectors.kicad_sch",
+      "destination": "hardware/mainboard/connectors.kicad_sch",
+      "sha256": "576ee7d013bce469daea62cd64c99a819301dedfd58f103352f5570ddbccb780"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/BOM.csv",
+      "destination": "hardware/mainboard/BOM.csv",
+      "sha256": "92d217729017383834cd0ebffc6095cea8d998d9958a639b57fcf79495c16958"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/fp-lib-table",
+      "destination": "hardware/mainboard/fp-lib-table",
+      "sha256": "4e91fda4f403774d9f46c3df4feb7ebf5cdf4a87f038b61e48bcc161844ea1d9"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/power.kicad_sch",
+      "destination": "hardware/mainboard/power.kicad_sch",
+      "sha256": "cc5f8617833edf8ac980c85d4ba829dbd8ec94373d4d485503567d91cf3bb616"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/micro.kicad_sch",
+      "destination": "hardware/mainboard/micro.kicad_sch",
+      "sha256": "d4dac4162a52870cd551f95c50137a3b589097349188b0b78e66f294bf5a5bfc"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/AllInOne.kicad_pro",
+      "destination": "hardware/mainboard/AllInOne.kicad_pro",
+      "sha256": "3defc8065ac973a31f1a6db431faeb9a063f516ade6ad745373e6912a7b1b0a3"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/AllInOne.kicad_pcb",
+      "destination": "hardware/mainboard/AllInOne.kicad_pcb",
+      "sha256": "c5e8781ae5580c3a15950274823986c8779077b32e59ac25d2f3459c57e565a6"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/sym-lib-table",
+      "destination": "hardware/mainboard/sym-lib-table",
+      "sha256": "6ca5b6c2c135129c836a79489eb0c9ecd8de3b52ea8d0d25482ff020a447529e"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/ad5941.kicad_sch",
+      "destination": "hardware/mainboard/ad5941.kicad_sch",
+      "sha256": "31592c5e7386855e501132680e27efd5876b379c97557dfa7f13e68830ec8351"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/Messi.pretty/SW-SMD_2P-TS24CA.kicad_mod",
+      "destination": "hardware/mainboard/Messi.pretty/SW-SMD_2P-TS24CA.kicad_mod",
+      "sha256": "d3e1b5bf2459978120d85da79d5b791bb76b9ca744e4cb25ec63d72c565b8e52"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/Messi.pretty/POGO-TH_PR5L3715-4P-C-male.kicad_mod",
+      "destination": "hardware/mainboard/Messi.pretty/POGO-TH_PR5L3715-4P-C-male.kicad_mod",
+      "sha256": "6c6c528aa10dbe92ca575012cdc88abc5f87b782caed649b40ba39d1fbd2b072"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/Messi.pretty/nRF5340-QKAA-Messi.kicad_mod",
+      "destination": "hardware/mainboard/Messi.pretty/nRF5340-QKAA-Messi.kicad_mod",
+      "sha256": "750ddacf844c21e5b5917789e6ba956000087a4dd1c6d6f37bb044539ca3d16d"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "AllInOne-corrected/Messi.pretty/USB_C_Receptacle_GCT_USB4135-GF-A_6P_TopMnt_Horizontal.kicad_mod",
+      "destination": "hardware/mainboard/Messi.pretty/USB_C_Receptacle_GCT_USB4135-GF-A_6P_TopMnt_Horizontal.kicad_mod",
+      "sha256": "f9baacae74cff5d54f840161b55d49d38e9f9523240dfdfd6bdc9fd4c9161fd2"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "library/Volum.kicad_sym",
+      "destination": "hardware/library/Volum.kicad_sym",
+      "sha256": "67d6ec4bada2635d4bc0607a85823d0797f4ca8398f6c08c5993dfb0d2c60a82",
+      "excluded_after_import": "Unreferenced legacy library; removed from candidate"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "library/Volum.pretty/POGO-TH_PR5L3715-4P-C-male.kicad_mod",
+      "destination": "hardware/library/Volum.pretty/POGO-TH_PR5L3715-4P-C-male.kicad_mod",
+      "sha256": "ebc5b4de1f743e78cd9e13d9336103eb645f5d1053b1a057bc38b0fbe5a16528",
+      "excluded_after_import": "Unreferenced legacy library; removed from candidate"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "library/Volum.pretty/POGO-TH_PR5L2820-4P-C-F-female.kicad_mod",
+      "destination": "hardware/library/Volum.pretty/POGO-TH_PR5L2820-4P-C-F-female.kicad_mod",
+      "sha256": "ed3d4a182766a6163ba11cc4dac364ff894c7fad38020a56d21f12784506418c",
+      "excluded_after_import": "Unreferenced legacy library; removed from candidate"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/CMakeLists.txt",
+      "destination": "firmware/nrf5340_zephyr/CMakeLists.txt",
+      "sha256": "ce230aab461f15861f7edbcec4a968c3090f84d373972b462e2054667edc12ae"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/Makefile",
+      "destination": "firmware/nrf5340_zephyr/Makefile",
+      "sha256": "62eebf1c29238b330ee71b76323dc08a3c4e20fe0d942770eac54c998f4f61ac"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/prj.conf",
+      "destination": "firmware/nrf5340_zephyr/prj.conf",
+      "sha256": "fa570045b39cc5d38c2bae1432c3f83166569e9f9795d316eb42203c7e5ba8f1"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/Kconfig",
+      "destination": "firmware/nrf5340_zephyr/Kconfig",
+      "sha256": "babbb6a6601eb8f7d99b06251ebfb81089bfb848d85b8914ac5293d70829afb2"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/sysbuild.conf",
+      "destination": "firmware/nrf5340_zephyr/sysbuild.conf",
+      "sha256": "92b322a64aa8711f087ec0238be86528b8c7e1fe479a0c3b245c8401c640a1e8"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/README.md",
+      "destination": "firmware/nrf5340_zephyr/README.md",
+      "sha256": "c7ea11b25ec1ade0a2b4a792556acaab8ff46595c32cb8112663bb6f84da04e4"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/.gitignore",
+      "destination": "firmware/nrf5340_zephyr/.gitignore",
+      "sha256": "8f910511e2fb2aacb15f8d3b953ffe0ce4381fd66a542037a1603641d68b4d0b"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_hardware_contract.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_hardware_contract.py",
+      "sha256": "8b107d3a57bf22ebe8cdff846d9fa22e79e43e554110d19c844ea3f900fa5047"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/verify_firmware_release.py",
+      "destination": "firmware/nrf5340_zephyr/tools/verify_firmware_release.py",
+      "sha256": "7eec82d1d129aef876676f901ba0c675a9e614559381545350c754059d2b5010"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/run_verification.py",
+      "destination": "firmware/nrf5340_zephyr/tools/run_verification.py",
+      "sha256": "adb79972c4d6d53fdbeedef9f51e357cd6fc78719dc268ca44ac391f08bc9ca0"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/analyze_sweep_csv.py",
+      "destination": "firmware/nrf5340_zephyr/tools/analyze_sweep_csv.py",
+      "sha256": "df5e052d13bb96f2e6e4471fc54c184bc83854d065c088ef58031a5d5b5021de"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_stored_sync.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_stored_sync.py",
+      "sha256": "a59774e9ead1f422d1c23d4a2d745c3152d33c286a027858e92d64e51916bf5f"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/requirements.txt",
+      "destination": "firmware/nrf5340_zephyr/tools/requirements.txt",
+      "sha256": "823cc76f4fed02b93afd03271d6ef9a0101ce2135a8fcc8cd3f62ce25e0e1a6e"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/setup_python_env.py",
+      "destination": "firmware/nrf5340_zephyr/tools/setup_python_env.py",
+      "sha256": "11e32b45e13f69f994d119f3f501ebd30d0dc09e9599311a00d6d17c82c4d783"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_release_matches_build.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_release_matches_build.py",
+      "sha256": "6df566bae94181c1e8879e73bfd4d439836718e064438e0debcffc29a4b91d0e"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_readiness_report.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_readiness_report.py",
+      "sha256": "c1cdd7f862ec9a20cb4f4661b0f3202b972e05856c324aaac3e528b539fa85b5"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/capture_uart.py",
+      "destination": "firmware/nrf5340_zephyr/tools/capture_uart.py",
+      "sha256": "9eb5c8c953258c8e71eb9c889957543d45eb11ece7fa691edfc8a6f4f960f7ce"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_board_health.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_board_health.py",
+      "sha256": "f7e90bcdbb963f20fdb50743231d3c527007e5f2c1d12d3fa516a2fcb7bf8595"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/scan_advertising.py",
+      "destination": "firmware/nrf5340_zephyr/tools/scan_advertising.py",
+      "sha256": "1a920f8bb3fcee502f4a1f1afca46d2d11c6d344973a049620572f8b1fc2977d"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_led_command.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_led_command.py",
+      "sha256": "4aecc2a09ef9a90279aeb8e1e818c386e214c3a8d1e980be1552cde52fd055ea"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/diagnose_debugger.py",
+      "destination": "firmware/nrf5340_zephyr/tools/diagnose_debugger.py",
+      "sha256": "baefbcc27619ccd9f4936ea72ca2a878fc80195f59c191dd47b1a6d62ec3ee2f"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/describe_ble_contract.py",
+      "destination": "firmware/nrf5340_zephyr/tools/describe_ble_contract.py",
+      "sha256": "925bee6b2a9fdb34a991098474b49e50142c8c9c80d935e791780e923f225c61"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/describe_firmware_release.py",
+      "destination": "firmware/nrf5340_zephyr/tools/describe_firmware_release.py",
+      "sha256": "fe3202a40d0b2c84637ed8931a5f2f05ed58c100e213d8a8cee72a47a65e9e7f"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_build_artifacts.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_build_artifacts.py",
+      "sha256": "edd81d2db1121bd24cac9ca7b6d01f9da55b17548c71b03fa5125686c16597c6"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/summarize_verification.py",
+      "destination": "firmware/nrf5340_zephyr/tools/summarize_verification.py",
+      "sha256": "8995f973db3c4e76f36a1f5f2fbbc93d8e21a5910b4fbbf21db96448f5b7aa70"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/README.md",
+      "destination": "firmware/nrf5340_zephyr/tools/README.md",
+      "sha256": "c7cdd106e7472427fa50e4ed2db5e567f020822a06895f90c001bdac8650044d"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_protocol_payloads.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_protocol_payloads.py",
+      "sha256": "b96d84fbb1772c638681737eb4feee31829428c59cc7a1a85da1053e55218377"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_docs_links.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_docs_links.py",
+      "sha256": "28241138319b383684a6903d7a14c5a4e7ab36850b3598cdc41dd0a781705aa4"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_release_package_fixture.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_release_package_fixture.py",
+      "sha256": "d9b317b43511fa84417df2e12ca1422ce4603524eae797fa5f2719f492f42d88"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/readiness_report.py",
+      "destination": "firmware/nrf5340_zephyr/tools/readiness_report.py",
+      "sha256": "884860294696a46f879bc67b6a276c1803492b1c30b69cd30ba3e75641096944"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_python_syntax.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_python_syntax.py",
+      "sha256": "70338acf54a29e34b2987f7ad9f8b9edb7ca16f80f489d19f3d0e54b9d037f52"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/package_firmware_release.py",
+      "destination": "firmware/nrf5340_zephyr/tools/package_firmware_release.py",
+      "sha256": "1f2d15307657983c8d40ffdf577739cd76c311295fde8906ad2a5fcc90f1b51a"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/flash_firmware.py",
+      "destination": "firmware/nrf5340_zephyr/tools/flash_firmware.py",
+      "sha256": "98c0190cc01fe64faf6330f4a0611afacb3ddbacbba9522472cdb01a56ea4026"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_pmic_battery.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_pmic_battery.py",
+      "sha256": "c99a10f20525304bb0fa5ad2b609c7cc751470593169e6314b2ee2cf356bca31"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/board_validation_report.py",
+      "destination": "firmware/nrf5340_zephyr/tools/board_validation_report.py",
+      "sha256": "bc459c339e170cf0c9d5726f3ee42030caf12b40e1e934f3228adf2ac8c861a9"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/biomess_ble.py",
+      "destination": "firmware/nrf5340_zephyr/tools/biomess_ble.py",
+      "sha256": "ddf976ff0512d5c1c3aced7f2978198b17284077eb6bcaef22d3bacc184f16c4"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/generate_sweep_fixture.py",
+      "destination": "firmware/nrf5340_zephyr/tools/generate_sweep_fixture.py",
+      "sha256": "5b06ac65fb3081a9ca4a16b618f2db65484ea2837818f27930b035d42d4a4bd5"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_ad5940_sweep.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_ad5940_sweep.py",
+      "sha256": "1c63ef17a7c1013e4587488d1b3e01286c8f432f3f05cb3ecd17a78a781e88ad"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_auto_mode.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_auto_mode.py",
+      "sha256": "be4cbc791b1e3274acd82957b337aab1987180fd6b6f5621b4302e02244c7bc4"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_board_validation_report.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_board_validation_report.py",
+      "sha256": "9bd8fab007e3edc909de6fac3a7e67e49a7301a45dda02fa20257589ce5ed746"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_uart_boot_log.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_uart_boot_log.py",
+      "sha256": "b445875e2ad325065013cfa38c89c81b9b3813e7ede86020ed639b46a4b3498c"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/ble_probe.py",
+      "destination": "firmware/nrf5340_zephyr/tools/ble_probe.py",
+      "sha256": "89940067dcbdd065e0084b35d3d3b188b2cc052d4422acab34c94aa42643115d"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/test_protocol_contract.py",
+      "destination": "firmware/nrf5340_zephyr/tools/test_protocol_contract.py",
+      "sha256": "9616c6d02e0e700c1d54549ab7d96037e71df60a409188c994e83da9abf952ca"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/tools/preflight.py",
+      "destination": "firmware/nrf5340_zephyr/tools/preflight.py",
+      "sha256": "08f60187141dc1b71bd585ea6649891ae4dc4dddfd1f88f999117528e0ffac56"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/PRD.md",
+      "destination": "firmware/nrf5340_zephyr/docs/PRD.md",
+      "sha256": "bcc33efdcc59bef02a391589975441d3fafd7361e1f4bd727a40e748c7f0ac35"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/architecture.md",
+      "destination": "firmware/nrf5340_zephyr/docs/architecture.md",
+      "sha256": "75f1b3f56e415e8584404798b39e18a71599d9ec489e553997605603c190827a"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/validation-matrix.md",
+      "destination": "firmware/nrf5340_zephyr/docs/validation-matrix.md",
+      "sha256": "d237012bcdd09026e81559c25b229e34ea67bb777c8739aca6583bfde0df45de"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/bring-up.md",
+      "destination": "firmware/nrf5340_zephyr/docs/bring-up.md",
+      "sha256": "c4e6fb41fdf068b9723f7f8997ba8d80a44ec7d35607815f0b17b651a1602a0d"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/ble-protocol.md",
+      "destination": "firmware/nrf5340_zephyr/docs/ble-protocol.md",
+      "sha256": "40ec63804f32bcb4cb37889baf4f040cb875f158b1d3a282263c4a4919eaad61"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/current-system-behavior.md",
+      "destination": "firmware/nrf5340_zephyr/docs/current-system-behavior.md",
+      "sha256": "0ecd6bd0de91505337f3ef42fd1b81ab1f21f6728aed655dcd5f81eb0148f298"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/troubleshooting.md",
+      "destination": "firmware/nrf5340_zephyr/docs/troubleshooting.md",
+      "sha256": "bb528139184ada8b5480d8c1b069939c2c72e2a0042f06f9739e1b8ca8954e73"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/implementation-status.md",
+      "destination": "firmware/nrf5340_zephyr/docs/implementation-status.md",
+      "sha256": "def83612547bc3b7416b85a4ad7656e2a0cd70db3859efb22e3f6a0f4b764fc8"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/hardware-v2.md",
+      "destination": "firmware/nrf5340_zephyr/docs/hardware-v2.md",
+      "sha256": "2bdacec315d5128d39ecf63f7906aa6ff1f67612bc4c2f8efee10adfb64bdc85"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/quickstart.md",
+      "destination": "firmware/nrf5340_zephyr/docs/quickstart.md",
+      "sha256": "92bc4f7b3a4130229245b3d17c7ad19c6a916e746241508e8cca5e647985e2c8"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/mobile-integration.md",
+      "destination": "firmware/nrf5340_zephyr/docs/mobile-integration.md",
+      "sha256": "bb59f78aca9a72bb942230bd42440d3daceb8b088ff8535cec2b4432b50640a2"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/verification.md",
+      "destination": "firmware/nrf5340_zephyr/docs/verification.md",
+      "sha256": "20a422451353e1a3bad0cfe39305a1ca4581c649e6f20469e47a6b2ebd944369"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/porting-guide.md",
+      "destination": "firmware/nrf5340_zephyr/docs/porting-guide.md",
+      "sha256": "6d822d72f10422ed6f5355e4b788e96d93d9bd9ea64fc1f6efc3a39ecdb5de67"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/docs/low-power-strategy.md",
+      "destination": "firmware/nrf5340_zephyr/docs/low-power-strategy.md",
+      "sha256": "8c42e0749cf25a3abd58bfe167f0dfb087fb5d276720b400dd3a84f5d6ddae44"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/nrf5340dk_nrf5340_cpuapp.overlay",
+      "destination": "firmware/nrf5340_zephyr/boards/nrf5340dk_nrf5340_cpuapp.overlay",
+      "sha256": "71e2bf61408520a0cfff37683922bbf8ccf85aadf923685ad299d5c800165c3c"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/nrf5340dk_nrf5340_cpuapp_ns.overlay",
+      "destination": "firmware/nrf5340_zephyr/boards/nrf5340dk_nrf5340_cpuapp_ns.overlay",
+      "sha256": "2e3b77c054cb760bda72633307a8a3e760c07c390a569f4b525f43b805a267d0"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ble_service.c",
+      "destination": "firmware/nrf5340_zephyr/src/ble_service.c",
+      "sha256": "d68807533276c40a364d4c4d99b081433707d679aa70c4c6aacdf19186093721"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/board_power.h",
+      "destination": "firmware/nrf5340_zephyr/src/board_power.h",
+      "sha256": "fc4990d3171b5de120dd4844378c43ef943b8976106f5bff4c5bf284a2c15b37"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/main.c",
+      "destination": "firmware/nrf5340_zephyr/src/main.c",
+      "sha256": "2bf3e89e7bd25d5411f2749d16a15fb33a5068e534b4b9ab54e89e0d0acce227"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ble_service.h",
+      "destination": "firmware/nrf5340_zephyr/src/ble_service.h",
+      "sha256": "8f4c841774df3d83bf5e7d03ec85f4f2cf43b7acf8e4c1f9548731c868c3eb58"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/board_power.c",
+      "destination": "firmware/nrf5340_zephyr/src/board_power.c",
+      "sha256": "5a0444ad01b4e8ab142a188c7dcb78f402fb71bdbba2f5a1a9896776a82dedbd"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpunet.yaml",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpunet.yaml",
+      "sha256": "66e28bef07556793bc598682aaf7c300475109badf8d652aad85dbb359bf6bf8"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpuapp.dts",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpuapp.dts",
+      "sha256": "ee60c99229866f39d6c2b2bd99a886fac38f975d3dc863fa202d42f0faa99a56"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/pre_dt_board.cmake",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/pre_dt_board.cmake",
+      "sha256": "f948b86c8129cb9d7c7fccdbd155f253bd341d65cab115ecc4189f1757ca2e14"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/Kconfig.biomess_nrf5340",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/Kconfig.biomess_nrf5340",
+      "sha256": "95134c3e797b02444a11a6a6f2034652c8e663902b9fac9204a31b099caa2b60"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/board.yml",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/board.yml",
+      "sha256": "887ee5ae5478d5253e616c3820bd20d55e5cdfd9680de09fb381a54e23d296a9"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/Kconfig.defconfig",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/Kconfig.defconfig",
+      "sha256": "75bc1d9757c4dbae20fec2831c4e7d8521d8f24a99b1cba7e2760d1d928672d9"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpunet.dts",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpunet.dts",
+      "sha256": "9b90919720d1ee613fe7c0388c0a7af742cc4ab291e890e11af467553633c4c2"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/board.cmake",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/board.cmake",
+      "sha256": "5d4f2a012f89afc037bdc75e5c79ddfccf804db81a7d3a7f5e20485bac1d6231"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpuapp_defconfig",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpuapp_defconfig",
+      "sha256": "fe1f22499ad4fbdbe1779583d8f415c2ad43cda26a94293b8d1456623741fe68"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpuapp.yaml",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpuapp.yaml",
+      "sha256": "5863d2d699ae2365a524c9638a78c0c0708f1f86e0b8cda875cf181507a2d26a"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpunet_defconfig",
+      "destination": "firmware/nrf5340_zephyr/boards/biomess/biomess_nrf5340/biomess_nrf5340_nrf5340_cpunet_defconfig",
+      "sha256": "fdd0820881b42ba81f8b2cb7df61ab226f1b166a74cf89fddb487eabb8644cad"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/BodyImpedance.h",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/BodyImpedance.h",
+      "sha256": "0e061d11af37c543cea0204fe1028eaea9eda5045ce6d982a833c9b34ab8be71"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/debug_config.h",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/debug_config.h",
+      "sha256": "40c6b0aaaa12a06014dedec894a821a61992a198862fffe38db3af5ac7dd6b2e"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/ad5940.h",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/ad5940.h",
+      "sha256": "b6094b48ed5da2fad4bfb36301be9b9482b66856ed3065c47c1e901b95667bcc"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/AD5940Main.h",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/AD5940Main.h",
+      "sha256": "4590d986b8e3b8c4b32ac25f2a825cdfea24937e2e296515b8d45f55f649a401"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/ZephyrPort.c",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/ZephyrPort.c",
+      "sha256": "e7db45d5e8a321fe1e9caac3e7467f85bfc4bdb78430db6ddc1f4ac69d212d8e"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/BodyImpedance.c",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/BodyImpedance.c",
+      "sha256": "95e352bf1f26c74a781d5b11271a71ccd5b7ae26e58873405afdffc54d624bd5"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/ble_common.h",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/ble_common.h",
+      "sha256": "69f5fe0ac4877b120a5cae5df10c24e5ddf0ed3d7007fb149adf55b0e212220e"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/AD5940Main.c",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/AD5940Main.c",
+      "sha256": "a66486515fe55651a52648b331852443d8d38daa454d9568e305472233a0faf9"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/ad5940.c",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/ad5940.c",
+      "sha256": "a31b8a027bfd6eab27606bfbfbd80372bedfa0c4f3070f6e4c99fe3117ff7452"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "firmware/nrf5340_zephyr/src/ad5940/nrf_delay.h",
+      "destination": "firmware/nrf5340_zephyr/src/ad5940/nrf_delay.h",
+      "sha256": "390369ee7f5644e2bb55ef3fa6720cb78827c28de970c069d8cbfa06621983a7"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "3D/S2B-PH-SM4-TB.STEP",
+      "destination": "hardware/3D/S2B-PH-SM4-TB.STEP",
+      "sha256": "24f5eca8c16334c234574fdcb3ced9afd8f1d0533ffe5a5eb91c274ae90674d1"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "3D/ts24ca.step",
+      "destination": "hardware/3D/ts24ca.step",
+      "sha256": "4bde3bb97e119877f8ee2017a46d59dc53418f053aee3f39782ec61d8bdb38c7"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "3D/AD5941BCPZ.stp",
+      "destination": "hardware/3D/AD5941BCPZ.stp",
+      "sha256": "e3b325c7f34f0674140ca559f83f5a91351f7f2f4dc474ae12b501565f81afd9"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "3D/nRF5340-QKAA-R7.stp",
+      "destination": "hardware/3D/nRF5340-QKAA-R7.stp",
+      "sha256": "74c24b7d29a0c4638ebe57a601b5b5182277b39f3a520bb8056dd87ab08475fe"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "3D/NPM1304-QEAA-R7.step",
+      "destination": "hardware/3D/NPM1304-QEAA-R7.step",
+      "sha256": "8dab704cd02a98b303a1ca763cd8dfa9b01ad4619818942e4e7c23d24928a182"
+    },
+    {
+      "source_repository": "hardware",
+      "source_path": "3D/Pogo_Connector_4_Pin_Type_2.STEP",
+      "destination": "hardware/3D/Pogo_Connector_4_Pin_Type_2.STEP",
+      "sha256": "747917b9b0a33edbfb872f15c8645ca7b0721e2c321696a3ebd634f30411b132"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/index.html",
+      "destination": "web/index.html",
+      "sha256": "458b4d46daf6eafe12a4dc6da3b1ac3c4e94cb0c0f34ec7ced5fa0fd1e820d39"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/README.md",
+      "destination": "web/README.md",
+      "sha256": "fde6834ee25be7b09bb5e7d91288060efc8b84bf12f2288bd98ff76105b61541"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/.gitignore",
+      "destination": "web/.gitignore",
+      "sha256": "61022f949eb49fe0ee5b774835be844845b3d71d9001f676d9ac82bd433e49a7"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/package-lock.json",
+      "destination": "web/package-lock.json",
+      "sha256": "481f24d04113d9508c783d1c16dd89efb0075180facb263807a51a2ceb35c034"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/package.json",
+      "destination": "web/package.json",
+      "sha256": "6c846a9104f6c3dbe6e15e42277b6141525a20dcc832f98faaa43367d24c7e83"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/tsconfig.json",
+      "destination": "web/tsconfig.json",
+      "sha256": "1fa88d2a6a7c53b4cc010771afb4f247fc7f79068b2dca604f5461c3b295536c"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/vite.config.ts",
+      "destination": "web/vite.config.ts",
+      "sha256": "19e685df4f3cd13a3c056bb7517dfc5fd97e6b5b1bd25d70b9f6eca58c5d321e"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/public/icon.svg",
+      "destination": "web/public/icon.svg",
+      "sha256": "4a855112a4563dd1ff8d81b20bfab7617a64e294f59fa397a5ac990d07ff419c"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/App.tsx",
+      "destination": "web/src/App.tsx",
+      "sha256": "0122fb59f3aed1ee0153383c8ef886ea0cd68950bf94244d7a882ce67bd1555d"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/main.tsx",
+      "destination": "web/src/main.tsx",
+      "sha256": "b8c1e566187ea5d53bf9b4c2f4cd8fc8193b4958afa219e57d39b76153f4fb20"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/styles.css",
+      "destination": "web/src/styles.css",
+      "sha256": "68dde086117b58f50165cbcf29fcc5c36eca2f4fbeb75b278c8c8476e3928bd8"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/core/index.test.ts",
+      "destination": "web/src/core/index.test.ts",
+      "sha256": "7ee94f4a2038bf0f1ec756a41ac571bedf68893fa837347e98f24cf2e5ccadd9"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/core/index.ts",
+      "destination": "web/src/core/index.ts",
+      "sha256": "83b09927e652a20ac0f2e02ab113f8517bd82867e3f6bafad56e8edaba1e02b1"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/ble/index.test.ts",
+      "destination": "web/src/ble/index.test.ts",
+      "sha256": "481c522b12dd078f1153f8d4e4b838a4b0b5033646174fa9d2f6f129c2b10ec4"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/ble/index.ts",
+      "destination": "web/src/ble/index.ts",
+      "sha256": "f1b916d8e416e80366e867b8c0cc833e8e502e67057ae9ce48732a32f43ff41a"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/components/Plots.tsx",
+      "destination": "web/src/components/Plots.tsx",
+      "sha256": "d1458012feb0af6661bdc0fdcec9f3e20c08f27293cf95d5cca629b3b98289ca"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/components/Guide.tsx",
+      "destination": "web/src/components/Guide.tsx",
+      "sha256": "b425ea5b060c99b4ceb46d9566a0db2bf7edf3419ba36ca0a8bdd2efed21cc94"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "web/src/components/Plots.test.ts",
+      "destination": "web/src/components/Plots.test.ts",
+      "sha256": "453aed0b90689edb56abc565fa0578e0b84ce5c223d0c4bdab7aa0c5c8c69db5"
+    },
+    {
+      "source_repository": "biomess",
+      "source_path": "design/myohm/myohm-editable.svg",
+      "destination": "design/myohm/myohm-editable.svg",
+      "sha256": "755c4cabbc77328824c6739e73a34880f22987c150fb3035b1fb26e6f134ef59",
+      "note": "Project logo, 2026-09-17"
+    }
+  ],
+  "selected_hardware": "AllInOne-corrected working tree; not tracked in original git repository",
+  "web_status": "Original local prototype, separate from the deployed application"
+}

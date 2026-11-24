@@ -1,0 +1,99 @@
+{
+  "strip": "VV150",
+  "fit_loads": [
+    "zb0",
+    "zb100",
+    "zb200",
+    "zb100p200",
+    "zb1k",
+    "zb4k99"
+  ],
+  "params": {
+    "gain_error_pct": 0.35701234659060754,
+    "R_residual_ohm": 0.2651563815922268,
+    "L_residual_uH": 0.40477747803518616,
+    "C_shunt_pF": 8.62076899483358
+  },
+  "params_se": {
+    "gain_error_pct": 0.04480896978734955,
+    "R_residual_ohm": 0.0010062665010237544,
+    "L_residual_uH": 0.00216895927138369,
+    "C_shunt_pF": 0.4242478195215088
+  },
+  "per_load": {
+    "zb100": {
+      "raw_median_pct": 0.662387847900392,
+      "fixture_corrected_median_pct": 0.3961708323329205,
+      "fixture_corrected_range_pct": [
+        0.058832090290406036,
+        0.4669382616116824
+      ],
+      "phase_residual_max_abs_deg": 0.10359400696135321
+    },
+    "zb200": {
+      "raw_median_pct": 0.5256373087565103,
+      "fixture_corrected_median_pct": 0.3925409384237022,
+      "fixture_corrected_range_pct": [
+        0.12083693787110494,
+        0.43185770844471616
+      ],
+      "phase_residual_max_abs_deg": 0.07954607174538413
+    },
+    "zb100p200": {
+      "raw_median_pct": 0.4773135715060661,
+      "fixture_corrected_median_pct": 0.38859994424788047,
+      "fixture_corrected_range_pct": [
+        -0.11430543720197806,
+        0.4366438075084522
+      ],
+      "phase_residual_max_abs_deg": 0.05214474991077084
+    },
+    "zb1k": {
+      "raw_median_pct": 0.4466308593750079,
+      "fixture_corrected_median_pct": 0.42017075614454447,
+      "fixture_corrected_range_pct": [
+        0.08115111650779383,
+        0.48275379074249614
+      ],
+      "phase_residual_max_abs_deg": 0.13239889220714718
+    },
+    "zb4k99": {
+      "raw_median_pct": 0.3994871252922527,
+      "fixture_corrected_median_pct": 0.39716820361203053,
+      "fixture_corrected_range_pct": [
+        -0.002733279136735156,
+        0.47420275757383834
+      ],
+      "phase_residual_max_abs_deg": 0.0846874580591292
+    },
+    "zb510": {
+      "raw_median_pct": 0.015847199882546015,
+      "fixture_corrected_median_pct": -0.036097036112842096,
+      "fixture_corrected_range_pct": [
+        -0.36388559576914226,
+        0.026469482656032994
+      ],
+      "phase_residual_max_abs_deg": 0.055199782564262986
+    },
+    "zb1k_10n": {
+      "raw_median_pct": 3.918054484879685,
+      "fixture_corrected_median_pct": 3.9900802587894524,
+      "fixture_corrected_range_pct": [
+        0.3710579094437838,
+        8.069912079463615
+      ],
+      "phase_residual_max_abs_deg": 2.6201629884339903
+    },
+    "zb4k99_1n": {
+      "raw_median_pct": 5.490113375997241,
+      "fixture_corrected_median_pct": 6.4008528495776655,
+      "fixture_corrected_range_pct": [
+        0.6399779054675703,
+        8.823401148054577
+      ],
+      "phase_residual_max_abs_deg": 2.4116959993543126
+    }
+  },
+  "zb510_implied_ohm": 508.00109108081523,
+  "zb510_implied_dev_pct": -0.39194292533034636
+}

@@ -1,0 +1,8 @@
+{
+  "check": "relocated hardware with empty KiCad user configuration",
+  "cli_exit": 0,
+  "library_issues": 0,
+  "erc_errors": 20,
+  "erc_warnings": 65,
+  "note": "Installed standard KiCad 10 libraries explicitly configured; physical verification not performed"
+}

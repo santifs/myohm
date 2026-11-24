@@ -1,0 +1,28 @@
+{
+  "device": "Messi-05",
+  "strip": "VV150",
+  "timestamp": "2026-10-09T14:49:16",
+  "points": 40,
+  "reps": 3,
+  "config": "zb4k99_1n",
+  "switches_off": {
+    "S1": [
+      10,
+      11
+    ],
+    "S2": [
+      1
+    ],
+    "S3": [
+      1
+    ],
+    "S4": [
+      1
+    ],
+    "S5": [
+      1
+    ]
+  },
+  "note": "R + C en serie, |Xc| = R a 31.9 kHz; C al ±5 %",
+  "vv_spacing_mm": 150
+}

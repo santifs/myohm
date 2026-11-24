@@ -1,0 +1,30 @@
+{
+  "device": "Messi-05",
+  "strip": "VV75",
+  "timestamp": "2026-10-09T20:29:14",
+  "points": 40,
+  "reps": 3,
+  "config": "zb100_f1k",
+  "switches_off": {
+    "S1": [
+      1
+    ],
+    "S2": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "S3": [
+      4
+    ],
+    "S4": [
+      6
+    ],
+    "S5": [
+      4
+    ]
+  },
+  "note": "contactos corriente equilibrados ≈1k (F+ 1002, F- 1k)",
+  "vv_spacing_mm": 75
+}

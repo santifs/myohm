@@ -1,0 +1,27 @@
+{
+  "device": "Messi-05",
+  "strip": "VV150",
+  "timestamp": "2026-10-09T15:36:39",
+  "points": 40,
+  "reps": 3,
+  "config": "zb100_fplus10k",
+  "switches_off": {
+    "S1": [
+      1
+    ],
+    "S2": [
+      5
+    ],
+    "S3": [
+      4
+    ],
+    "S4": [
+      4
+    ],
+    "S5": [
+      4
+    ]
+  },
+  "note": "solo F+ alto (10k); con el cableado actual es el lado de retorno (I−)",
+  "vv_spacing_mm": 150
+}

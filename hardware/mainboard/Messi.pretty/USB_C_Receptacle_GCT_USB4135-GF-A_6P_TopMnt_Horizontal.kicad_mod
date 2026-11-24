@@ -1,0 +1,371 @@
+(footprint "USB_C_Receptacle_GCT_USB4135-GF-A_6P_TopMnt_Horizontal"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "USB Type C Receptacle, GCT, power-only, 6P, top mounted, horizontal, 3A: https://gct.co/files/drawings/usb4135.pdf")
+	(tags "USB C Type-C Receptacle SMD USB Power-only Charging-only 6P 6C USB4135-GF-A")
+	(property "Reference" "J1"
+		(at 0 -4.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "87882958-a331-4ca7-a400-bfa4a3683d99")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "USB_C_Receptacle_PowerOnly_6P"
+		(at 0 4.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "95e8283f-e79a-4b4f-baf8-38467356c3d4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://www.usb.org/sites/default/files/documents/usb_type-c.zip"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1475aad1-20e9-498e-a9f0-ffb67830975d")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "USB Power-Only 6P Type-C Receptacle connector"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "772130d8-123c-4cf8-9ed9-9be05af8bcff")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property ki_fp_filters "USB*C*Receptacle*")
+	(sheetname "/Connectors and Mounting/")
+	(sheetfile "connectors.kicad_sch")
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -4.6 -2.04)
+		(end -4.6 -0.41)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "63d48318-3d92-4064-bac4-df3d321b0f7d")
+	)
+	(fp_line
+		(start 4.6 -2.04)
+		(end 4.6 -0.41)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b340ced4-7ee3-4409-8046-a1005953f211")
+	)
+	(fp_line
+		(start -4.75 3.4525)
+		(end 4.75 3.4525)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "Dwgs.User")
+		(uuid "20f0fae4-a78a-440a-90df-842e97a4b9fe")
+	)
+	(fp_line
+		(start -6.55 -4.2)
+		(end -6.55 -1.8)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "7e6199c7-a575-44a4-bab8-92c201e88e08")
+	)
+	(fp_line
+		(start -6.55 -1.8)
+		(end -5 -1.8)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "04919f9d-8fb8-435a-93a2-71204be80ef4")
+	)
+	(fp_line
+		(start -6.55 -0.65)
+		(end -6.55 1.9)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "aabf6dc7-c60e-4bbd-bad6-ae479e71ffd9")
+	)
+	(fp_line
+		(start -5 -1.8)
+		(end -5 -0.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "ad7238a7-397b-46f6-b099-0e65782b7b1a")
+	)
+	(fp_line
+		(start -5 -0.65)
+		(end -6.55 -0.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "1307d460-670b-45b5-be7a-bc50e778bde1")
+	)
+	(fp_line
+		(start -5 1.9)
+		(end -6.55 1.9)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "d18362ca-a7ef-4195-88f2-c62fea554f3f")
+	)
+	(fp_line
+		(start -5 1.9)
+		(end -5 4)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "522fa56b-8f88-4143-bae1-f4066ddc472d")
+	)
+	(fp_line
+		(start -5 4)
+		(end 5 4)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "818ed885-afab-4e05-92ed-c0bf9794203f")
+	)
+	(fp_line
+		(start 5 -1.8)
+		(end 5 -0.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "d41de836-b21f-4451-af89-81ed51e0b295")
+	)
+	(fp_line
+		(start 5 -1.8)
+		(end 6.55 -1.8)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "955a22c7-faa1-4a51-b858-ad7a617987f0")
+	)
+	(fp_line
+		(start 5 1.9)
+		(end 5 4)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "477c3d82-e23c-4154-b317-0758d9a8a02d")
+	)
+	(fp_line
+		(start 6.55 -4.2)
+		(end -6.55 -4.2)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "a524eb42-07a3-40f6-9245-57331ca7c636")
+	)
+	(fp_line
+		(start 6.55 -4.2)
+		(end 6.55 -1.8)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "6a2341c1-ed40-4b1a-a539-2cbd5551341a")
+	)
+	(fp_line
+		(start 6.55 -0.65)
+		(end 5 -0.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "40cb952e-fd5b-48ea-90bd-575e5331fac5")
+	)
+	(fp_line
+		(start 6.55 -0.65)
+		(end 6.55 1.9)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e8994730-ad53-4248-880f-43377fb9de22")
+	)
+	(fp_line
+		(start 6.55 1.9)
+		(end 5 1.9)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "7b25a49e-42b8-46b1-b7d8-d956d5ef4720")
+	)
+	(fp_rect
+		(start -4.47 -3.4525)
+		(end 4.47 3.4525)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "0ff77a8a-c4b6-494e-98c4-5058352ed808")
+	)
+	(fp_text user "PCB Edge"
+		(at 0 2.9 0)
+		(unlocked yes)
+		(layer "Dwgs.User")
+		(uuid "0830b1e9-3ade-4fd4-b179-fb683397531e")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.1)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "a36f5aec-5288-40fc-b099-3b79cecb7f21")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "A5" smd roundrect
+		(at -0.5 -3.0325)
+		(size 0.7 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "cc1277e3-1aab-4792-8d14-a074acf6140a")
+	)
+	(pad "A9" smd roundrect
+		(at 1.52 -3.0325 180)
+		(size 0.76 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "b068699d-b13c-4433-b001-ce8c7592a38c")
+	)
+	(pad "A12" smd roundrect
+		(at 2.75 -3.0325 180)
+		(size 0.8 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "c4056ef1-0be3-4d04-9791-bbf10e04436d")
+	)
+	(pad "B5" smd roundrect
+		(at 0.5 -3.0325 180)
+		(size 0.7 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "0b8fdb91-b02f-48ad-8e6f-0e4150a24dc4")
+	)
+	(pad "B9" smd roundrect
+		(at -1.52 -3.0325)
+		(size 0.76 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "05a25cfb-d8a7-4966-9051-9dacb7966c45")
+	)
+	(pad "B12" smd roundrect
+		(at -2.75 -3.0325)
+		(size 0.8 1.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.25)
+		(uuid "a36ab39a-e24a-4c51-917d-522ae7b34005")
+	)
+	(pad "S1" smd roundrect
+		(at -5.125 -2.9775)
+		(size 1.8 1.35)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.1851851852)
+		(uuid "76fc3481-b386-4768-a302-9c5715c9ba7a")
+	)
+	(pad "S1" smd roundrect
+		(at -5.125 0.6025)
+		(size 1.8 1.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.1666666667)
+		(uuid "7443a0e3-8e56-47e2-b27e-8033d28a670b")
+	)
+	(pad "S1" smd roundrect
+		(at 5.125 -2.9775)
+		(size 1.8 1.35)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.1851851852)
+		(uuid "be5bf8f9-a435-4d19-b66c-5b6179b7675b")
+	)
+	(pad "S1" smd roundrect
+		(at 5.125 0.6025)
+		(size 1.8 1.5)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.1666666667)
+		(uuid "e308ab5e-d32d-4d6a-8563-e797820e1746")
+	)
+	(embedded_fonts no)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/USB_C_Receptacle_GCT_USB4135-GF-A_6P_TopMnt_Horizontal.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

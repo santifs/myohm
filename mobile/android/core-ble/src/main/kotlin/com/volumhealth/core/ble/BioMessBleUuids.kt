@@ -1,0 +1,33 @@
+package com.volumhealth.core.ble
+
+import java.util.UUID
+
+/** UUID definitions for BioMess firmware services and characteristics. */
+object BioMessBleUuids {
+    val GENERAL_SERVICE: UUID = UUID.fromString("00001800-0000-1000-8000-00805f9b34fb")
+    val CONTROL_SERVICE: UUID = UUID.fromString("0000af00-0000-1000-8000-00805f9b34fb")
+    val CONFIG_SERVICE: UUID = UUID.fromString("0000af01-0000-1000-8000-00805f9b34fb")
+    val DATA_SERVICE: UUID = UUID.fromString("0000af02-0000-1000-8000-00805f9b34fb")
+    val ENV_SERVICE: UUID = UUID.fromString("0000af03-0000-1000-8000-00805f9b34fb")
+
+    val DEVICE_NAME: UUID = UUID.fromString("00002a00-0000-1000-8000-00805f9b34fb")
+    val CONTROL_COMMAND: UUID = UUID.fromString("0000c000-0000-1000-8000-00805f9b34fb")
+    val SERIAL_NUMBER: UUID = UUID.fromString("0000c001-0000-1000-8000-00805f9b34fb")
+
+    val RCAL: UUID = UUID.fromString("0000c011-0000-1000-8000-00805f9b34fb")
+    val SWEEP_ENABLE: UUID = UUID.fromString("0000c012-0000-1000-8000-00805f9b34fb")
+    val SWEEP_START_FREQ: UUID = UUID.fromString("0000c013-0000-1000-8000-00805f9b34fb")
+    val SWEEP_STOP_FREQ: UUID = UUID.fromString("0000c014-0000-1000-8000-00805f9b34fb")
+    val SWEEP_POINTS: UUID = UUID.fromString("0000c015-0000-1000-8000-00805f9b34fb")
+    val NUM_REPETITIONS: UUID = UUID.fromString("0000c017-0000-1000-8000-00805f9b34fb")
+
+    val IMU_QUATERNION: UUID = UUID.fromString("0000c201-0000-1000-8000-00805f9b34fb")
+    val BATTERY_LEVEL: UUID = UUID.fromString("0000c202-0000-1000-8000-00805f9b34fb")
+    val IMU_Q_VARIANCE: UUID = UUID.fromString("0000c203-0000-1000-8000-00805f9b34fb")
+
+    val MEASUREMENT_CHARS: List<UUID> = (0x10..0x3F).map {
+        UUID.fromString("0000c1${it.toString(16).padStart(2, '0')}-0000-1000-8000-00805f9b34fb")
+    }
+
+    val CLIENT_CHARACTERISTIC_CONFIG: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
+}

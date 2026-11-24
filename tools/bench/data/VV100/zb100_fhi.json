@@ -1,0 +1,26 @@
+{
+  "device": "Messi-05",
+  "strip": "VV100",
+  "timestamp": "2026-10-09T20:58:16",
+  "points": 40,
+  "reps": 3,
+  "config": "zb100_fhi",
+  "switches_off": {
+    "S1": [
+      1
+    ],
+    "S2": [
+      5
+    ],
+    "S3": [
+      4
+    ],
+    "S4": [
+      10
+    ],
+    "S5": [
+      4
+    ]
+  },
+  "note": "contactos corriente altos: F+ 10k, F- 4.99k"
+}

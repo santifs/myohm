@@ -1,0 +1,508 @@
+(footprint "POGO-TH_PR5L3715-4P-C-male"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "CN1"
+		(at -0.014967 -4.4405 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b636ab27-e0cf-4cab-ab21-20c1baa5c87f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "~"
+		(at -0.014967 4.470433 0)
+		(layer "F.Fab")
+		(uuid "80e4f773-0148-4df6-a02a-a6471389eb61")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://item.szlcsc.com/datasheet/PR5L3715-4P-C-H/43105438.html"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "dbf43b4f-63a8-43c9-bada-90238ae18cc8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Type:Pogo Pin Number of Pins:4P Pitch:2.54mm Overall Length/Height:- Operational Height:- Contact Resistance:- Elastic Life:10,000 Cycles Current Rating:2A Voltage Rating:12V Contact Material:Brass Contact Plating:Gold Operating Temperature:-40°C~+85°C Oper"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "82a5ca13-cf2b-4a65-b10d-618855c46c22")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Manufacturer Part" "PR5L3715-4P-C-H"
+		(at 0 0 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8db16526-b964-48be-8ac7-6de7ad544e77")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Manufacturer" "SAMZO(三佐)"
+		(at 0 0 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "81a02710-3825-4fcb-aa39-29186fd12bb1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Supplier Part" "C41361287"
+		(at 0 0 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6a30745d-f7dc-4146-b139-ccdeef6b6ab5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Supplier" "LCSC"
+		(at 0 0 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "20305705-1fc5-4584-b6c3-0d5244017583")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "LCSC Part Name" "2.54-4P磁吸弹簧探针连接器超薄公头POGOPIN适配PR5L2820-4P-C-F"
+		(at 0 0 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "96adb758-1f19-4628-a3bb-d74401b5e7a9")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(sheetname "/AD5941/")
+	(sheetfile "ad5941.kicad_sch")
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -7.1725 -3.44)
+		(end 7.171 -3.44)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "8b8904dd-be9d-4d70-8420-4f44e34301fd")
+	)
+	(fp_line
+		(start 7.171 3.44)
+		(end -7.1725 3.44)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "92a07371-ad0a-466c-a125-df4b98f37487")
+	)
+	(fp_arc
+		(start -7.1725 3.44)
+		(mid -10.6125 0)
+		(end -7.1725 -3.44)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "b219aae8-26f8-4050-adc9-04d4436fa4d5")
+	)
+	(fp_arc
+		(start 7.171 -3.44)
+		(mid 10.611 0)
+		(end 7.171 3.44)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "74bf4954-4c79-4f94-ae4e-249e20113f80")
+	)
+	(fp_circle
+		(center -6.77 0)
+		(end -5.241 0)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "640495dd-bb58-45d9-ae4b-c7e1792dccbb")
+	)
+	(fp_circle
+		(center 6.77 0)
+		(end 8.341 0)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "1248e5ab-7c97-488e-852f-6e16b1096347")
+	)
+	(fp_poly
+		(pts
+			(xy 1.25 -2.44) (xy 1.25 -3.44) (xy -1.25 -3.44) (xy -1.25 -2.44) (xy -0.75 -2.44) (xy -0.75 -2.94)
+			(xy 0.75 -2.94) (xy 0.75 -2.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		(uuid "451eff69-e9b7-4f93-a63f-716e1cc66359")
+	)
+	(fp_poly
+		(pts
+			(xy 1.25 -2.44) (xy 1.25 -3.44) (xy -1.25 -3.44) (xy -1.25 -2.44) (xy -0.75 -2.44) (xy -0.75 -2.94)
+			(xy 0.75 -2.94) (xy 0.75 -2.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "Dwgs.User")
+		(uuid "5353f55e-d144-4ff8-9310-4c38577b87a9")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start -6.9855 0.4575)
+				(mid -7.1125 0.5845)
+				(end -7.2395 0.4575)
+			)
+			(arc
+				(start -7.2395 -0.4925)
+				(mid -7.150096 -0.613808)
+				(end -7.0075 -0.5645)
+			)
+			(xy -6.589 0.047)
+			(arc
+				(start -6.589 -0.4925)
+				(mid -6.462 -0.6195)
+				(end -6.335 -0.4925)
+			)
+			(arc
+				(start -6.335 0.4575)
+				(mid -6.424601 0.578868)
+				(end -6.567 0.529)
+			)
+			(xy -6.9855 -0.082)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "Dwgs.User")
+		(uuid "ff27ba91-7e37-43df-9896-49d1661c8948")
+	)
+	(fp_poly
+		(pts
+			(arc
+				(start 7.0035 -0.446)
+				(mid 7.003751 -0.338249)
+				(end 6.896 -0.3385)
+			)
+			(xy 6.8185 -0.416) (xy 6.6 -0.416) (xy 6.5315 -0.416) (xy 6.426 -0.3105) (xy 6.426 -0.2735) (xy 6.5315 -0.168)
+			(arc
+				(start 6.75 -0.168)
+				(mid 6.778921 -0.162282)
+				(end 6.8035 -0.146)
+			)
+			(arc
+				(start 7.0535 0.104)
+				(mid 7.070161 0.128747)
+				(end 7.076 0.158)
+			)
+			(arc
+				(start 7.076 0.308)
+				(mid 7.070215 0.337084)
+				(end 7.0535 0.3615)
+			)
+			(arc
+				(start 6.9035 0.5115)
+				(mid 6.878954 0.527901)
+				(end 6.85 0.534)
+			)
+			(arc
+				(start 6.5 0.534)
+				(mid 6.470753 0.528147)
+				(end 6.446 0.5115)
+			)
+			(arc
+				(start 6.296 0.3615)
+				(mid 6.296249 0.254249)
+				(end 6.4035 0.254)
+			)
+			(xy 6.5315 0.382) (xy 6.8185 0.382) (xy 6.924 0.2765) (xy 6.924 0.1895) (xy 6.7185 -0.016)
+			(arc
+				(start 6.5 -0.016)
+				(mid 6.470753 -0.021853)
+				(end 6.446 -0.0385)
+			)
+			(arc
+				(start 6.296 -0.1885)
+				(mid 6.279704 -0.213074)
+				(end 6.274 -0.242)
+			)
+			(arc
+				(start 6.274 -0.342)
+				(mid 6.279785 -0.371084)
+				(end 6.296 -0.396)
+			)
+			(arc
+				(start 6.446 -0.546)
+				(mid 6.470775 -0.562554)
+				(end 6.5 -0.568)
+			)
+			(xy 6.6 -0.568)
+			(arc
+				(start 6.85 -0.568)
+				(mid 6.878921 -0.562282)
+				(end 6.9035 -0.546)
+			)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "Dwgs.User")
+		(uuid "56941732-6497-4fad-9b29-b46b88aa3dfa")
+	)
+	(fp_rect
+		(start -10.905433 -3.7155)
+		(end 10.8755 3.745433)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "00719872-93a7-4a21-9d34-fc8b88e66fc0")
+	)
+	(fp_line
+		(start -10.6 -3.44)
+		(end 10.6 -3.44)
+		(stroke
+			(width 0.051)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "75138ba5-aaa2-40f1-8649-316f53e1ef4f")
+	)
+	(fp_line
+		(start -10.6 3.44)
+		(end -10.6 -3.44)
+		(stroke
+			(width 0.051)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "f1c7a946-4e58-45c1-9234-73112b231f8d")
+	)
+	(fp_line
+		(start 10.6 -3.44)
+		(end 10.6 3.44)
+		(stroke
+			(width 0.051)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "76616757-961d-4829-90ee-3ca60b4a8609")
+	)
+	(fp_line
+		(start 10.6 3.44)
+		(end -10.6 3.44)
+		(stroke
+			(width 0.051)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "9b1d12e2-f700-41e9-af1a-b3fab682ffd8")
+	)
+	(fp_poly
+		(pts
+			(xy -10.544567 3.417039) (xy -10.577039 3.384567) (xy -10.622961 3.384567) (xy -10.655433 3.417039)
+			(xy -10.655433 3.462961) (xy -10.622961 3.495433) (xy -10.577039 3.495433) (xy -10.544567 3.462961)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "F.Fab")
+		(uuid "d9542e30-f05a-4cf3-827b-2151626cf9b1")
+	)
+	(fp_poly
+		(pts
+			(xy -3.462994 -0.045684) (xy -3.486642 -0.133939) (xy -3.532326 -0.213067) (xy -3.596933 -0.277674)
+			(xy -3.676061 -0.323358) (xy -3.764316 -0.347006) (xy -3.855684 -0.347006) (xy -3.943939 -0.323358)
+			(xy -4.023067 -0.277674) (xy -4.087674 -0.213067) (xy -4.133358 -0.133939) (xy -4.157006 -0.045684)
+			(xy -4.157006 0.045684) (xy -4.133358 0.133939) (xy -4.087674 0.213067) (xy -4.023067 0.277674) (xy -3.943939 0.323358)
+			(xy -3.855684 0.347006) (xy -3.764316 0.347006) (xy -3.676061 0.323358) (xy -3.596933 0.277674) (xy -3.532326 0.213067)
+			(xy -3.486642 0.133939) (xy -3.462994 0.045684)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "User.1")
+		(uuid "e2240e36-abcf-4a9f-891c-b22c7935e426")
+	)
+	(fp_poly
+		(pts
+			(xy -0.922994 -0.045684) (xy -0.946642 -0.133939) (xy -0.992326 -0.213067) (xy -1.056933 -0.277674)
+			(xy -1.136061 -0.323358) (xy -1.224316 -0.347006) (xy -1.315684 -0.347006) (xy -1.403939 -0.323358)
+			(xy -1.483067 -0.277674) (xy -1.547674 -0.213067) (xy -1.593358 -0.133939) (xy -1.617006 -0.045684)
+			(xy -1.617006 0.045684) (xy -1.593358 0.133939) (xy -1.547674 0.213067) (xy -1.483067 0.277674) (xy -1.403939 0.323358)
+			(xy -1.315684 0.347006) (xy -1.224316 0.347006) (xy -1.136061 0.323358) (xy -1.056933 0.277674) (xy -0.992326 0.213067)
+			(xy -0.946642 0.133939) (xy -0.922994 0.045684)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "User.1")
+		(uuid "0668acd5-632b-4e30-bacb-9758571ced95")
+	)
+	(fp_poly
+		(pts
+			(xy 1.617006 -0.045684) (xy 1.593358 -0.133939) (xy 1.547674 -0.213067) (xy 1.483067 -0.277674) (xy 1.403939 -0.323358)
+			(xy 1.315684 -0.347006) (xy 1.224316 -0.347006) (xy 1.136061 -0.323358) (xy 1.056933 -0.277674) (xy 0.992326 -0.213067)
+			(xy 0.946642 -0.133939) (xy 0.922994 -0.045684) (xy 0.922994 0.045684) (xy 0.946642 0.133939) (xy 0.992326 0.213067)
+			(xy 1.056933 0.277674) (xy 1.136061 0.323358) (xy 1.224316 0.347006) (xy 1.315684 0.347006) (xy 1.403939 0.323358)
+			(xy 1.483067 0.277674) (xy 1.547674 0.213067) (xy 1.593358 0.133939) (xy 1.617006 0.045684)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "User.1")
+		(uuid "c8a7f029-587d-48ee-af70-6bfc2edbe2b2")
+	)
+	(fp_poly
+		(pts
+			(xy 4.157006 -0.045684) (xy 4.133358 -0.133939) (xy 4.087674 -0.213067) (xy 4.023067 -0.277674) (xy 3.943939 -0.323358)
+			(xy 3.855684 -0.347006) (xy 3.764316 -0.347006) (xy 3.676061 -0.323358) (xy 3.596933 -0.277674) (xy 3.532326 -0.213067)
+			(xy 3.486642 -0.133939) (xy 3.462994 -0.045684) (xy 3.462994 0.045684) (xy 3.486642 0.133939) (xy 3.532326 0.213067)
+			(xy 3.596933 0.277674) (xy 3.676061 0.323358) (xy 3.764316 0.347006) (xy 3.855684 0.347006) (xy 3.943939 0.323358)
+			(xy 4.023067 0.277674) (xy 4.087674 0.213067) (xy 4.133358 0.133939) (xy 4.157006 0.045684)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill yes)
+		(layer "User.1")
+		(uuid "1b8a96ef-3f1d-48e3-80a9-bc3f49e1be80")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "b2475fc8-e604-48a3-b37a-8fdc86dadd0c")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.1)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at -3.81 0)
+		(size 1.3 1.3)
+		(drill 0.85)
+		(layers "*.Mask" "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 90)
+		(uuid "e284e3d5-449e-46d4-836f-020e3b409665")
+	)
+	(pad "2" thru_hole circle
+		(at -1.27 0)
+		(size 1.3 1.3)
+		(drill 0.85)
+		(layers "*.Mask" "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 90)
+		(uuid "c1562924-9885-4244-821b-c62404c12b59")
+	)
+	(pad "3" thru_hole circle
+		(at 1.27 0)
+		(size 1.3 1.3)
+		(drill 0.85)
+		(layers "*.Mask" "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 90)
+		(uuid "f5fb1f95-1b51-448b-9687-e842c8de1192")
+	)
+	(pad "4" thru_hole circle
+		(at 3.81 0)
+		(size 1.3 1.3)
+		(drill 0.85)
+		(layers "*.Mask" "F.Cu" "B.Cu" "In1.Cu" "In2.Cu")
+		(remove_unused_layers no)
+		(thermal_bridge_angle 90)
+		(uuid "ad46d98c-b509-4b97-ad35-434d4ad2f8e3")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/../3D/Pogo_Connector_4_Pin_Type_2.STEP"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 -0 -0)
+		)
+	)
+)

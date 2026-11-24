@@ -1,0 +1,30 @@
+{
+  "upstream_commit": "818c54822ad35c57ec277e1503cd45e9dc4e554f",
+  "scope": "Comparison to current upstream; differences do not identify the original imported revision. Other ADI-derived application files still require review.",
+  "files": [
+    {
+      "path": "firmware/nrf5340_zephyr/src/ad5940/ad5940.c",
+      "upstream_url": "https://raw.githubusercontent.com/analogdevicesinc/ad5940lib/818c54822ad35c57ec277e1503cd45e9dc4e554f/ad5940.c",
+      "local_sha256": "a31b8a027bfd6eab27606bfbfbd80372bedfa0c4f3070f6e4c99fe3117ff7452",
+      "upstream_sha256": "da5a5904eaeaf77ca15663220c0554e4ba49b31f4f8f1bcc6f2cddbcbc36f599",
+      "byte_identical": false,
+      "equal_ignoring_outer_whitespace_and_line_endings": false
+    },
+    {
+      "path": "firmware/nrf5340_zephyr/src/ad5940/ad5940.h",
+      "upstream_url": "https://raw.githubusercontent.com/analogdevicesinc/ad5940lib/818c54822ad35c57ec277e1503cd45e9dc4e554f/ad5940.h",
+      "local_sha256": "b6094b48ed5da2fad4bfb36301be9b9482b66856ed3065c47c1e901b95667bcc",
+      "upstream_sha256": "09a6f62790f86afe0e6fc9b07b8d5b42fcbe4dffed190f5ec37bc272f2b3c3a2",
+      "byte_identical": false,
+      "equal_ignoring_outer_whitespace_and_line_endings": false
+    },
+    {
+      "path": "LICENSES/LicenseRef-ADI-reference.txt",
+      "upstream_url": "https://raw.githubusercontent.com/analogdevicesinc/ad5940lib/818c54822ad35c57ec277e1503cd45e9dc4e554f/LICENSE",
+      "local_sha256": "177858bc98800428455e96603362511206a5cfdf17ff64aec4a849df40a7007e",
+      "upstream_sha256": "177858bc98800428455e96603362511206a5cfdf17ff64aec4a849df40a7007e",
+      "byte_identical": true,
+      "equal_ignoring_outer_whitespace_and_line_endings": true
+    }
+  ]
+}

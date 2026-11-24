@@ -1,0 +1,27 @@
+{
+  "device": "Messi-05",
+  "strip": "VV100",
+  "timestamp": "2026-10-09T20:45:21",
+  "points": 40,
+  "reps": 3,
+  "config": "zb1k_10n",
+  "switches_off": {
+    "S1": [
+      6,
+      12
+    ],
+    "S2": [
+      1
+    ],
+    "S3": [
+      1
+    ],
+    "S4": [
+      1
+    ],
+    "S5": [
+      1
+    ]
+  },
+  "note": "R + C en serie, |Xc| = R a 15.9 kHz; C al ±10 %"
+}

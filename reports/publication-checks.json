@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-14",
+  "release_status": "pending_licence_privacy_choices_and_publication",
+  "github_visibility": "private",
+  "clean_source_copy": true,
+  "gitleaks_version": "8.30.1",
+  "gitleaks_history": {
+    "commits": 2,
+    "findings": 0,
+    "archive_depth": 3
+  },
+  "gitleaks_candidate": {
+    "findings": 0,
+    "archive_depth": 3
+  },
+  "tests": {
+    "web": 20,
+    "ios": 3,
+    "android": 3,
+    "firmware_offline_suites": 8,
+    "repository_hygiene": 2
+  },
+  "builds": {
+    "web": "pass",
+    "ios_simulator": "pass",
+    "android_debug": "pass",
+    "ncs_3_3_0_sysbuild": "pass"
+  },
+  "npm_audit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "android_lint": {
+    "errors": 0,
+    "warnings": 4
+  },
+  "kicad_mainboard": {
+    "erc_errors": 10,
+    "erc_warnings": 21,
+    "drc_violations": 0
+  },
+  "workflow_validation": "actionlint passed; hosted jobs not run",
+  "physical_ble_acceptance": "not performed",
+  "cad_permissions": {
+    "assets": 16,
+    "status": "confirmed_by_maintainer",
+    "date": "2026-10-14",
+    "basis": "Maintainer states permission was requested and approved; approval documents not independently inspected."
+  }
+}

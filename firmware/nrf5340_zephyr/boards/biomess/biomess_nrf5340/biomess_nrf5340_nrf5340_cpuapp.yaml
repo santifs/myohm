@@ -1,0 +1,18 @@
+identifier: biomess_nrf5340/nrf5340/cpuapp
+name: BioMess-nRF5340-application-MCU
+type: mcu
+arch: arm
+toolchain:
+  - gnuarmemb
+  - zephyr
+ram: 448
+flash: 1024
+supported:
+  - gpio
+  - i2c
+  - spi
+  - watchdog
+  - usb_device
+  - usbd
+  - netif:openthread
+vendor: biomess

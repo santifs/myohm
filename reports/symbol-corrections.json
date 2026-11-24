@@ -1,0 +1,500 @@
+{
+  "date": "2026-09-20",
+  "pin_type_changes": [
+    {
+      "sheet": "power.kicad_sch",
+      "symbol": "Myohm_power:root_0_nPM1304_QEAA_AltiumLib.DbLib",
+      "pin": "22",
+      "from": "power_in",
+      "to": "power_out"
+    },
+    {
+      "sheet": "power.kicad_sch",
+      "symbol": "Myohm_power:root_0_nPM1304_QEAA_AltiumLib.DbLib",
+      "pin": "20",
+      "from": "power_in",
+      "to": "power_out"
+    },
+    {
+      "sheet": "power.kicad_sch",
+      "symbol": "Myohm_power:root_0_nPM1304_QEAA_AltiumLib.DbLib",
+      "pin": "3",
+      "from": "power_in",
+      "to": "power_out"
+    },
+    {
+      "sheet": "power.kicad_sch",
+      "symbol": "Myohm_power:root_0_nPM1304_QEAA_AltiumLib.DbLib",
+      "pin": "5",
+      "from": "power_in",
+      "to": "power_out"
+    },
+    {
+      "sheet": "power.kicad_sch",
+      "symbol": "Myohm_power:TS24CA",
+      "pin": "4",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "power.kicad_sch",
+      "symbol": "Myohm_power:TS24CA",
+      "pin": "1",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "power.kicad_sch",
+      "symbol": "Myohm_power:TS24CA",
+      "pin": "3",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "power.kicad_sch",
+      "symbol": "Myohm_power:TS24CA",
+      "pin": "2",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "A21",
+      "from": "output",
+      "to": "power_out"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "A27",
+      "from": "power_in",
+      "to": "passive"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "G31",
+      "from": "power_in",
+      "to": "passive"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "B10",
+      "from": "power_in",
+      "to": "power_out"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "A15",
+      "from": "power_in",
+      "to": "passive"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "J1",
+      "from": "power_in",
+      "to": "power_out"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "B6",
+      "from": "power_in",
+      "to": "passive"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "A23",
+      "from": "power_in",
+      "to": "passive"
+    },
+    {
+      "sheet": "micro.kicad_sch",
+      "symbol": "Myohm_micro:root_0_nRF5340_QKAA_AltiumLib.DbLib",
+      "pin": "A13",
+      "from": "power_in",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:PR5L3715-4P-C-H",
+      "pin": "1",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:PR5L3715-4P-C-H",
+      "pin": "2",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:PR5L3715-4P-C-H",
+      "pin": "3",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:PR5L3715-4P-C-H",
+      "pin": "4",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "1",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "2",
+      "from": "unspecified",
+      "to": "output"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "3",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "4",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "5",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "6",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "7",
+      "from": "unspecified",
+      "to": "no_connect"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "8",
+      "from": "unspecified",
+      "to": "output"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "9",
+      "from": "unspecified",
+      "to": "output"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "10",
+      "from": "unspecified",
+      "to": "no_connect"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "11",
+      "from": "unspecified",
+      "to": "input"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "12",
+      "from": "unspecified",
+      "to": "output"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "49",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "13",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "48",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "14",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "47",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "15",
+      "from": "unspecified",
+      "to": "input"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "46",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "16",
+      "from": "unspecified",
+      "to": "input"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "45",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "17",
+      "from": "unspecified",
+      "to": "input"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "44",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "18",
+      "from": "unspecified",
+      "to": "output"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "43",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "19",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "42",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "20",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "41",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "21",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "40",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "22",
+      "from": "unspecified",
+      "to": "input"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "39",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "23",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "38",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "24",
+      "from": "unspecified",
+      "to": "no_connect"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "37",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "36",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "35",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "34",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "33",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "32",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "31",
+      "from": "unspecified",
+      "to": "passive"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "30",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "29",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "28",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "27",
+      "from": "unspecified",
+      "to": "bidirectional"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "26",
+      "from": "unspecified",
+      "to": "power_in"
+    },
+    {
+      "sheet": "ad5941.kicad_sch",
+      "symbol": "Myohm_ad5941:AD5941BCPZ-Volum",
+      "pin": "25",
+      "from": "unspecified",
+      "to": "power_in"
+    }
+  ],
+  "removed_false_nc_flags": [
+    "U1.AJ1",
+    "U1.AL21",
+    "U1.R31"
+  ]
+}

@@ -1,0 +1,6 @@
+JLCPCB order notes for Electrodes_VV100mm:
+- Product/Base material: Flexible PCB / FPC, polyimide, 2 copper layers.
+- Stiffener: FR4, bottom side, 0.4 mm. Stiffener pattern is included as fr4b_0.4.gbr following JLCPCB FPC stiffener layer naming rules.
+- Top and bottom solder pads for plated-through connectors must remain exposed and solderable; do not cover pads with the stiffener.
+- Select Confirm Production File / production file confirmation so JLCPCB checks the bottom stiffener layer before fabrication.
+- No BOM/CPL needed; assembly will be manual.

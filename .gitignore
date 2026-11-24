@@ -1,0 +1,63 @@
+# Local/build outputs
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+build/
+node_modules/
+dist/
+*.tsbuildinfo
+*.kicad_prl
+*.lck
+*-backups/
+fp-info-cache
+.env
+.env.*
+!.env.example
+label.conf
+reports/*-stderr.log
+
+# Reproducible scratch outputs
+reports/*.log
+reports/schematic-pages/
+
+# Native mobile development
+.gradle/
+local.properties
+xcuserdata/
+*.xcuserstate
+reports/mobile/*.log
+
+# Private review evidence, signing material and local measurements
+.private-review/
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.mobileprovision
+*.pem
+*.key
+DerivedData/
+*.xcarchive/
+*.ipa
+*.apk
+*.aab
+measurements/
+exports/
+
+# Superseded mobile implementation, retained locally for rollback
+mobile/.previous-implementation/
+
+# Release scoping (2026-10-22): IDE/agent settings, legacy iOS projects and internal process logs
+.idea/
+.cursor/
+**/supabase/.temp/
+reports/mobile/
+mobile/ios/BioMess.xcodeproj/
+mobile/ios/BioMess.xcworkspace/
+mobile/ios/BioMessPrototypeApp/
+mobile/ios/BioMessUITests/
+mobile/ios/Config/BioMessPrototype.entitlements
+mobile/android/TODO.md
+mobile/android/IMPLEMENTATION_PLAN.md
+docs/*-private-note.md
