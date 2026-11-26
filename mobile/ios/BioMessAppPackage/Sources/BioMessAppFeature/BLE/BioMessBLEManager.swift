@@ -55,6 +55,8 @@ public final class BioMessBLEManager: NSObject, Sendable {
     private var measurementCompilationTask: Task<Void, Never>?
 
     // V3.0 Streaming data reassembly (measurements received via 0xC000 notifications)
+    private var streamingMeasurementID: UUID?
+    private var streamingSetupTask: Task<Void, Never>?
     private var streamingBuffer = Data()  // Accumulates BLE notification chunks
     private var expectedStreamingBytes: Int?  // Expected total bytes for current measurement
     private var expectedMeasurementPoints = 48  // Default: 48 points per repetition
@@ -349,6 +351,10 @@ public final class BioMessBLEManager: NSObject, Sendable {
     public func disconnect() {
         guard let peripheral = bioMessPeripheral else { return }
 
+        finishStreamingMeasurement(throwing: BLEError.disconnected)
+        controlCharNotificationsEnabled = false
+        commandQueue.removeAll()
+
         // Cancel auto-reconnection since this is a manual disconnect
         cancelAutoReconnect()
 
@@ -356,6 +362,7 @@ public final class BioMessBLEManager: NSObject, Sendable {
         centralManager.cancelPeripheralConnection(peripheral)
         bioMessPeripheral = nil
         connectedDevice = nil
+        connectionState = .disconnected
     }
 
     /// Force disconnect and reconnect to refresh BLE cache
@@ -388,8 +395,7 @@ public final class BioMessBLEManager: NSObject, Sendable {
         logger.info("Force disconnect and reset requested")
 
         // Cancel any ongoing operations
-        measurementContinuation?.resume(throwing: BLEError.disconnected)
-        measurementContinuation = nil
+        finishStreamingMeasurement(throwing: BLEError.disconnected)
         measurementCompilationTask?.cancel()
         measurementCompilationTask = nil
 
@@ -429,92 +435,66 @@ public final class BioMessBLEManager: NSObject, Sendable {
         stopFreq: Float? = nil,
         repetitions: UInt8? = nil
     ) async throws -> ImpedanceData {
-        guard bioMessPeripheral != nil, connectionState == .connected else {
+        guard bioMessPeripheral != nil, connectionState == .connected, controlCharNotificationsEnabled else {
             throw BLEError.notConnected
         }
+        guard measurementContinuation == nil else { throw BLEError.invalidParameter }
+        let maxHz = AD5940ConfigurationManager.maxSweepFrequencyHz
+        if let startFreq, !startFreq.isFinite || startFreq <= 0 || startFreq >= maxHz {
+            throw BLEError.invalidParameter
+        }
+        if let stopFreq, !stopFreq.isFinite || stopFreq <= (startFreq ?? 0) || stopFreq > maxHz {
+            throw BLEError.invalidParameter
+        }
 
+        let measurementID = UUID()
         return try await withCheckedThrowingContinuation { continuation in
             measurementContinuation = continuation
+            streamingMeasurementID = measurementID
 
-            Task {
+            streamingSetupTask = Task {
                 do {
-                    // Configure measurement parameters while still connected.
-                    // Generic read/write helpers reject .measuring state.
-                    var configurationChanged = false
-                    if let points = numPoints {
-                        try await self.configureSweepPoints(points)
-                        configurationChanged = true
-                    }
-                    if let start = startFreq {
-                        try await self.configureSweepStartFreq(start)
-                        configurationChanged = true
-                    }
-                    if let stop = stopFreq {
-                        try await self.configureSweepStopFreq(stop)
-                        configurationChanged = true
-                    }
-                    if let reps = repetitions {
-                        try await self.configureNumRepetitions(reps)
-                        configurationChanged = true
-                    }
+                    try Task.checkCancellation()
+                    if let points = numPoints { try await configureSweepPoints(points) }
+                    try Task.checkCancellation()
+                    if let start = startFreq { try await configureSweepStartFreq(start) }
+                    try Task.checkCancellation()
+                    if let stop = stopFreq { try await configureSweepStopFreq(stop) }
+                    try Task.checkCancellation()
+                    if let reps = repetitions { try await configureNumRepetitions(reps) }
 
-                    // Wait for configuration to apply
-                    if configurationChanged {
+                    if numPoints != nil || startFreq != nil || stopFreq != nil || repetitions != nil {
                         try await Task.sleep(for: .milliseconds(300))
                     }
 
-                    // Read effective firmware configuration before entering .measuring.
-                    do {
-                        let sweepPts = try await self.readSweepPoints()
-                        self.expectedMeasurementPoints = Int(sweepPts)
-                        self.logger.info("📊 Effective SweepPoints from firmware: \(sweepPts)")
-                    } catch {
-                        let fallback: Int
-                        if let requestedPoints = numPoints {
-                            fallback = Int(min(max(requestedPoints, UInt32(2)), UInt32(100)))
-                        } else {
-                            fallback = self.expectedMeasurementPoints
-                        }
-                        self.expectedMeasurementPoints = fallback
-                        self.logger.warning("Failed to read effective SweepPoints, using \(fallback): \(error)")
+                    try Task.checkCancellation()
+                    let points = try await readSweepPoints()
+                    try Task.checkCancellation()
+                    let reps = try await readNumRepetitions()
+                    guard (2...100).contains(points), (1...10).contains(reps) else {
+                        throw BLEError.invalidResponse
                     }
-
-                    do {
-                        let numReps = try await self.readNumRepetitions()
-                        self.expectedRepetitions = Int(numReps)
-                        self.logger.info("📊 Effective NumRepetitions from firmware: \(numReps)")
-                    } catch {
-                        let fallback = Int(min(max(repetitions ?? UInt8(self.expectedRepetitions), UInt8(1)), UInt8(10)))
-                        self.expectedRepetitions = fallback
-                        self.logger.warning("Failed to read effective NumRepetitions, using \(fallback): \(error)")
-                    }
+                    guard streamingMeasurementID == measurementID else { return }
 
                     connectionState = .measuring
-                    streamingBuffer.removeAll()
-                    currentMeasurements.removeAll()
-
-                    // Calculate expected streaming data size using firmware-effective points.
-                    let totalPoints = self.expectedMeasurementPoints * self.expectedRepetitions
-                    self.expectedStreamingBytes = totalPoints * self.bytesPerMeasurementPoint
-                    self.logger.info("🔄 V3.0 Streaming: Expecting \(self.expectedRepetitions) repetitions × \(self.expectedMeasurementPoints) points = \(totalPoints) total points (\(self.expectedStreamingBytes ?? 0) bytes)")
-
-                    logger.info("Starting V3.0 streaming measurement protocol...")
-
-                    // START MEASUREMENT (0x01) - firmware will stream data via 0xC000 notifications
+                    expectedMeasurementPoints = Int(points)
+                    expectedRepetitions = Int(reps)
+                    expectedStreamingBytes = Int(points) * Int(reps) * bytesPerMeasurementPoint
+                    startStreamingTimeout(for: .seconds(30))
                     await sendCommand(.measurement)
-
-                    // Data will arrive via handleCharacteristicData() for 0xC000
-                    // Continuation will be resumed in compileStreamingMeasurement()
-
                 } catch {
-                    connectionState = .connected
-                    continuation.resume(throwing: error)
-                    measurementContinuation = nil
+                    guard streamingMeasurementID == measurementID else { return }
+                    finishStreamingMeasurement(throwing: error)
                 }
             }
         }
     }
-    
+
+    func cancelStreamingMeasurement() {
+        guard streamingMeasurementID != nil else { return }
+        abortStreamingMeasurement(throwing: CancellationError())
+    }
+
     /// Test device connection by blinking LED
     public func testConnection() async {
         await sendCommand(.ledBlink)
@@ -843,6 +823,7 @@ extension BioMessBLEManager: CBCentralManagerDelegate {
     
     nonisolated public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         Task { @MainActor in
+            guard bioMessPeripheral === peripheral else { return }
             if let error = error {
                 logger.error("Disconnected with error: \(error.localizedDescription)")
                 connectionState = .error("Disconnected: \(error.localizedDescription)")
@@ -853,8 +834,7 @@ extension BioMessBLEManager: CBCentralManagerDelegate {
             
             bioMessPeripheral = nil
             connectedDevice = nil
-            measurementContinuation?.resume(throwing: BLEError.disconnected)
-            measurementContinuation = nil
+            finishStreamingMeasurement(throwing: BLEError.disconnected)
             measurementCompilationTask?.cancel()
             measurementCompilationTask = nil
 
@@ -988,6 +968,7 @@ extension BioMessBLEManager: CBPeripheralDelegate {
 
                 // Resume read completion handler with error if present
                 Task { @MainActor in
+                    guard peripheral === self.bioMessPeripheral else { return }
                     if let handler = self.readCompletionHandlers.removeValue(forKey: characteristic.uuid) {
                         handler.resume(throwing: error)
                     }
@@ -997,6 +978,7 @@ extension BioMessBLEManager: CBPeripheralDelegate {
         }
 
         Task { @MainActor in
+            guard peripheral === self.bioMessPeripheral else { return }
             // Check if this is a read operation awaiting completion
             if let handler = self.readCompletionHandlers.removeValue(forKey: characteristic.uuid) {
                 handler.resume(returning: data)
@@ -1009,6 +991,7 @@ extension BioMessBLEManager: CBPeripheralDelegate {
 
     nonisolated public func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         Task { @MainActor in
+            guard peripheral === self.bioMessPeripheral else { return }
             // Resume write completion handler
             if let handler = self.writeCompletionHandlers.removeValue(forKey: characteristic.uuid) {
                 if let error = error {
@@ -1141,178 +1124,74 @@ extension BioMessBLEManager {
     /// Handle streaming measurement data from 0xC000 notifications (V3.0+)
     /// Data format: N × (freq, mag, phase) = N × 12 bytes
     private func handleStreamingMeasurementData(_ chunk: Data) {
-        // Append chunk to streaming buffer
-        self.streamingBuffer.append(chunk)
-        self.logger.info("📦 Streaming chunk received: \(chunk.count) bytes, buffer: \(self.streamingBuffer.count) bytes")
-
-        // Check if we have complete measurement data
-        guard let expectedBytes = self.expectedStreamingBytes else {
-            self.logger.warning("Received streaming data but expectedStreamingBytes not set")
+        guard let expectedBytes = expectedStreamingBytes, measurementContinuation != nil else { return }
+        let received = streamingBuffer.count + chunk.count
+        guard received <= expectedBytes else {
+            logger.error("Unexpected sweep length: \(received)/\(expectedBytes) bytes")
+            abortStreamingMeasurement(throwing: BLEError.incompleteSweep)
             return
         }
 
-        // Cancel previous inactivity timeout
-        self.streamingInactivityTask?.cancel()
-
-        if self.streamingBuffer.count >= expectedBytes {
-            self.logger.info("✅ Complete measurement received: \(self.streamingBuffer.count) bytes")
-            self.streamingInactivityTask = nil
-            self.compileStreamingMeasurement()
+        streamingBuffer.append(chunk)
+        if received == expectedBytes {
+            compileStreamingMeasurement()
         } else {
-            self.logger.debug("⏳ Waiting for more data: \(self.streamingBuffer.count)/\(expectedBytes) bytes")
-
-            // Start inactivity timeout — if no new data for 5s, compile partial
-            self.streamingInactivityTask = Task { [weak self] in
-                try? await Task.sleep(for: .seconds(5))
-                guard !Task.isCancelled else { return }
-                guard let self = self else { return }
-                let bufferSize = self.streamingBuffer.count
-                if bufferSize > 0 && bufferSize < expectedBytes {
-                    self.logger.warning("⏰ Streaming inactivity timeout: \(bufferSize)/\(expectedBytes) bytes — compiling partial measurement")
-                    self.compilePartialStreamingMeasurement()
-                }
-            }
+            startStreamingTimeout(for: .seconds(5))
         }
     }
 
-    /// Parse and compile streaming measurement data (V3.0+)
-    /// Handles multi-repetition measurements by separating the stream into individual repetitions
+    private func startStreamingTimeout(for duration: Duration) {
+        streamingInactivityTask?.cancel()
+        streamingInactivityTask = Task { [weak self] in
+            do {
+                try await Task.sleep(for: duration)
+            } catch {
+                return
+            }
+            guard let self, let expected = self.expectedStreamingBytes else { return }
+            self.logger.warning("Sweep stalled at \(self.streamingBuffer.count)/\(expected) bytes")
+            self.abortStreamingMeasurement(throwing: BLEError.incompleteSweep)
+        }
+    }
+
+    // The stream has no frame marker. Close the link before accepting another sweep.
+    private func abortStreamingMeasurement(throwing error: Error) {
+        finishStreamingMeasurement(throwing: error)
+        disconnect()
+    }
+
+    private func finishStreamingMeasurement(throwing error: Error) {
+        clearStreamingMeasurement()?.resume(throwing: error)
+    }
+
+    private func clearStreamingMeasurement() -> CheckedContinuation<ImpedanceData, Error>? {
+        streamingSetupTask?.cancel()
+        streamingSetupTask = nil
+        streamingInactivityTask?.cancel()
+        streamingInactivityTask = nil
+        streamingBuffer.removeAll()
+        expectedStreamingBytes = nil
+        streamingMeasurementID = nil
+        let pending = measurementContinuation
+        measurementContinuation = nil
+        return pending
+    }
+
     private func compileStreamingMeasurement() {
-        guard let expectedBytes = self.expectedStreamingBytes else { return }
-        guard self.streamingBuffer.count >= expectedBytes else { return }
-
-        let totalPoints = self.expectedMeasurementPoints * self.expectedRepetitions
-        self.logger.info("🔄 Compiling streaming measurement: \(self.expectedRepetitions) repetitions × \(self.expectedMeasurementPoints) points = \(totalPoints) total points")
-
-        // Parse ALL measurement points from buffer
-        var allMeasurements: [ImpedanceData.MeasurementPoint] = []
-        var offset = 0
-
-        for pointIndex in 0..<totalPoints {
-            guard offset + bytesPerMeasurementPoint <= self.streamingBuffer.count else {
-                self.logger.error("Buffer underrun at offset \(offset), point \(pointIndex)/\(totalPoints)")
-                break
-            }
-
-            // Extract 3 little-endian floats.
-            let freq = Self.float32LE(self.streamingBuffer, offset)
-            let mag = Self.float32LE(self.streamingBuffer, offset + 4)
-            let phase = Self.float32LE(self.streamingBuffer, offset + 8)
-
-            let point = ImpedanceData.MeasurementPoint(frequency: freq, magnitude: mag, phase: phase)
-            allMeasurements.append(point)
-
-            if pointIndex < 5 || pointIndex >= totalPoints - 2 {
-                self.logger.debug("Point \(pointIndex): \(freq) Hz, \(mag) Ω, \(phase)°")
-            }
-            offset += bytesPerMeasurementPoint
+        let repetitions = (0..<expectedRepetitions).map { repetition in
+            (0..<expectedMeasurementPoints).map { point in
+                let offset = (repetition * expectedMeasurementPoints + point) * bytesPerMeasurementPoint
+                return ImpedanceData.MeasurementPoint(
+                    frequency: Self.float32LE(streamingBuffer, offset),
+                    magnitude: Self.float32LE(streamingBuffer, offset + 4),
+                    phase: Self.float32LE(streamingBuffer, offset + 8)
+                )
+            }.sorted { $0.frequency < $1.frequency }
         }
-
-        guard allMeasurements.count == totalPoints else {
-            self.logger.error("Incomplete measurement parsing: \(allMeasurements.count)/\(totalPoints) points")
-            self.measurementContinuation?.resume(throwing: BLEError.incompleteData)
-            self.measurementContinuation = nil
-            self.connectionState = .connected
-            return
-        }
-
-        self.logger.info("Successfully parsed \(allMeasurements.count) total measurement points")
-
-        // Separate into repetitions
-        var repetitions: [[ImpedanceData.MeasurementPoint]] = []
-        for repIndex in 0..<self.expectedRepetitions {
-            let startIndex = repIndex * self.expectedMeasurementPoints
-            let endIndex = startIndex + self.expectedMeasurementPoints
-            let repMeasurements = Array(allMeasurements[startIndex..<endIndex])
-
-            // Sort by frequency within each repetition
-            let sortedRep = repMeasurements.sorted { $0.frequency < $1.frequency }
-            repetitions.append(sortedRep)
-
-            self.logger.info("Repetition \(repIndex + 1)/\(self.expectedRepetitions): \(sortedRep.count) points")
-        }
-
-        // Create ImpedanceData with all repetitions
-        let impedanceData = ImpedanceData(
-            repetitions: repetitions,
-            timestamp: Date(),
-            deviceInfo: self.deviceInfo
-        )
-
-        self.logger.info("✅ Streaming measurement complete: \(repetitions.count) repetitions, \(self.expectedMeasurementPoints) points each, device: \(self.deviceInfo?.name ?? "Unknown")")
-
-        // Resume continuation
-        if let continuation = self.measurementContinuation {
-            continuation.resume(returning: impedanceData)
-            self.measurementContinuation = nil
-        } else {
-            // Automatic measurement from firmware
-            self.logger.info("Automatic measurement received from firmware")
-            self.onAutomaticMeasurement?(impedanceData)
-        }
-
-        // Clear streaming buffer
-        self.streamingBuffer.removeAll()
-        self.connectionState = .connected
-    }
-
-    /// Compile a partial streaming measurement when the last BLE notification(s) are lost.
-    /// Rounds down to complete measurement points and requires at least 1 full repetition.
-    private func compilePartialStreamingMeasurement() {
-        let availableBytes = self.streamingBuffer.count
-        let totalCompletePoints = availableBytes / bytesPerMeasurementPoint
-        let pointsPerRep = self.expectedMeasurementPoints
-        let completeReps = totalCompletePoints / pointsPerRep
-
-        self.logger.warning("🔧 Partial compile: \(availableBytes) bytes → \(totalCompletePoints) complete points → \(completeReps) complete repetitions")
-
-        guard completeReps >= 1 else {
-            self.logger.error("Not enough data for even 1 complete repetition")
-            self.measurementContinuation?.resume(throwing: BLEError.incompleteData)
-            self.measurementContinuation = nil
-            self.streamingBuffer.removeAll()
-            self.connectionState = .connected
-            return
-        }
-
-        let usablePoints = completeReps * pointsPerRep
-        var allMeasurements: [ImpedanceData.MeasurementPoint] = []
-        var offset = 0
-
-        for _ in 0..<usablePoints {
-            guard offset + bytesPerMeasurementPoint <= availableBytes else { break }
-            let freq = Self.float32LE(self.streamingBuffer, offset)
-            let mag = Self.float32LE(self.streamingBuffer, offset + 4)
-            let phase = Self.float32LE(self.streamingBuffer, offset + 8)
-            allMeasurements.append(ImpedanceData.MeasurementPoint(frequency: freq, magnitude: mag, phase: phase))
-            offset += bytesPerMeasurementPoint
-        }
-
-        var repetitions: [[ImpedanceData.MeasurementPoint]] = []
-        for repIndex in 0..<completeReps {
-            let startIndex = repIndex * pointsPerRep
-            let endIndex = startIndex + pointsPerRep
-            let sortedRep = Array(allMeasurements[startIndex..<endIndex]).sorted { $0.frequency < $1.frequency }
-            repetitions.append(sortedRep)
-        }
-
-        let impedanceData = ImpedanceData(
-            repetitions: repetitions,
-            timestamp: Date(),
-            deviceInfo: self.deviceInfo
-        )
-
-        self.logger.info("✅ Partial measurement compiled: \(completeReps)/\(self.expectedRepetitions) repetitions, \(pointsPerRep) points each")
-
-        if let continuation = self.measurementContinuation {
-            continuation.resume(returning: impedanceData)
-            self.measurementContinuation = nil
-        } else {
-            self.onAutomaticMeasurement?(impedanceData)
-        }
-
-        self.streamingBuffer.removeAll()
-        self.connectionState = .connected
+        let measurement = ImpedanceData(repetitions: repetitions, timestamp: Date(), deviceInfo: deviceInfo)
+        let pending = clearStreamingMeasurement()
+        connectionState = .connected
+        pending?.resume(returning: measurement)
     }
 
     func readAllMeasurements() async {
@@ -1510,6 +1389,7 @@ extension BioMessBLEManager {
     }
 
     func compileMeasurementResults() async {
+        guard streamingMeasurementID == nil else { return }
         // Check if we have measurements (firmware sends 15 points, not 16)
         let measurements = (0..<16).compactMap { self.currentMeasurements[$0] }
 
@@ -1689,6 +1569,7 @@ public enum BLEError: LocalizedError, Sendable {
     case notConnected
     case disconnected
     case incompleteData
+    case incompleteSweep
     case invalidResponse
     case timeout
     case invalidParameter
@@ -1700,6 +1581,7 @@ public enum BLEError: LocalizedError, Sendable {
         case .notConnected: return "Device not connected"
         case .disconnected: return "Device disconnected during operation"
         case .incompleteData: return "Incomplete measurement data received"
+        case .incompleteSweep: return "Incomplete sweep. Reconnect the device before retrying."
         case .invalidResponse: return "Invalid response from device"
         case .timeout: return "Operation timed out"
         case .invalidParameter: return "Invalid parameter value"

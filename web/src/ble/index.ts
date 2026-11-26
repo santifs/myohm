@@ -1,4 +1,5 @@
 import {
+  MAX_SWEEP_FREQUENCY_HZ,
   validateConfig,
   type MeasurementPoint,
   type MeasurementRun,
@@ -279,6 +280,9 @@ export class BioMessClient {
     ) => void,
   ): Promise<MeasurementRun> {
     validateConfig(config);
+    if (config.endHz > MAX_SWEEP_FREQUENCY_HZ) {
+      throw new RangeError("La frecuencia final del barrido BLE debe ser de 198 000 Hz o menos.");
+    }
     if (this.measuring)
       throw new Error("A BioMess measurement is already active");
     const chars = this.characteristics;
@@ -345,6 +349,9 @@ export class BioMessClient {
         repetitions: repetitionsView.getUint8(0),
       };
       validateConfig(effective);
+      if (effective.endHz > MAX_SWEEP_FREQUENCY_HZ) {
+        throw new RangeError("La frecuencia final informada por el dispositivo supera los 198 000 Hz.");
+      }
       const configuredAt = performance.now();
       const expectedBytes = effective.points * effective.repetitions * 12;
       const timeoutMs = Math.max(

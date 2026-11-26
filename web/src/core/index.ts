@@ -59,9 +59,11 @@ export interface PointFilters {
 export const HISTORY_STORAGE_KEY = "biomess.history.v1";
 export const HISTORY_VERSION = 1;
 
+export const MAX_SWEEP_FREQUENCY_HZ = 198_000;
+
 export const DEFAULT_CONFIG: Readonly<SweepConfig> = Object.freeze({
   startHz: 4_000,
-  endHz: 198_000,
+  endHz: MAX_SWEEP_FREQUENCY_HZ,
   points: 48,
   repetitions: 5,
 });

@@ -13,6 +13,7 @@ import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.os.ParcelUuid
+import android.os.SystemClock
 import android.util.Log
 import com.volumhealth.core.model.BatteryData
 import com.volumhealth.core.model.DeviceInfo
@@ -33,6 +34,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -63,6 +65,7 @@ class BioMessBleManager(
 ) {
     companion object {
         private const val BYTES_PER_MEASUREMENT_POINT = 12  // sizeof(BioimpedanceMeasurement) = 3 floats × 4 bytes
+        const val MAX_SWEEP_FREQUENCY_HZ = 198_000f
         const val ADVERTISED_DEVICE_NAME = "BioMess"
         val ACCEPTED_DEVICE_NAME_PREFIXES = listOf("BIOMESS")
         val ADVERTISED_SERVICE_UUID: UUID = BioMessBleUuids.CONTROL_SERVICE
@@ -86,19 +89,18 @@ class BioMessBleManager(
     private val _isDeviceReady = MutableStateFlow(false)
     val isDeviceReady: StateFlow<Boolean> = _isDeviceReady.asStateFlow()
 
-    private var bluetoothGatt: BluetoothGatt? = null
+    @Volatile private var bluetoothGatt: BluetoothGatt? = null
     private val characteristicMap = mutableMapOf<UUID, BluetoothGattCharacteristic>()
 
+    private val measurementLock = Any()
     private val measurementBuffer = StreamingBuffer()
     private var expectedStreamingBytes: Int? = null
     private var expectedMeasurementPoints = 48
-    private var expectedRepetitions = 1
     private var measurementContinuation: CancellableContinuation<ImpedanceData>? = null
     private var lastDataReceivedTime = 0L
     private var measurementTimeoutJob: Job? = null
 
     private var currentDeviceInfo: DeviceInfo? = null
-    var onAutomaticMeasurement: ((ImpedanceData) -> Unit)? = null
 
     private val scanCallback = object : ScanCallback() {
         @SuppressLint("MissingPermission")
@@ -136,7 +138,7 @@ class BioMessBleManager(
     private var pendingStoredBatch: CompletableDeferred<List<StoredMeasurement>>? = null
 
     private enum class DataMode { Idle, Measurement, StoredSync }
-    private var dataMode: DataMode = DataMode.Idle
+    @Volatile private var dataMode: DataMode = DataMode.Idle
     private var storedChunkListener: ((ByteArray) -> Unit)? = null
     private val storedReassemblyBuffer = ByteArrayOutputStream()
     private var expectedStoredBatchCount = 0
@@ -146,10 +148,11 @@ class BioMessBleManager(
     private val gattCallback = object : BluetoothGattCallback() {
         @SuppressLint("MissingPermission")
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
+            if (gatt !== bluetoothGatt) return
             Log.d(TAG, "onConnectionStateChange: status=$status newState=$newState (0=disconnected, 2=connected)")
             if (status != BluetoothGatt.GATT_SUCCESS && newState != BluetoothProfile.STATE_CONNECTED) {
                 Log.e(TAG, "Connection failed: GATT status=$status")
-                handleDisconnect()
+                handleDisconnect(gatt)
                 return
             }
             when (newState) {
@@ -172,7 +175,7 @@ class BioMessBleManager(
                 }
                 BluetoothProfile.STATE_DISCONNECTED -> {
                     Log.i(TAG, "Disconnected (GATT status=$status)")
-                    handleDisconnect()
+                    handleDisconnect(gatt)
                 }
             }
         }
@@ -215,6 +218,7 @@ class BioMessBleManager(
             characteristic: BluetoothGattCharacteristic,
             status: Int
         ) {
+            if (gatt !== bluetoothGatt) return
             Log.d(TAG, "onCharacteristicRead: uuid=${characteristic.uuid} status=$status size=${characteristic.value?.size ?: 0}")
             pendingRead?.apply {
                 if (!isCompleted) {
@@ -230,6 +234,7 @@ class BioMessBleManager(
             characteristic: BluetoothGattCharacteristic,
             status: Int
         ) {
+            if (gatt !== bluetoothGatt) return
             Log.d(TAG, "onCharacteristicWrite: uuid=${characteristic.uuid} status=$status")
             pendingWrite?.apply {
                 if (!isCompleted) {
@@ -245,6 +250,7 @@ class BioMessBleManager(
             descriptor: BluetoothGattDescriptor,
             status: Int
         ) {
+            if (gatt !== bluetoothGatt) return
             Log.d(TAG, "onDescriptorWrite: char=${descriptor.characteristic.uuid} status=$status")
             pendingDescriptor?.apply {
                 if (!isCompleted) {
@@ -259,9 +265,10 @@ class BioMessBleManager(
             gatt: BluetoothGatt,
             characteristic: BluetoothGattCharacteristic
         ) {
+            if (gatt !== bluetoothGatt) return
             val data = characteristic.value ?: return
             Log.d(TAG, "onCharacteristicChanged: uuid=${characteristic.uuid} size=${data.size} mode=$dataMode")
-            handleCharacteristicData(characteristic.uuid, data)
+            handleCharacteristicData(gatt, characteristic.uuid, data)
         }
 
         override fun onMtuChanged(gatt: BluetoothGatt, mtu: Int, status: Int) {
@@ -436,18 +443,20 @@ class BioMessBleManager(
     @SuppressLint("MissingPermission")
     fun disconnect() {
         Log.i(TAG, "disconnect() called")
-        measurementContinuation?.cancel()
-        measurementContinuation = null
-        dataMode = DataMode.Idle
-        _isDeviceReady.value = false
-        reconnectJob?.cancel()
-        try {
-            bluetoothGatt?.disconnect()
-            bluetoothGatt?.close()
-        } catch (_: SecurityException) { }
-        bluetoothGatt = null
-        measurementBuffer.clear()
-        _connectionState.value = ConnectionState.Disconnected
+        synchronized(measurementLock) {
+            val pending = clearMeasurement()
+            dataMode = DataMode.Idle
+            _isDeviceReady.value = false
+            reconnectJob?.cancel()
+            val gatt = bluetoothGatt
+            bluetoothGatt = null
+            try {
+                gatt?.disconnect()
+                gatt?.close()
+            } catch (_: SecurityException) { }
+            _connectionState.value = ConnectionState.Disconnected
+            pending?.resumeWithException(IllegalStateException("Device disconnected during measurement"))
+        }
     }
 
     suspend fun readSweepConfiguration(): SweepConfiguration {
@@ -476,109 +485,117 @@ class BioMessBleManager(
         startFreq: Float? = null,
         stopFreq: Float? = null
     ): ImpedanceData = suspendCancellableCoroutine { continuation ->
-        Log.i(TAG, "performMeasurement() called — numPoints=$numPoints startFreq=$startFreq stopFreq=$stopFreq")
-        measurementContinuation = continuation
-        scope.launch {
+        require(startFreq == null || startFreq.isFinite() && startFreq > 0 && startFreq < MAX_SWEEP_FREQUENCY_HZ)
+        require(stopFreq == null || stopFreq.isFinite() && stopFreq > 0 && stopFreq <= MAX_SWEEP_FREQUENCY_HZ)
+        require(startFreq == null || stopFreq == null || startFreq < stopFreq)
+
+        synchronized(measurementLock) {
+            if (measurementContinuation != null || dataMode != DataMode.Idle) {
+                continuation.resumeWithException(IllegalStateException("A BLE operation is already active"))
+                return@suspendCancellableCoroutine
+            }
+            measurementContinuation = continuation
+        }
+
+        val setupJob = scope.launch {
             try {
-                // Wait for device to be ready (services discovered, notifications enabled)
-                if (!_isDeviceReady.value) {
-                    Log.d(TAG, "Device not ready, waiting up to 5s...")
-                    withTimeout(5.seconds) {
-                        _isDeviceReady.first { it }
+                withTimeout(30.seconds) {
+                    if (!_isDeviceReady.value) {
+                        withTimeout(5.seconds) { _isDeviceReady.first { it } }
                     }
-                    Log.d(TAG, "Device is now ready")
-                }
+                    numPoints?.let { configureSweepPoints(it) }
+                    startFreq?.let { configureSweepStartFreq(it) }
+                    stopFreq?.let { configureSweepStopFreq(it) }
 
-                Log.d(TAG, "Reading repetitions...")
-                val repetitions = readNumRepetitions()
-                expectedRepetitions = repetitions
-                Log.d(TAG, "Repetitions: $repetitions")
-
-                numPoints?.let {
-                    Log.d(TAG, "Configuring sweep points: $it")
-                    configureSweepPoints(it)
-                }
-                startFreq?.let {
-                    Log.d(TAG, "Configuring start freq: $it")
-                    configureSweepStartFreq(it)
-                }
-                stopFreq?.let {
-                    Log.d(TAG, "Configuring stop freq: $it")
-                    configureSweepStopFreq(it)
-                }
-
-                val fallbackPoints = numPoints?.coerceIn(2, 100) ?: expectedMeasurementPoints
-                try {
-                    expectedMeasurementPoints = readSweepPoints()
-                    Log.d(TAG, "Effective sweep points from firmware: $expectedMeasurementPoints")
-                } catch (e: Exception) {
-                    expectedMeasurementPoints = fallbackPoints
-                    Log.w(TAG, "Failed to read effective sweep points, using $fallbackPoints: ${e.message}")
-                }
-
-                val totalPoints = expectedMeasurementPoints * expectedRepetitions
-                expectedStreamingBytes = totalPoints * BYTES_PER_MEASUREMENT_POINT
-                Log.d(TAG, "Expecting $totalPoints points = $expectedStreamingBytes bytes")
-                measurementBuffer.clear()
-                dataMode = DataMode.Measurement
-                _connectionState.value = ConnectionState.Measuring
-                Log.i(TAG, "Sending MEASUREMENT command (0x01)...")
-                sendCommand(BioMessCommand.MEASUREMENT, byteArrayOf())
-                Log.d(TAG, "MEASUREMENT command sent, waiting for data...")
-
-                // Two timeouts:
-                //  - Inactivity after partial data: 5s of silence with bytes already received → compile what we have.
-                //  - No-data at all: 30s after MEASUREMENT command sent without a single byte → abort with a
-                //    clear error. Usually means another central has the device (BioMess peripheral only accepts
-                //    one connection) or the device firmware is unresponsive. 30s is deliberately generous to
-                //    tolerate firmware-side setup (sweep config, initialisation) plus the first repetition.
-                lastDataReceivedTime = System.currentTimeMillis()
-                val measurementStart = System.currentTimeMillis()
-                measurementTimeoutJob?.cancel()
-                measurementTimeoutJob = scope.launch {
-                    while (dataMode == DataMode.Measurement) {
-                        delay(2.seconds)
-                        val bytesReceived = measurementBuffer.size()
-                        val elapsedSinceData = System.currentTimeMillis() - lastDataReceivedTime
-                        val elapsedSinceStart = System.currentTimeMillis() - measurementStart
-                        if (elapsedSinceData > 5000 && bytesReceived > 0) {
-                            val expected = expectedStreamingBytes ?: 0
-                            Log.w(TAG, "Measurement inactivity timeout (${elapsedSinceData}ms no data) — received $bytesReceived/$expected bytes, compiling partial result")
-                            compilePartialMeasurement()
-                            break
-                        }
-                        if (bytesReceived == 0 && elapsedSinceStart > 30000) {
-                            Log.e(TAG, "Measurement startup timeout — no bytes received after 30s. Another central likely holds the device.")
-                            dataMode = DataMode.Idle
-                            _connectionState.value = ConnectionState.Connected
-                            val pending = measurementContinuation
-                            measurementContinuation = null
-                            if (pending != null && pending.isActive) {
-                                pending.resumeWithException(
-                                    IllegalStateException(
-                                        "El dispositivo no responde. Comprueba que no esté conectado a otro móvil o tablet y reinícialo."
-                                    )
-                                )
-                            }
-                            break
-                        }
+                    val configuration = readSweepConfiguration()
+                    check(configuration.points in 2..100 && configuration.repetitions in 1..10)
+                    check(configuration.startFrequency.isFinite() && configuration.startFrequency > 0 &&
+                        configuration.stopFrequency > configuration.startFrequency &&
+                        configuration.stopFrequency <= MAX_SWEEP_FREQUENCY_HZ) {
+                        "Invalid device sweep frequency range"
                     }
+
+                    synchronized(measurementLock) {
+                        if (measurementContinuation !== continuation || !continuation.isActive) {
+                            return@withTimeout
+                        }
+                        expectedMeasurementPoints = configuration.points
+                        expectedStreamingBytes = configuration.points * configuration.repetitions * BYTES_PER_MEASUREMENT_POINT
+                        dataMode = DataMode.Measurement
+                        _connectionState.value = ConnectionState.Measuring
+                        lastDataReceivedTime = SystemClock.elapsedRealtime()
+                        startMeasurementTimeout(continuation)
+                    }
+                    sendCommand(BioMessCommand.MEASUREMENT, byteArrayOf())
                 }
-            } catch (t: Throwable) {
-                Log.e(TAG, "performMeasurement error: ${t.message}", t)
-                dataMode = DataMode.Idle
-                measurementContinuation = null
-                if (continuation.isActive) {
-                    continuation.resumeWithException(t)
+            } catch (error: Exception) {
+                synchronized(measurementLock) {
+                    if (measurementContinuation === continuation) {
+                        val failure = if (error is TimeoutCancellationException) {
+                            IllegalStateException("El dispositivo no respondió al preparar el barrido.", error)
+                        } else {
+                            error
+                        }
+                        failMeasurement(failure)
+                    }
                 }
             }
         }
 
         continuation.invokeOnCancellation {
-            Log.d(TAG, "Measurement cancelled")
-            measurementTimeoutJob?.cancel()
-            scope.launch { dataMode = DataMode.Idle }
+            setupJob.cancel()
+            synchronized(measurementLock) {
+                if (measurementContinuation === continuation) {
+                    val streaming = dataMode == DataMode.Measurement
+                    clearMeasurement()
+                    if (streaming) disconnect()
+                }
+            }
         }
+    }
+
+    private fun startMeasurementTimeout(continuation: CancellableContinuation<ImpedanceData>) {
+        measurementTimeoutJob = scope.launch {
+            while (true) {
+                delay(1.seconds)
+                val finished = synchronized(measurementLock) {
+                    if (measurementContinuation !== continuation) return@synchronized true
+
+                    val received = measurementBuffer.size()
+                    val expected = checkNotNull(expectedStreamingBytes)
+                    val timeout = if (received == 0) 30_000L else 5_000L
+                    if (SystemClock.elapsedRealtime() - lastDataReceivedTime < timeout) {
+                        return@synchronized false
+                    }
+
+                    failMeasurement(IllegalStateException(
+                        "Barrido incompleto ($received/$expected bytes). Vuelve a conectar el dispositivo."
+                    ))
+                    true
+                }
+                if (finished) break
+            }
+        }
+    }
+
+    // Once the unframed stream starts, reconnect before retrying so late packets
+    // from the aborted sweep cannot be mistaken for the next one.
+    private fun failMeasurement(error: Exception) {
+        val streaming = dataMode == DataMode.Measurement
+        val pending = clearMeasurement()
+        if (streaming) disconnect()
+        pending?.resumeWithException(error)
+    }
+
+    private fun clearMeasurement(): CancellableContinuation<ImpedanceData>? {
+        measurementTimeoutJob?.cancel()
+        measurementTimeoutJob = null
+        measurementBuffer.clear()
+        expectedStreamingBytes = null
+        if (dataMode == DataMode.Measurement) dataMode = DataMode.Idle
+        val pending = measurementContinuation
+        measurementContinuation = null
+        return pending
     }
 
     suspend fun requestStoredCount(): Int {
@@ -709,17 +726,18 @@ class BioMessBleManager(
     }
 
     @SuppressLint("MissingPermission")
-    private fun handleDisconnect() {
+    private fun handleDisconnect(gatt: BluetoothGatt) {
         Log.i(TAG, "handleDisconnect()")
-        measurementTimeoutJob?.cancel()
-        measurementContinuation?.cancel()
-        measurementContinuation = null
-        measurementBuffer.clear()
-        bluetoothGatt?.close()
-        bluetoothGatt = null
-        _isDeviceReady.value = false
-        _connectionState.value = ConnectionState.Disconnected
-        dataMode = DataMode.Idle
+        synchronized(measurementLock) {
+            if (gatt !== bluetoothGatt) return
+            val pending = clearMeasurement()
+            bluetoothGatt = null
+            gatt.close()
+            _isDeviceReady.value = false
+            _connectionState.value = ConnectionState.Disconnected
+            dataMode = DataMode.Idle
+            pending?.resumeWithException(IllegalStateException("Device disconnected during measurement"))
+        }
         if (isAutoConnectEnabled) {
             Log.d(TAG, "Auto-reconnect enabled, scheduling reconnect...")
             startAutoReconnect()
@@ -822,6 +840,7 @@ class BioMessBleManager(
     }
 
     suspend fun configureSweepStopFreq(freq: Float) {
+        require(freq.isFinite() && freq > 0 && freq <= MAX_SWEEP_FREQUENCY_HZ)
         val buffer = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(freq).array()
         writeCharacteristic(BioMessBleUuids.SWEEP_STOP_FREQ, buffer)
     }
@@ -861,9 +880,9 @@ class BioMessBleManager(
         }
     }
 
-    private fun handleCharacteristicData(uuid: UUID, data: ByteArray) {
+    private fun handleCharacteristicData(gatt: BluetoothGatt, uuid: UUID, data: ByteArray) {
         when (uuid) {
-            BioMessBleUuids.CONTROL_COMMAND -> handleControlNotification(data)
+            BioMessBleUuids.CONTROL_COMMAND -> handleControlNotification(gatt, data)
             BioMessBleUuids.BATTERY_LEVEL -> {
                 Log.d(TAG, "Battery notification: ${data.size} bytes")
                 BleDataParser.parseBatteryData(data)?.let { updateBatteryLevel(it) }
@@ -874,7 +893,7 @@ class BioMessBleManager(
         }
     }
 
-    private fun handleControlNotification(data: ByteArray) {
+    private fun handleControlNotification(gatt: BluetoothGatt, data: ByteArray) {
         Log.d(TAG, "Control notification: ${data.size} bytes, dataMode=$dataMode, hex=${data.joinToString { "0x%02x".format(it) }}")
         val countDeferred = pendingStoredCount
         if (countDeferred != null && countDeferred.isActive) {
@@ -895,94 +914,45 @@ class BioMessBleManager(
             DataMode.StoredSync -> storedChunkListener?.invoke(data)
             DataMode.Measurement -> {
                 Log.v(TAG, "Measurement data chunk: ${data.size} bytes, buffer total: ${measurementBuffer.size() + data.size}")
-                handleStreamingMeasurementData(data)
+                handleStreamingMeasurementData(gatt, data)
             }
             else -> Log.d(TAG, "Control notification in Idle mode (ignored): ${data.size} bytes")
         }
     }
 
-    private fun handleStreamingMeasurementData(chunk: ByteArray) {
-        measurementBuffer.write(chunk)
-        lastDataReceivedTime = System.currentTimeMillis()
-        val expected = expectedStreamingBytes ?: return
-        val current = measurementBuffer.size()
-        if (current >= expected) {
-            Log.i(TAG, "Measurement data complete: $current/$expected bytes — compiling result")
-            measurementTimeoutJob?.cancel()
-            compileStreamingMeasurement(expected)
-        } else {
-            Log.v(TAG, "Measurement progress: $current/$expected bytes (${100 * current / expected}%)")
+    private fun handleStreamingMeasurementData(gatt: BluetoothGatt, chunk: ByteArray) {
+        synchronized(measurementLock) {
+            if (gatt !== bluetoothGatt || dataMode != DataMode.Measurement) return
+            val expected = expectedStreamingBytes ?: return
+            val received = measurementBuffer.size() + chunk.size
+            if (received > expected) {
+                failMeasurement(IllegalStateException("Unexpected sweep length: $received/$expected bytes"))
+                return
+            }
+
+            measurementBuffer.write(chunk)
+            lastDataReceivedTime = SystemClock.elapsedRealtime()
+            if (received == expected) {
+                val result = compileStreamingMeasurement(expected)
+                val pending = clearMeasurement()
+                _connectionState.value = ConnectionState.Connected
+                pending?.resume(result)
+            }
         }
     }
 
-    private fun compileStreamingMeasurement(expectedBytes: Int) {
-        val raw = measurementBuffer.read(expectedBytes)
-        val buffer = ByteBuffer.wrap(raw).order(ByteOrder.LITTLE_ENDIAN)
-        val totalPoints = expectedBytes / BYTES_PER_MEASUREMENT_POINT
-        val points = mutableListOf<MeasurementPoint>()
-        repeat(totalPoints) {
-            val frequency = buffer.float
-            val magnitude = buffer.float
-            val phase = buffer.float
-            points.add(MeasurementPoint(frequency = frequency, magnitude = magnitude, phase = phase))
+    private fun compileStreamingMeasurement(expectedBytes: Int): ImpedanceData {
+        val buffer = ByteBuffer.wrap(measurementBuffer.read(expectedBytes)).order(ByteOrder.LITTLE_ENDIAN)
+        val points = List(expectedBytes / BYTES_PER_MEASUREMENT_POINT) {
+            MeasurementPoint(frequency = buffer.float, magnitude = buffer.float, phase = buffer.float)
         }
-
-        val repetitions = points.chunked(expectedMeasurementPoints) { repetition ->
-            repetition.sortedBy { it.frequency }
-        }
-
-        Log.i(TAG, "Compiled ${repetitions.size} repetition(s), ${points.size} total points")
-        if (points.isNotEmpty()) {
-            val first = points.first()
-            val last = points.last()
-            Log.d(TAG, "  First point: freq=${first.frequency} mag=${first.magnitude} phase=${first.phase}")
-            Log.d(TAG, "  Last point:  freq=${last.frequency} mag=${last.magnitude} phase=${last.phase}")
-        }
-
-        val impedanceData = ImpedanceData(
-            repetitions = repetitions,
+        return ImpedanceData(
+            repetitions = points.chunked(expectedMeasurementPoints) { repetition ->
+                repetition.sortedBy { it.frequency }
+            },
             timestamp = Clock.System.now(),
             deviceInfo = currentDeviceInfo
         )
-
-        measurementBuffer.clear()
-        expectedStreamingBytes = null
-        dataMode = DataMode.Idle
-        _connectionState.value = ConnectionState.Connected
-
-        val continuation = measurementContinuation
-        measurementContinuation = null
-        if (continuation != null && continuation.isActive) {
-            Log.i(TAG, "Resuming measurement continuation with result")
-            continuation.resume(impedanceData)
-        } else {
-            Log.i(TAG, "No active continuation — invoking onAutomaticMeasurement")
-            onAutomaticMeasurement?.invoke(impedanceData)
-        }
-    }
-
-    private fun compilePartialMeasurement() {
-        val available = measurementBuffer.size()
-        // Round down to complete measurement points (12 bytes each)
-        val usableBytes = (available / BYTES_PER_MEASUREMENT_POINT) * BYTES_PER_MEASUREMENT_POINT
-        if (usableBytes < expectedMeasurementPoints * BYTES_PER_MEASUREMENT_POINT) {
-            // Not even one full repetition — fail
-            Log.e(TAG, "Partial measurement too small: $usableBytes bytes (need at least ${expectedMeasurementPoints * BYTES_PER_MEASUREMENT_POINT} for 1 rep)")
-            measurementBuffer.clear()
-            expectedStreamingBytes = null
-            dataMode = DataMode.Idle
-            _connectionState.value = ConnectionState.Connected
-            val continuation = measurementContinuation
-            measurementContinuation = null
-            if (continuation != null && continuation.isActive) {
-                continuation.resumeWithException(
-                    IllegalStateException("Measurement incomplete: received $available/${expectedStreamingBytes ?: 0} bytes")
-                )
-            }
-            return
-        }
-        Log.i(TAG, "Compiling partial measurement: $usableBytes/$available bytes usable")
-        compileStreamingMeasurement(usableBytes)
     }
 
     @SuppressLint("MissingPermission")
