@@ -199,6 +199,15 @@ describe("BioMessClient", () => {
     expect(commands).toEqual([[0x06], [0x02]]);
   });
 
+  it("rejects 200 kHz before sending any configuration writes", async () => {
+    const harness = makeHarness();
+    const client = await connectedClient(harness);
+    await expect(client.measure({
+      startHz: 4_000, endHz: 200_000, points: 2, repetitions: 1,
+    })).rejects.toThrow("198 000 Hz");
+    expect(harness.chars.enable.writeValueWithResponse).not.toHaveBeenCalled();
+  });
+
   it("reassembles a point stream split at every possible byte offset", async () => {
     for (let offset = 1; offset < 36; offset += 1) {
       const harness = makeHarness();

@@ -178,6 +178,9 @@ struct MeasurementView: View {
             updateViewState(from: bleManager.connectionState)
         }
         .onChange(of: scenePhase) { oldPhase, newPhase in
+            if newPhase == .background {
+                bleManager.cancelStreamingMeasurement()
+            }
             // When app returns to foreground, try to auto-connect if disconnected
             if newPhase == .active && oldPhase != .active {
                 if bleManager.connectionState == .disconnected {

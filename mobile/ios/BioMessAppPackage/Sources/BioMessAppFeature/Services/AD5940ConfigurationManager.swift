@@ -9,6 +9,8 @@ public final class AD5940ConfigurationManager: Sendable {
 
     // MARK: - Configuration
 
+    nonisolated static let maxSweepFrequencyHz: Float = 198_000
+
     public struct Configuration: Sendable, Equatable {
         public var numOfData: Int32           // Derived local total: sweepPoints * numRepetitions
         public var sweepStart: Float          // Start frequency in Hz
@@ -80,6 +82,12 @@ public final class AD5940ConfigurationManager: Sendable {
     ) async throws {
         guard !isSyncing else {
             throw ConfigurationError.syncInProgress
+        }
+
+        guard config.sweepStart.isFinite, config.sweepStart > 0,
+              config.sweepStop > config.sweepStart,
+              config.sweepStop <= Self.maxSweepFrequencyHz else {
+            throw BLEError.invalidParameter
         }
 
         isSyncing = true

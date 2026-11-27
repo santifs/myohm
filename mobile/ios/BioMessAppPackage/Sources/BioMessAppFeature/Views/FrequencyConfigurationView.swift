@@ -202,7 +202,7 @@ public struct FrequencyConfigurationView: View {
 
                 FrequencySlider(
                     value: $sweepStop,
-                    range: 50000...200000,
+                    range: 50_000...Double(AD5940ConfigurationManager.maxSweepFrequencyHz),
                     label: "Fin",
                     color: .red
                 )

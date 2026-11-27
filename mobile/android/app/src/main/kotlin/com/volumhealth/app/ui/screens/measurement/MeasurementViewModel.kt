@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -306,6 +307,8 @@ class MeasurementViewModel @Inject constructor(
                 } else {
                     _viewState.value = MeasurementViewState.Results(data)
                 }
+            } catch (error: CancellationException) {
+                throw error
             } catch (t: Throwable) {
                 val errorMessage = t.message?.let { ErrorMessage.Text(it) }
                     ?: ErrorMessage.Resource(R.string.error_measurement_failed)
@@ -326,11 +329,15 @@ class MeasurementViewModel @Inject constructor(
         }
     }
 
+    fun cancelMeasurementIfCapturing() {
+        if (_viewState.value is MeasurementViewState.Measuring) cancelMeasurement()
+    }
+
     fun cancelMeasurement() {
         measurementJob?.cancel()
         measurementJob = null
         clearPendingMeasurement()
-        _viewState.value = MeasurementViewState.Connected("")
+        updateViewStateFromConnection(connectionState.value)
     }
 
     fun confirmFatigue(rating: Int) {

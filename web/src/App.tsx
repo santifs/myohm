@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Activity, BarChart3, BookOpen, CheckCircle, Download, ExternalLink, Monitor, Play, Plug, Trash2 } from "lucide-react";
 import { BioMessClient } from "./ble";
-import { DEFAULT_CONFIG, exportCsv, exportFilteredJson, exportJson, filterPoints, loadHistory, saveHistory, simulateMeasurement, summarize, summarizeByFrequency, validateConfig } from "./core";
+import { DEFAULT_CONFIG, MAX_SWEEP_FREQUENCY_HZ, exportCsv, exportFilteredJson, exportJson, filterPoints, loadHistory, saveHistory, simulateMeasurement, summarize, summarizeByFrequency, validateConfig } from "./core";
 import type { MeasurementRun, PointFilters, SweepConfig } from "./core";
 import Plots from "./components/Plots";
 import Guide from "./components/Guide";
@@ -47,7 +47,8 @@ export default function App() {
   }
   function download(kind: "csv" | "json", filteredOnly = false) { if (!run) return; const content = kind === "csv" ? exportCsv(run, filteredOnly ? filtered : run.points) : filteredOnly ? exportFilteredJson(run, filtered) : exportJson(run); const url = URL.createObjectURL(new Blob([content], { type: kind === "csv" ? "text/csv;charset=utf-8" : "application/json" })); const a = document.createElement("a"); a.href = url; a.download = `biomess-${filteredOnly ? "filtrado" : "completo"}-${run.startedAt.replace(/[:.]/g, "-")}.${kind}`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
   function sortBy(key: typeof sort.key) { setSort((old) => ({ key, asc: old.key === key ? !old.asc : true })); setPage(0); }
-  const fields: [keyof SweepConfig, string, number, number][] = [["startHz", "Inicio (Hz)", 4000, 200000], ["endHz", "Fin (Hz)", 4000, 200000], ["points", "Puntos", 2, 100], ["repetitions", "Repeticiones", 1, 10]];
+  const maxSweepHz = mode === "simulation" ? 200_000 : MAX_SWEEP_FREQUENCY_HZ;
+  const fields: [keyof SweepConfig, string, number, number][] = [["startHz", "Inicio (Hz)", 4000, maxSweepHz], ["endHz", "Fin (Hz)", 4000, maxSweepHz], ["points", "Puntos", 2, 100], ["repetitions", "Repeticiones", 1, 10]];
   return <><header><a className="brand" href="./"><Activity /><span>BioMess Lab</span></a><nav><a href="/">Santiago Lab</a><a href="#guia" onClick={() => { (document.getElementById("guia") as HTMLDetailsElement).open = true; }}><BookOpen size={18} />Guía de práctica</a><a href="https://santiagofs.com" target="_blank" rel="noreferrer">Mi sitio personal<ExternalLink size={15} /></a></nav></header>
     <main><h1>Laboratorio de bioimpedancia</h1><p className="subtitle">Configura, mide y comprende la impedancia.</p><div className="workspace"><aside><h2>Configuración del instrumento</h2><h3>Conexión</h3><div className={`connection ${mode !== "none" ? "active" : ""}`}><Monitor size={26} /><div><strong>{mode === "simulation" ? "Modo simulado" : mode === "ble" ? "PCB conectada" : "Sin conexión"}</strong><small>{device ? `${device.serial} · ${device.batteryMv === null || device.batteryMv === 0 ? "Batería no disponible" : `${device.batteryPercent}% · ${device.batteryMv} mV`}` : mode === "simulation" ? "Instrumento simulado · Listo para medir" : "Conecta tu placa o prueba la simulación"}</small></div></div>
       {mode === "ble" ? <button disabled={locked} onClick={() => { client.current?.disconnect(); setMode("none"); setDevice(null); log("PCB desconectada."); }}><Plug size={18} />Desconectar PCB</button> : <button className="primary" disabled={locked || !supported} onClick={connect}><Plug size={18} />{connecting ? "Conectando…" : "Conectar PCB"}</button>}<button disabled={locked || mode === "simulation"} onClick={simulation}><Play size={18} />Modo simulado</button>
