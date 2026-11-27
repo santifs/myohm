@@ -38,6 +38,18 @@ public final class Measurement {
     /// Sync error message if failed
     public var syncError: String?
 
+    /// Person measured (new Myohm flow). Older records may only link through a session.
+    public var personID: UUID?
+
+    /// Distance between V+ and V− of the band used for local measurements (mm).
+    public var bandMillimeters: Int?
+
+    /// Body weight entered for a whole-body measurement (kg).
+    public var bodyWeightKg: Double?
+
+    /// Whether the five-minute supine rest was completed before a whole-body measurement.
+    public var restCompleted: Bool?
+
     // MARK: - Initialization
 
     public init(

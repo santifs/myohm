@@ -37,6 +37,11 @@ public final class BioMessBLEManager: NSObject, Sendable {
     /// UI should wait for this before allowing measurements
     public private(set) var isDeviceReady: Bool = false
 
+    /// Fraction of the current sweep received so far (0...1). Reset when a sweep starts.
+    public private(set) var liveSweepProgress: Double = 0
+    /// Points of the repetition currently being streamed, for live charts.
+    public private(set) var liveSweepPoints: [ImpedanceData.MeasurementPoint] = []
+
     // Auto-reconnection properties
     public private(set) var isAutoConnectEnabled: Bool = true
     public private(set) var isAutoConnecting: Bool = false
@@ -477,6 +482,8 @@ public final class BioMessBLEManager: NSObject, Sendable {
                     guard streamingMeasurementID == measurementID else { return }
 
                     connectionState = .measuring
+                    liveSweepProgress = 0
+                    liveSweepPoints = []
                     expectedMeasurementPoints = Int(points)
                     expectedRepetitions = Int(reps)
                     expectedStreamingBytes = Int(points) * Int(reps) * bytesPerMeasurementPoint
@@ -1133,11 +1140,28 @@ extension BioMessBLEManager {
         }
 
         streamingBuffer.append(chunk)
+        updateLiveSweep(expectedBytes: expectedBytes)
         if received == expectedBytes {
             compileStreamingMeasurement()
         } else {
             startStreamingTimeout(for: .seconds(5))
         }
+    }
+
+    private func updateLiveSweep(expectedBytes: Int) {
+        liveSweepProgress = Double(streamingBuffer.count) / Double(max(expectedBytes, 1))
+        let completed = streamingBuffer.count / bytesPerMeasurementPoint
+        guard completed > 0, expectedMeasurementPoints > 0 else { return }
+        let repetition = (completed - 1) / expectedMeasurementPoints
+        let first = repetition * expectedMeasurementPoints
+        liveSweepPoints = (first..<completed).map { index in
+            let offset = index * bytesPerMeasurementPoint
+            return ImpedanceData.MeasurementPoint(
+                frequency: Self.float32LE(streamingBuffer, offset),
+                magnitude: Self.float32LE(streamingBuffer, offset + 4),
+                phase: Self.float32LE(streamingBuffer, offset + 8)
+            )
+        }.sorted { $0.frequency < $1.frequency }
     }
 
     private func startStreamingTimeout(for duration: Duration) {

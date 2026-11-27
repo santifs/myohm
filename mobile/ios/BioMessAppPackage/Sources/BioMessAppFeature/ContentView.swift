@@ -50,7 +50,7 @@ struct BioMess: View {
 
     @ViewBuilder
     private var mainContent: some View {
-        MainView()
+        MyohmRootView()
             .environment(bleManager)
             .environment(processor)
             .environment(patientInfo)
@@ -71,13 +71,13 @@ struct BioMess: View {
                 // Perform PatientInfo -> Athlete migration if needed
                 performMigrationIfNeeded()
             }
-            .alert("Perfil migrado", isPresented: $showMigrationAlert) {
+            .alert(L("Profile migrated"), isPresented: $showMigrationAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
                 if let name = migratedAthleteName {
-                    Text("Hemos migrado tu perfil anterior (\(name)) al nuevo sistema de atletas.")
+                    Text(L("Your previous profile (\(name)) has been moved to People."))
                 } else {
-                    Text("Hemos migrado tu perfil anterior al nuevo sistema de atletas.")
+                    Text(L("Your previous profile has been moved to People."))
                 }
             }
     }
