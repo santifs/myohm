@@ -79,7 +79,7 @@ struct HistoryScreen: View {
                     LazyVStack(spacing: 8) {
                         ForEach(rows) { m in
                             Button { path.append(.result(m.id)) } label: { MyohmMeasurementRow(measurement: m, person: person) }
-                                .buttonStyle(.plain)
+                                .buttonStyle(MyohmPlainButton())
                         }
                     }
                 }
@@ -234,7 +234,7 @@ struct PeopleScreen: View {
                                     .background(selected ? MyohmColor.brand : .white, in: Capsule())
                                     .overlay(Capsule().stroke(selected ? .clear : MyohmColor.line))
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(MyohmPlainButton())
                             }
                         }
                     }
@@ -302,7 +302,7 @@ struct PeopleScreen: View {
                         valueTile(L("Whole-body phase"), lastBody.impedanceData.flatMap(SweepAnalysis.init)?.atReference.map { MyohmFormat.degrees($0.phaseAngle) } ?? "—", lastBody.measuredAt)
                     }
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(MyohmPlainButton())
             }
 
             if !muscles.isEmpty {
@@ -324,7 +324,7 @@ struct PeopleScreen: View {
                             .padding(.horizontal, 16).padding(.vertical, 14)
                             .overlay(alignment: .bottom) { if index < muscles.count - 1 { Rectangle().fill(MyohmColor.hairline).frame(height: 1) } }
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(MyohmPlainButton())
                     }
                 }
                 .background(.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))

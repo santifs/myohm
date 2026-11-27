@@ -103,11 +103,14 @@ struct WelcomeView: View {
 
                 VStack(spacing: 22) {
                     MyohmLogo(width: logoWidth, color: .white)
-                    Text(L("Bioimpedance"))
-                        .font(.system(size: 15, weight: .semibold))
-                        .tracking(4)
-                        .textCase(.uppercase)
+                    // Product descriptor, kept in English in every language.
+                    Text(verbatim: "BIOIMPEDANCE SPECTROSCOPY")
+                        .font(.system(size: 13, weight: .semibold))
+                        .tracking(2.6)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                         .foregroundStyle(.white.opacity(0.72))
+                        .frame(width: logoWidth + 24)
                 }
                 .position(x: proxy.size.width / 2, y: logoCenterY + 22)
 

@@ -137,7 +137,7 @@ struct PairingView: View {
             .background(.white, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).stroke(isSelected ? MyohmColor.brand : .clear, lineWidth: 2))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MyohmPlainButton())
     }
 }
 

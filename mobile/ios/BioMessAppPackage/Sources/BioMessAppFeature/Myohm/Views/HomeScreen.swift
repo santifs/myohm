@@ -50,7 +50,7 @@ struct HomeScreen: View {
                             }
                             .myohmCard(padding: 14)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(MyohmPlainButton())
                     }
 
                     Text(L("What do you want to measure?"))
@@ -91,7 +91,7 @@ struct HomeScreen: View {
                             }
                             .myohmCard(padding: 14)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(MyohmPlainButton())
                     }
                 }
                 .padding(20)
@@ -179,7 +179,7 @@ struct HomeScreen: View {
             }
             .shadow(color: dark ? MyohmColor.brand.opacity(0.25) : MyohmColor.ink.opacity(0.06), radius: dark ? 14 : 1, y: dark ? 8 : 1)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MyohmPlainButton())
     }
 }
 

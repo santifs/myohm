@@ -52,21 +52,30 @@ public enum MyohmMuscle: String, CaseIterable, Sendable, Codable, Identifiable {
         }
     }
 
-    /// Hit areas on the 520 × 1000 body illustrations: centre, radii and rotation (degrees).
-    /// Index 0 is the person's right side, index 1 the left side.
-    public var zones: [(cx: CGFloat, cy: CGFloat, rx: CGFloat, ry: CGFloat, rot: Double)] {
+    /// Outlines traced on the 520 × 1000 body illustrations, for the side drawn on the viewer's left.
+    /// Front view shows the person's right on the viewer's left; the back view, the person's left.
+    private var tracedOutline: [CGPoint] {
+        let pts: [(CGFloat, CGFloat)]
         switch self {
-        case .biceps: return [(148, 302, 22, 50, 12), (372, 302, 22, 50, -12)]
-        case .forearm: return [(100, 428, 19, 55, 25), (420, 428, 19, 55, -25)]
-        case .quadriceps: return [(214, 578, 38, 80, 4), (306, 578, 38, 80, -4)]
-        case .tibialis: return [(224, 780, 17, 62, 0), (296, 780, 17, 62, 0)]
-        // Back view: the person's right side is on the viewer's right.
-        case .triceps: return [(378, 300, 23, 50, -10), (142, 300, 23, 50, 10)]
-        case .glutes: return [(302, 455, 45, 50, 0), (218, 455, 45, 50, 0)]
-        case .hamstrings: return [(298, 605, 36, 78, 0), (222, 605, 36, 78, 0)]
-        case .calf: return [(298, 760, 28, 56, 0), (222, 760, 28, 56, 0)]
-        case .other: return []
+        case .biceps: pts = [(126, 266), (158, 262), (166, 288), (160, 318), (147, 345), (131, 358), (112, 350), (114, 316), (118, 288)]
+        case .forearm: pts = [(102, 372), (146, 370), (140, 408), (124, 446), (106, 466), (86, 460), (88, 420), (94, 392)]
+        case .quadriceps: pts = [(182, 442), (222, 446), (249, 492), (247, 560), (237, 612), (218, 632), (196, 628), (173, 594), (163, 530), (167, 476)]
+        case .tibialis: pts = [(172, 690), (194, 688), (199, 740), (195, 798), (184, 828), (173, 800), (167, 742)]
+        case .triceps: pts = [(118, 264), (160, 262), (165, 290), (153, 328), (135, 352), (110, 346), (111, 310), (114, 284)]
+        case .glutes: pts = [(200, 398), (240, 393), (257, 412), (257, 470), (249, 499), (215, 502), (189, 488), (181, 450), (187, 414)]
+        case .hamstrings: pts = [(174, 516), (249, 513), (247, 570), (239, 624), (227, 674), (201, 679), (185, 650), (174, 590)]
+        case .calf: pts = [(173, 702), (222, 699), (231, 745), (224, 789), (200, 800), (177, 792), (163, 750)]
+        case .other: pts = []
         }
+        return pts.map { CGPoint(x: $0.0, y: $0.1) }
+    }
+
+    /// Tap outlines for each side: index 0 is the person's right, index 1 the left.
+    public var outlines: [[CGPoint]] {
+        let traced = tracedOutline
+        guard !traced.isEmpty else { return [] }
+        let mirrored = traced.map { CGPoint(x: 520 - $0.x, y: $0.y) }
+        return view == .back ? [mirrored, traced] : [traced, mirrored]
     }
 }
 

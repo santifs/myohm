@@ -576,7 +576,7 @@ struct BodyResultView: View {
                 }
                 .myohmCard()
             }
-            .buttonStyle(.plain)
+            .buttonStyle(MyohmPlainButton())
         } else if tab == 1 {
             VStack(alignment: .leading, spacing: 4) {
                 Text(L("Spectroscopy model")).font(MyohmFont.micro).foregroundStyle(MyohmColor.muted)

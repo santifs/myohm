@@ -96,6 +96,8 @@ struct ReviewTourHost: View {
                 ProgressView()
             }
         }
+        .preferredColorScheme(.light)
+        .tint(MyohmColor.brand)
         .task {
             if data == nil {
                 let seeded = ReviewTour.seed(context)

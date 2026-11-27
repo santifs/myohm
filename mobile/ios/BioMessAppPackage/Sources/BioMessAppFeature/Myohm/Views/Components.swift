@@ -90,7 +90,7 @@ struct ConnectionPill: View {
             .background(.white, in: Capsule())
             .overlay(Capsule().stroke(MyohmColor.line))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MyohmPlainButton())
     }
 }
 
@@ -108,7 +108,7 @@ struct CircleIconButton: View {
                 .background(.white, in: Circle())
                 .shadow(color: MyohmColor.ink.opacity(0.08), radius: 1, y: 1)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MyohmPlainButton())
         .accessibilityLabel(label)
     }
 }

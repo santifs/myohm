@@ -101,7 +101,7 @@ struct PlacementView: View {
         Button { value.wrappedValue.toggle() } label: {
             CheckRow(text: text, done: value.wrappedValue)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MyohmPlainButton())
     }
 
     private func legend(color: Color, title: String, text: String) -> some View {

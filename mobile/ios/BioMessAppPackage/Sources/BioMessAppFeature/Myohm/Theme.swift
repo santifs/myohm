@@ -71,8 +71,19 @@ struct MyohmPrimaryButton: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: 56)
             .foregroundStyle(light ? MyohmColor.brand : .white)
             .background(light ? Color.white : MyohmColor.brand, in: Capsule())
+            .contentShape(Capsule())
             .opacity(configuration.isPressed ? 0.85 : 1)
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
+    }
+}
+
+/// Plain button whose whole frame is tappable, not only its text or filled parts.
+struct MyohmPlainButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .contentShape(Rectangle())
+            .opacity(configuration.isPressed ? 0.7 : 1)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
     }
 }
 
@@ -84,6 +95,7 @@ struct MyohmSecondaryButton: ButtonStyle {
             .foregroundStyle(MyohmColor.ink)
             .background(Color.white, in: Capsule())
             .overlay(Capsule().stroke(MyohmColor.line))
+            .contentShape(Capsule())
             .opacity(configuration.isPressed ? 0.8 : 1)
     }
 }
@@ -111,7 +123,7 @@ struct PillSegmented<T: Hashable>: View {
                             }
                         }
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(MyohmPlainButton())
                 .accessibilityAddTraits(selection == option.0 ? .isSelected : [])
             }
         }
@@ -135,7 +147,7 @@ struct ChipButton: View {
                 .background(selected ? MyohmColor.brand : .white, in: Capsule())
                 .overlay(Capsule().stroke(selected ? MyohmColor.brand : MyohmColor.line))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MyohmPlainButton())
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 }

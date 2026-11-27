@@ -97,7 +97,7 @@ struct MuscleSelectView: View {
             .foregroundStyle(selected ? .white : MyohmColor.ink)
             .background(selected ? MyohmColor.brand : MyohmColor.background, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MyohmPlainButton())
         .accessibilityLabel(L("\(String(mm)) millimetre band"))
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
@@ -123,11 +123,11 @@ struct BodyMap: View {
                     .frame(width: size.width, height: size.height)
                     .accessibilityHidden(true)
                 ForEach(MyohmMuscle.allCases.filter { $0.view == view }) { item in
-                    ForEach(0..<item.zones.count, id: \.self) { index in
+                    ForEach(0..<item.outlines.count, id: \.self) { index in
                         ZoneView(
                             muscle: item,
                             side: index == 0 ? .right : .left,
-                            zone: item.zones[index],
+                            outline: item.outlines[index],
                             scale: scale,
                             selected: item == muscle && (index == 0 ? LimbSide.right : .left) == side,
                             onTap: onTap
@@ -141,24 +141,43 @@ struct BodyMap: View {
     }
 }
 
+/// Smooth closed outline through the traced points (Catmull–Rom converted to Bézier).
+struct MuscleOutline: Shape {
+    let points: [CGPoint]
+    let scale: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let p = points.map { CGPoint(x: $0.x * scale, y: $0.y * scale) }
+        guard p.count > 2 else { return path }
+        path.move(to: p[0])
+        for i in 0..<p.count {
+            let p0 = p[(i - 1 + p.count) % p.count], p1 = p[i], p2 = p[(i + 1) % p.count], p3 = p[(i + 2) % p.count]
+            let c1 = CGPoint(x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6)
+            let c2 = CGPoint(x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6)
+            path.addCurve(to: p2, control1: c1, control2: c2)
+        }
+        path.closeSubpath()
+        return path
+    }
+}
+
 private struct ZoneView: View {
     let muscle: MyohmMuscle
     let side: LimbSide
-    let zone: (cx: CGFloat, cy: CGFloat, rx: CGFloat, ry: CGFloat, rot: Double)
+    let outline: [CGPoint]
     let scale: CGFloat
     let selected: Bool
     var onTap: (MyohmMuscle, LimbSide) -> Void
 
     var body: some View {
-        let fill: Color = selected ? MyohmColor.brand.opacity(0.62) : MyohmColor.chartBlue.opacity(0.14)
+        let shape = MuscleOutline(points: outline, scale: scale)
+        let fill: Color = selected ? MyohmColor.brand.opacity(0.55) : MyohmColor.chartBlue.opacity(0.12)
         let stroke: Color = selected ? .white : MyohmColor.chartBlue.opacity(0.35)
-        Ellipse()
+        shape
             .fill(fill)
-            .overlay(Ellipse().stroke(stroke, lineWidth: selected ? 2 : 1))
-            .frame(width: zone.rx * 2 * scale, height: zone.ry * 2 * scale)
-            .rotationEffect(.degrees(zone.rot))
-            .contentShape(Ellipse())
-            .position(x: zone.cx * scale, y: zone.cy * scale)
+            .overlay(shape.stroke(stroke, lineWidth: selected ? 2 : 1))
+            .contentShape(shape)
             .onTapGesture { onTap(muscle, side) }
             .accessibilityElement()
             .accessibilityLabel(muscle.name + " " + side.name.lowercased())
