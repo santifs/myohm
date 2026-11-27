@@ -55,5 +55,18 @@ data class MeasurementEntity(
     val lastSyncAttempt: Instant?,
 
     @ColumnInfo(name = "sync_error")
-    val syncError: String?
+    val syncError: String?,
+
+    // Myohm redesign: person, band and whole-body context (v9)
+    @ColumnInfo(name = "person_id")
+    val personId: String? = null,
+
+    @ColumnInfo(name = "band_mm")
+    val bandMillimeters: Int? = null,
+
+    @ColumnInfo(name = "body_weight_kg")
+    val bodyWeightKg: Double? = null,
+
+    @ColumnInfo(name = "rest_completed")
+    val restCompleted: Boolean? = null
 )

@@ -27,7 +27,7 @@ import com.volumhealth.core.database.entity.RawMeasurementEntity
         MeasurementSessionEntity::class,
         MeasurementEntity::class
     ],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -109,6 +109,16 @@ abstract class AppDatabase : RoomDatabase() {
                     "CREATE INDEX IF NOT EXISTS `index_measurements_session_id` " +
                         "ON `measurements` (`session_id`)"
                 )
+            }
+        }
+
+        val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE athletes ADD COLUMN is_athlete INTEGER")
+                db.execSQL("ALTER TABLE measurements ADD COLUMN person_id TEXT")
+                db.execSQL("ALTER TABLE measurements ADD COLUMN band_mm INTEGER")
+                db.execSQL("ALTER TABLE measurements ADD COLUMN body_weight_kg REAL")
+                db.execSQL("ALTER TABLE measurements ADD COLUMN rest_completed INTEGER")
             }
         }
     }

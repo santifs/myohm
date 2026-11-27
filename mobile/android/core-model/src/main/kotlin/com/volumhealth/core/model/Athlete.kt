@@ -26,6 +26,8 @@ data class Athlete(
     val usualActivities: List<String>? = null,
     val heightCm: Double? = null,
     val weightKg: Double? = null,
+    /** Trains regularly at a competitive level; selects the athlete equation. */
+    val isAthlete: Boolean? = null,
     val rightThighLength: Double? = null,
     val rightThighCircumference: Double? = null,
     val leftThighLength: Double? = null,

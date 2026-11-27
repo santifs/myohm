@@ -89,6 +89,14 @@ class BioMessBleManager(
     private val _isDeviceReady = MutableStateFlow(false)
     val isDeviceReady: StateFlow<Boolean> = _isDeviceReady.asStateFlow()
 
+    /** Fraction (0–1) of the bytes of the current sweep received so far. */
+    private val _liveSweepProgress = MutableStateFlow(0.0)
+    val liveSweepProgress: StateFlow<Double> = _liveSweepProgress.asStateFlow()
+
+    /** Points received so far, one per frequency; later repetitions overwrite earlier ones. */
+    private val _liveSweepPoints = MutableStateFlow<List<MeasurementPoint>>(emptyList())
+    val liveSweepPoints: StateFlow<List<MeasurementPoint>> = _liveSweepPoints.asStateFlow()
+
     @Volatile private var bluetoothGatt: BluetoothGatt? = null
     private val characteristicMap = mutableMapOf<UUID, BluetoothGattCharacteristic>()
 
@@ -280,6 +288,20 @@ class BioMessBleManager(
     private var reconnectJob: Job? = null
     private var reconnectAttempts = 0
     private val maxReconnectAttempts = 3
+
+    /** Name and address of the device currently linked, if any. */
+    val connectedDeviceName: String?
+        @SuppressLint("MissingPermission")
+        get() = try { bluetoothGatt?.device?.name } catch (_: SecurityException) { null }
+
+    val connectedDeviceAddress: String?
+        get() = bluetoothGatt?.device?.address
+
+    fun pairedDevice(): PairedDeviceManager.PairedDevice? = pairedDeviceManager.getPairedDevice()
+
+    fun forgetPairedDevice() {
+        pairedDeviceManager.clear()
+    }
 
     fun hasRequiredPermissions(): Boolean = BlePermissionHelper.hasAllPermissions(context)
     fun getMissingPermissions(): List<String> = BlePermissionHelper.getMissingPermissions(context)
@@ -483,7 +505,8 @@ class BioMessBleManager(
     suspend fun performMeasurement(
         numPoints: Int? = null,
         startFreq: Float? = null,
-        stopFreq: Float? = null
+        stopFreq: Float? = null,
+        repetitions: Int? = null
     ): ImpedanceData = suspendCancellableCoroutine { continuation ->
         require(startFreq == null || startFreq.isFinite() && startFreq > 0 && startFreq < MAX_SWEEP_FREQUENCY_HZ)
         require(stopFreq == null || stopFreq.isFinite() && stopFreq > 0 && stopFreq <= MAX_SWEEP_FREQUENCY_HZ)
@@ -495,6 +518,8 @@ class BioMessBleManager(
                 return@suspendCancellableCoroutine
             }
             measurementContinuation = continuation
+            _liveSweepProgress.value = 0.0
+            _liveSweepPoints.value = emptyList()
         }
 
         val setupJob = scope.launch {
@@ -506,6 +531,7 @@ class BioMessBleManager(
                     numPoints?.let { configureSweepPoints(it) }
                     startFreq?.let { configureSweepStartFreq(it) }
                     stopFreq?.let { configureSweepStopFreq(it) }
+                    repetitions?.let { configureRepetitions(it) }
 
                     val configuration = readSweepConfiguration()
                     check(configuration.points in 2..100 && configuration.repetitions in 1..10)
@@ -522,6 +548,8 @@ class BioMessBleManager(
                         expectedMeasurementPoints = configuration.points
                         expectedStreamingBytes = configuration.points * configuration.repetitions * BYTES_PER_MEASUREMENT_POINT
                         dataMode = DataMode.Measurement
+                        _liveSweepProgress.value = 0.0
+                        _liveSweepPoints.value = emptyList()
                         _connectionState.value = ConnectionState.Measuring
                         lastDataReceivedTime = SystemClock.elapsedRealtime()
                         startMeasurementTimeout(continuation)
@@ -932,6 +960,7 @@ class BioMessBleManager(
 
             measurementBuffer.write(chunk)
             lastDataReceivedTime = SystemClock.elapsedRealtime()
+            updateLiveSweep(expected)
             if (received == expected) {
                 val result = compileStreamingMeasurement(expected)
                 val pending = clearMeasurement()
@@ -939,6 +968,22 @@ class BioMessBleManager(
                 pending?.resume(result)
             }
         }
+    }
+
+    private fun updateLiveSweep(expectedBytes: Int) {
+        val bytes = measurementBuffer.toByteArray()
+        _liveSweepProgress.value = (bytes.size.toDouble() / expectedBytes).coerceIn(0.0, 1.0)
+        val count = bytes.size / BYTES_PER_MEASUREMENT_POINT
+        if (count == 0 || expectedMeasurementPoints <= 0) return
+        val buffer = ByteBuffer.wrap(bytes, 0, count * BYTES_PER_MEASUREMENT_POINT).order(ByteOrder.LITTLE_ENDIAN)
+        val byIndex = arrayOfNulls<MeasurementPoint>(expectedMeasurementPoints)
+        for (i in 0 until count) {
+            val point = MeasurementPoint(frequency = buffer.float, magnitude = buffer.float, phase = buffer.float)
+            byIndex[i % expectedMeasurementPoints] = point
+        }
+        _liveSweepPoints.value = byIndex.filterNotNull()
+            .filter { it.frequency.isFinite() && it.magnitude.isFinite() && it.phase.isFinite() }
+            .sortedBy { it.frequency }
     }
 
     private fun compileStreamingMeasurement(expectedBytes: Int): ImpedanceData {
