@@ -20,8 +20,12 @@ extension Athlete {
         return w / pow(h / 100, 2)
     }
 
+    /// Age in years with a fractional part, consistent with `age` (whole years by calendar).
     func ageYears(at date: Date = Date()) -> Double {
-        date.timeIntervalSince(dateOfBirth) / (365.2425 * 24 * 3600)
+        let cal = Calendar.current
+        let years = cal.dateComponents([.year], from: dateOfBirth, to: date).year ?? 0
+        let lastBirthday = cal.date(byAdding: .year, value: years, to: dateOfBirth) ?? dateOfBirth
+        return Double(years) + date.timeIntervalSince(lastBirthday) / (365.2425 * 24 * 3600)
     }
 
     var profileSummary: String {

@@ -31,6 +31,9 @@ struct BioMess: View {
 
     // SwiftData model container for all app models
     @State private var modelContainer: ModelContainer = {
+        #if DEBUG
+        if ReviewTour.isEnabled { return ReviewTour.makeContainer() }
+        #endif
         do {
             return try ModelContainer(
                 for: Athlete.self,
@@ -50,7 +53,7 @@ struct BioMess: View {
 
     @ViewBuilder
     private var mainContent: some View {
-        MyohmRootView()
+        rootView
             .environment(bleManager)
             .environment(processor)
             .environment(patientInfo)
@@ -80,6 +83,19 @@ struct BioMess: View {
                     Text(L("Your previous profile has been moved to People."))
                 }
             }
+    }
+
+    @ViewBuilder
+    private var rootView: some View {
+        #if DEBUG
+        if ReviewTour.isEnabled {
+            ReviewTourHost()
+        } else {
+            MyohmRootView()
+        }
+        #else
+        MyohmRootView()
+        #endif
     }
 
     // MARK: - Migration

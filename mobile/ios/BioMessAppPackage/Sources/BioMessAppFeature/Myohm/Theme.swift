@@ -193,6 +193,8 @@ enum MyohmFormat {
     static func litres(_ value: Double) -> String { number(value) + " L" }
     static func ohms(_ value: Double) -> String { number(value, digits: 0) + " Ω" }
     static func frequency(_ hz: Double) -> String {
-        hz >= 1000 ? number(hz / 1000, digits: hz < 10_000 ? 1 : 0) + " kHz" : number(hz, digits: 0) + " Hz"
+        let k = hz / 1000
+        let digits = hz >= 1000 && abs(k - k.rounded()) > 0.05 ? 1 : 0
+        return hz >= 1000 ? number(k, digits: digits) + " kHz" : number(hz, digits: 0) + " Hz"
     }
 }

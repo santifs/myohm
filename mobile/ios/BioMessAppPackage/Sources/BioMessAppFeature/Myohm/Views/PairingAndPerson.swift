@@ -16,7 +16,9 @@ struct PairingView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             ScreenHeader(kicker: nil, title: isConnected ? L("Myohm connected") : L("Looking for your Myohm"), back: { dismiss() })
-            Text(L("Turn it on and keep it within a metre. Pick yours; the name matches the label on the device."))
+            Text(isConnected
+                 ? L("Ready to measure. From now on the app will connect to it automatically.")
+                 : L("Turn it on and keep it within a metre. Pick yours; the name matches the label on the device."))
                 .font(MyohmFont.body)
                 .foregroundStyle(MyohmColor.muted)
 
@@ -25,7 +27,20 @@ struct PairingView: View {
                 .frame(height: 170)
 
             VStack(spacing: 10) {
-                ForEach(ble.discoveredDevices, id: \.identifier) { device in
+                if isConnected, let device = ble.connectedDevice {
+                    HStack(spacing: 12) {
+                        Image(systemName: "checkmark.circle.fill").font(.system(size: 22)).foregroundStyle(MyohmColor.success)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(device.name ?? "Myohm").font(.system(size: 15, weight: .bold)).foregroundStyle(MyohmColor.ink)
+                            Text(ble.currentBatteryLevel.map { L("Connected · \(String($0.percentage) + " %")") } ?? L("Connected"))
+                                .font(MyohmFont.caption).foregroundStyle(MyohmColor.muted)
+                        }
+                        Spacer()
+                    }
+                    .padding(14)
+                    .background(.white, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                }
+                ForEach(ble.discoveredDevices.filter { !isConnected || $0.identifier != ble.connectedDevice?.identifier }, id: \.identifier) { device in
                     deviceRow(device)
                 }
                 if ble.discoveredDevices.isEmpty && !isConnected {
@@ -169,7 +184,9 @@ struct PersonFormView: View {
                         Text(L("Body-composition equations need it."))
                             .font(.system(size: 12)).foregroundStyle(MyohmColor.muted)
                     }
-                    field(L("Date of birth")) {
+                    HStack {
+                        Text(L("Date of birth")).font(.system(size: 15, weight: .semibold)).foregroundStyle(MyohmColor.ink)
+                        Spacer()
                         DatePicker("", selection: $birth, in: ...Date(), displayedComponents: .date)
                             .labelsHidden()
                     }

@@ -4,10 +4,10 @@ struct MuscleSelectView: View {
     let person: Athlete?
     var onMeasure: (MeasurementKind) -> Void
     @Environment(\.dismiss) private var dismiss
-    @State private var view: MyohmMuscle.BodyView = .front
-    @State private var muscle: MyohmMuscle = .quadriceps
-    @State private var side: LimbSide = .right
-    @State private var band = 100
+    @State var view: MyohmMuscle.BodyView = .front
+    @State var muscle: MyohmMuscle = .quadriceps
+    @State var side: LimbSide = .right
+    @State var band = 100
 
     var body: some View {
         ScrollView {
@@ -30,7 +30,9 @@ struct MuscleSelectView: View {
                         .foregroundStyle(MyohmColor.muted)
                         .padding(6)
                     }
-                    PillSegmented(options: [(LimbSide.left, LimbSide.left.name), (.right, LimbSide.right.name)], selection: $side)
+                    PillSegmented(options: view == .front
+                        ? [(LimbSide.right, LimbSide.right.name), (.left, LimbSide.left.name)]
+                        : [(LimbSide.left, LimbSide.left.name), (.right, LimbSide.right.name)], selection: $side)
                 }
                 .myohmCard(padding: 14)
 

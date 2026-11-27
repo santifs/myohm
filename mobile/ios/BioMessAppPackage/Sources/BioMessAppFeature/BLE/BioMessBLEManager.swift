@@ -1152,16 +1152,17 @@ extension BioMessBLEManager {
         liveSweepProgress = Double(streamingBuffer.count) / Double(max(expectedBytes, 1))
         let completed = streamingBuffer.count / bytesPerMeasurementPoint
         guard completed > 0, expectedMeasurementPoints > 0 else { return }
-        let repetition = (completed - 1) / expectedMeasurementPoints
-        let first = repetition * expectedMeasurementPoints
-        liveSweepPoints = (first..<completed).map { index in
+        // Later repetitions overwrite the same frequency so the curve stays complete while it refreshes.
+        var byIndex: [Int: ImpedanceData.MeasurementPoint] = [:]
+        for index in 0..<completed {
             let offset = index * bytesPerMeasurementPoint
-            return ImpedanceData.MeasurementPoint(
+            byIndex[index % expectedMeasurementPoints] = ImpedanceData.MeasurementPoint(
                 frequency: Self.float32LE(streamingBuffer, offset),
                 magnitude: Self.float32LE(streamingBuffer, offset + 4),
                 phase: Self.float32LE(streamingBuffer, offset + 8)
             )
-        }.sorted { $0.frequency < $1.frequency }
+        }
+        liveSweepPoints = byIndex.values.sorted { $0.frequency < $1.frequency }
     }
 
     private func startStreamingTimeout(for duration: Duration) {

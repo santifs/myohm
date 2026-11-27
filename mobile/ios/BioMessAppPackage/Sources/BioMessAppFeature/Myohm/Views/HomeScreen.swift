@@ -17,8 +17,8 @@ struct HomeScreen: View {
     @Query(sort: \Measurement.measuredAt, order: .reverse) private var measurements: [Measurement]
     @AppStorage("myohm.personID") private var selectedPersonID = ""
     @State private var path: [MeasureRoute] = []
-    @State private var showSettings = false
-    @State private var showPersonPicker = false
+    @State var showSettings = false
+    @State var showPersonPicker = false
 
     private var person: Athlete? { SelectedPerson.resolve(people, id: selectedPersonID) }
     private var lastMeasurement: Measurement? {
@@ -31,7 +31,7 @@ struct HomeScreen: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     HStack {
-                        Text("myohm").font(.system(size: 24, weight: .heavy)).foregroundStyle(MyohmColor.brand).tracking(-0.4)
+                        MyohmLogo(width: 104)
                         Spacer()
                         ConnectionPill(onTap: openPairing)
                         CircleIconButton(systemName: "gearshape", label: L("Settings")) { showSettings = true }
@@ -42,7 +42,7 @@ struct HomeScreen: View {
                             HStack(spacing: 12) {
                                 Avatar(initials: person.initials, size: 44)
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text(L("Measuring")).font(MyohmFont.caption).foregroundStyle(MyohmColor.muted)
+                                    Text(L("Person")).font(MyohmFont.caption).foregroundStyle(MyohmColor.muted)
                                     Text(person.fullName).font(.system(size: 17, weight: .bold)).foregroundStyle(MyohmColor.ink)
                                 }
                                 Spacer()
@@ -102,10 +102,16 @@ struct HomeScreen: View {
                 destination(route)
             }
         }
-        .sheet(isPresented: $showSettings) { SettingsSheet(openPairing: openPairing) }
+        .sheet(isPresented: $showSettings) {
+            SettingsSheet(openPairing: openPairing)
+                .tint(MyohmColor.brand)
+                .presentationBackground(MyohmColor.background)
+        }
         .sheet(isPresented: $showPersonPicker) {
             PersonPicker(people: people, selectedID: $selectedPersonID)
+                .tint(MyohmColor.brand)
                 .presentationDetents([.medium])
+                .presentationBackground(MyohmColor.background)
         }
     }
 
@@ -202,6 +208,8 @@ struct PersonPicker: View {
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(MyohmColor.background)
             .navigationTitle(L("Who is being measured?"))
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -242,6 +250,8 @@ struct SettingsSheet: View {
                         .foregroundStyle(MyohmColor.muted)
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(MyohmColor.background)
             .navigationTitle(L("Settings"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

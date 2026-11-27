@@ -30,6 +30,7 @@ struct PlacementView: View {
                     ElectrodeDiagram()
                         .aspectRatio(1536.0 / 1100.0, contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).stroke(MyohmColor.hairline))
                     HStack(alignment: .top, spacing: 10) {
                         legend(color: MyohmColor.brand, title: L("Current (I)"), text: L("Back of the hand and base of the toes"))
                         legend(color: MyohmColor.accent, title: L("Sensing (V)"), text: L("Wrist and ankle, between the bones"))
@@ -132,7 +133,7 @@ struct ElectrodeDiagram: View {
         GeometryReader { proxy in
             let s = proxy.size.width / canvas.width
             ZStack(alignment: .topLeading) {
-                Color(hex: 0xF7F5F3)
+                Color.white
                 Image("limbs", bundle: .module)
                     .resizable()
                     .frame(width: 1536 * s, height: 1024 * s)
@@ -170,6 +171,7 @@ struct ElectrodeDiagram: View {
 struct MyohmMeasuringView: View {
     let kind: MeasurementKind
     let person: Athlete?
+    var autoStart = true
     var onFinished: (UUID) -> Void
     @Environment(BioMessBLEManager.self) private var ble
     @Environment(\.modelContext) private var context
@@ -190,11 +192,20 @@ struct MyohmMeasuringView: View {
 
             ZStack {
                 Circle().stroke(MyohmColor.brandSoft, lineWidth: 14)
-                Circle()
-                    .trim(from: 0, to: max(0.02, ble.liveSweepProgress))
-                    .stroke(MyohmColor.brand, style: StrokeStyle(lineWidth: 14, lineCap: .round))
-                    .rotationEffect(.degrees(-90))
-                    .animation(.easeOut(duration: 0.3), value: ble.liveSweepProgress)
+                if waitingForData {
+                    TimelineView(.animation) { context in
+                        Circle()
+                            .trim(from: 0, to: 0.18)
+                            .stroke(MyohmColor.brand, style: StrokeStyle(lineWidth: 14, lineCap: .round))
+                            .rotationEffect(.degrees(context.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 1.4) / 1.4 * 360))
+                    }
+                } else {
+                    Circle()
+                        .trim(from: 0, to: ble.liveSweepProgress)
+                        .stroke(MyohmColor.brand, style: StrokeStyle(lineWidth: 14, lineCap: .round))
+                        .rotationEffect(.degrees(-90))
+                        .animation(.easeOut(duration: 0.3), value: ble.liveSweepProgress)
+                }
                 VStack(spacing: 4) {
                     Text("\(Int((ble.liveSweepProgress * 100).rounded())) %")
                         .font(MyohmFont.display(44))
@@ -207,19 +218,25 @@ struct MyohmMeasuringView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(L("Phase angle · live")).font(MyohmFont.micro).foregroundStyle(MyohmColor.muted)
+                if ble.liveSweepPoints.isEmpty {
+                    Text(L("The curve will appear as frequencies arrive."))
+                        .font(MyohmFont.caption).foregroundStyle(MyohmColor.muted)
+                        .frame(maxWidth: .infinity, minHeight: 140)
+                } else {
                 Chart(ble.liveSweepPoints) { point in
                     LineMark(x: .value("Hz", Double(point.frequency)), y: .value("°", abs(Double(point.phase))))
                         .interpolationMethod(.monotone)
                         .foregroundStyle(MyohmColor.brand)
                 }
-                .chartXScale(domain: 4_000...198_000, type: .log)
+                .chartXScale(domain: 4_000...200_000, type: .log)
                 .chartXAxis {
-                    AxisMarks(values: [5_000, 10_000, 50_000, 100_000]) { value in
-                        AxisGridLine()
+                    AxisMarks(values: [5_000, 10_000, 20_000, 50_000, 100_000, 200_000]) { value in
+                        AxisGridLine().foregroundStyle(MyohmColor.hairline)
                         AxisValueLabel { Text(MyohmFormat.frequency(value.as(Double.self) ?? 0)) }
                     }
                 }
                 .frame(height: 140)
+                }
             }
             .myohmCard()
 
@@ -257,9 +274,15 @@ struct MyohmMeasuringView: View {
     }
 
     private var statusText: String {
-        if ble.connectionState == .measuring { return L("Sweep 4–198 kHz") }
+        if errorText != nil { return L("Stopped") }
+        if ble.connectionState == .measuring {
+            return ble.liveSweepProgress > 0 ? L("Sweep 4–198 kHz") : L("Starting the sweep…")
+        }
+        if started && ble.liveSweepProgress >= 1 { return L("Saving…") }
         return ready ? L("Preparing…") : L("Not connected")
     }
+
+    private var waitingForData: Bool { ble.liveSweepProgress == 0 && errorText == nil }
 
     private func cancel() {
         task?.cancel()
@@ -272,7 +295,7 @@ struct MyohmMeasuringView: View {
     }
 
     private func start(force: Bool) {
-        guard ready, force || !started else { return }
+        guard ready, force || (autoStart && !started) else { return }
         started = true
         errorText = nil
         task = Task {

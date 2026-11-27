@@ -36,25 +36,15 @@ struct ResultScreen: View {
 /// Cole fit of a measurement, computed once per screen.
 @MainActor
 final class ColeFitLoader: ObservableObject {
-    @Published var parameters: ColeParameters?
+    @Published var parameters: ColeFit?
     @Published var failed = false
     private var started = false
 
-    func load(_ sweep: SweepAnalysis?, sign: Float, processor: BioimpedanceProcessor) {
+    func load(_ sweep: SweepAnalysis?) {
         guard !started, let sweep else { return }
         started = true
-        let data = ImpedanceData(measurements: sweep.points.map {
-            ImpedanceData.MeasurementPoint(frequency: Float($0.frequencyHz), magnitude: Float($0.magnitude), phase: sign * Float($0.phaseAngle))
-        })
-        Task {
-            do { parameters = try await processor.processComplete(data) } catch { failed = true }
-        }
+        if let fit = ColeFit.fit(sweep) { parameters = fit } else { failed = true }
     }
-}
-
-private func phaseSign(_ data: ImpedanceData?) -> Float {
-    guard let phases = data?.phases, !phases.isEmpty else { return -1 }
-    return phases.reduce(0, +) < 0 ? -1 : 1
 }
 
 @MainActor
@@ -73,11 +63,10 @@ struct LocalResultView: View {
     let measurement: Measurement
     let person: Athlete?
     @Binding var path: [MeasureRoute]
-    @Environment(BioimpedanceProcessor.self) private var processor
     @Query(sort: \Measurement.measuredAt, order: .reverse) private var all: [Measurement]
     @StateObject private var fit = ColeFitLoader()
-    @State private var chart: SpectrumChartKind = .phase
-    @State private var selectedFrequency: Double?
+    @State var chart: SpectrumChartKind = .phase
+    @State var selectedFrequency: Double?
     @State private var compare = true
 
     private var sweep: SweepAnalysis? { measurement.impedanceData.flatMap(SweepAnalysis.init) }
@@ -96,6 +85,7 @@ struct LocalResultView: View {
             VStack(alignment: .leading, spacing: 16) {
                 resultHeader(measurement) { path.removeAll() }
                 if let sweep, let ref = sweep.atReference {
+                    if !sweep.looksLikeTissue { ContactWarning() }
                     hero(ref)
                     spectrumCard(sweep)
                     coleCard
@@ -106,7 +96,9 @@ struct LocalResultView: View {
             }
             .padding(20)
         }
-        .onAppear { fit.load(sweep, sign: phaseSign(measurement.impedanceData), processor: processor) }
+        .background(MyohmColor.background.ignoresSafeArea())
+        .toolbar(.hidden, for: .navigationBar)
+        .onAppear { fit.load(sweep) }
     }
 
     private func hero(_ ref: SweepPoint) -> some View {
@@ -219,7 +211,7 @@ struct LocalResultView: View {
                     .foregroundStyle(MyohmColor.brand).symbolSize(90)
             }
         }
-        .chartXScale(domain: 4_000...198_000, type: .log)
+        .chartXScale(domain: 4_000...200_000, type: .log)
         .chartYScale(domain: yMin(points + prev)...yMax(points + prev))
         .chartXAxis {
             AxisMarks(values: [5_000, 10_000, 20_000, 50_000, 100_000, 200_000]) { value in
@@ -282,10 +274,10 @@ struct LocalResultView: View {
             }
             if let p = fit.parameters {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
-                    tile("R₀", MyohmFormat.ohms(Double(p.R0)), L("extracellular"))
-                    tile("R∞", MyohmFormat.ohms(Double(p.Rinf)), L("total"))
-                    tile("fc", MyohmFormat.number(Double(p.fc)) + " kHz", L("characteristic frequency"))
-                    tile("α", MyohmFormat.number(Double(p.alpha), digits: 2), L("dispersion"))
+                    tile("R₀", MyohmFormat.ohms(p.r0), L("extracellular"))
+                    tile("R∞", MyohmFormat.ohms(p.rInf), L("total"))
+                    tile("fc", MyohmFormat.number(p.fc / 1000) + " kHz", L("characteristic frequency"))
+                    tile("α", MyohmFormat.number(p.alpha, digits: 2), L("dispersion"))
                 }
             } else if fit.failed {
                 Text(L("The Cole model could not be fitted to this sweep.")).font(MyohmFont.caption).foregroundStyle(MyohmColor.muted)
@@ -309,6 +301,7 @@ struct LocalResultView: View {
         HStack(spacing: 10) {
             ShareLink(item: CSVExport.file(for: measurement, sweep: sweep)) {
                 Label(L("Export CSV"), systemImage: "square.and.arrow.up")
+                    .foregroundStyle(MyohmColor.ink)
             }
             .buttonStyle(MyohmSecondaryButton())
             Button(L("Repeat")) {
@@ -319,6 +312,22 @@ struct LocalResultView: View {
             }
             .buttonStyle(MyohmPrimaryButton())
         }
+    }
+}
+
+struct ContactWarning: View {
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(MyohmColor.accent)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(L("The signal does not look like tissue")).font(.system(size: 15, weight: .bold)).foregroundStyle(MyohmColor.accentInk)
+                Text(L("Check that every electrode touches the skin and the cables are connected, then repeat. These values are not reliable."))
+                    .font(MyohmFont.caption).foregroundStyle(MyohmColor.accentInk.opacity(0.85))
+            }
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(MyohmColor.accentBg, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 }
 
@@ -349,9 +358,8 @@ struct BodyResultView: View {
     let measurement: Measurement
     let person: Athlete?
     @Binding var path: [MeasureRoute]
-    @Environment(BioimpedanceProcessor.self) private var processor
     @StateObject private var fit = ColeFitLoader()
-    @State private var tab = 0
+    @State var tab = 0
 
     private var sweep: SweepAnalysis? { measurement.impedanceData.flatMap(SweepAnalysis.init) }
     private var reference: SweepPoint? { sweep?.atReference }
@@ -363,7 +371,7 @@ struct BodyResultView: View {
     private var estimate: FatEstimate? { inputs.flatMap { BodyComposition.estimate($0) } }
     private var water: BodyWater? {
         guard let p = fit.parameters, let inputs else { return nil }
-        return BodyWater.estimate(heightCm: inputs.heightCm, weightKg: inputs.weightKg, r0: Double(p.R0), rInf: Double(p.Rinf))
+        return BodyWater.estimate(heightCm: inputs.heightCm, weightKg: inputs.weightKg, r0: p.r0, rInf: p.rInf)
     }
 
     var body: some View {
@@ -379,6 +387,7 @@ struct BodyResultView: View {
                     }
                 }
 
+                if let sweep, !sweep.looksLikeTissue { ContactWarning() }
                 if inputs == nil {
                     missingData
                 } else {
@@ -400,6 +409,7 @@ struct BodyResultView: View {
                             ShareLink(item: CSVExport.file(for: measurement, sweep: sweep)) {
                                 Label(L("Export"), systemImage: "square.and.arrow.up")
                                     .font(.system(size: 14, weight: .semibold))
+                                    .foregroundStyle(MyohmColor.brand)
                                     .padding(.horizontal, 14).frame(minHeight: 40)
                                     .background(MyohmColor.brandSoft, in: Capsule())
                             }
@@ -414,8 +424,10 @@ struct BodyResultView: View {
             }
             .padding(20)
         }
+        .background(MyohmColor.background.ignoresSafeArea())
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
-            fit.load(sweep, sign: phaseSign(measurement.impedanceData), processor: processor)
+            fit.load(sweep)
             if case .highBMI = selection { tab = 1 }
         }
     }

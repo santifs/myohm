@@ -42,6 +42,15 @@ public struct SweepAnalysis: Sendable, Equatable {
         self.init(points: combined, repetitions: reps.count)
     }
 
+    /// Living tissue gives phase angles of a few degrees to a few tens of degrees.
+    /// Anything else usually means an electrode without contact or a loose cable.
+    public var looksLikeTissue: Bool {
+        let phases = points.map(\.phaseAngle).sorted()
+        guard !phases.isEmpty else { return false }
+        let inRange = phases.filter { (0.3...45).contains($0) }.count
+        return Double(inRange) / Double(phases.count) >= 0.9
+    }
+
     /// Value at 50 kHz by linear interpolation on a log-frequency axis.
     public var atReference: SweepPoint? { interpolated(at: Self.referenceFrequencyHz) }
 

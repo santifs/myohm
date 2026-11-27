@@ -50,3 +50,29 @@ struct BodyCompositionTests {
         #expect(ref.phaseAngle > 6 && ref.phaseAngle < 7)
     }
 }
+
+@Suite("Cole fit")
+struct ColeFitTests {
+    @Test func recoversSyntheticParameters() throws {
+        let freqs = (0..<48).map { 4_000 * pow(198_000.0 / 4_000, Double($0) / 47) }
+        let points = freqs.map { f -> SweepPoint in
+            let m = ColeFit.model(f, r0: 700, rInf: 470, fc: 46_000, alpha: 0.72)
+            return SweepPoint(frequencyHz: f, magnitude: (m.re * m.re + m.x * m.x).squareRoot(), phaseAngle: atan2(m.x, m.re) * 180 / .pi)
+        }
+        let fit = try #require(ColeFit.fit(SweepAnalysis(points: points, repetitions: 1)))
+        #expect(abs(fit.r0 - 700) < 1)
+        #expect(abs(fit.rInf - 470) < 1)
+        #expect(abs(fit.fc - 46_000) / 46_000 < 0.01)
+        #expect(abs(fit.alpha - 0.72) < 0.01)
+    }
+}
+
+@Suite("Signal check")
+struct SignalCheckTests {
+    @Test func flagsNonTissuePhase() {
+        let good = SweepAnalysis(points: (0..<48).map { SweepPoint(frequencyHz: 4_000 + Double($0) * 4_000, magnitude: 500, phaseAngle: 6) }, repetitions: 1)
+        let bad = SweepAnalysis(points: (0..<48).map { SweepPoint(frequencyHz: 4_000 + Double($0) * 4_000, magnitude: 500, phaseAngle: 100) }, repetitions: 1)
+        #expect(good.looksLikeTissue)
+        #expect(!bad.looksLikeTissue)
+    }
+}

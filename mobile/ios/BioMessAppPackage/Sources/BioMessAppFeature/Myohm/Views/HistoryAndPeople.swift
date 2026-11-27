@@ -8,7 +8,7 @@ struct HistoryScreen: View {
     @Query(sort: \Athlete.createdAt) private var people: [Athlete]
     @Query(sort: \Measurement.measuredAt, order: .reverse) private var measurements: [Measurement]
     @AppStorage("myohm.personID") private var selectedPersonID = ""
-    @State private var filter: Filter = .all
+    @State var filter: Filter = .all
     @State private var path: [MeasureRoute] = []
     @State private var selectedDate: Date?
 
@@ -99,7 +99,9 @@ struct HistoryScreen: View {
 
     private func trendCard(_ t: (title: String, kicker: String, unit: String, points: [(Date, Double)])) -> some View {
         let values = t.points.map(\.1)
-        let lo = (values.min() ?? 0) - 1, hi = (values.max() ?? 1) + 1
+        let lo = ((values.min() ?? 0) - 1).rounded(.down), hi = ((values.max() ?? 1) + 1).rounded(.up)
+        let firstDate = t.points.first!.0, lastDate = t.points.last!.0
+        let pad = max(lastDate.timeIntervalSince(firstDate) * 0.06, 86_400)
         let selected = selectedDate.flatMap { d in t.points.min { abs($0.0.timeIntervalSince(d)) < abs($1.0.timeIntervalSince(d)) } }
         let shown = selected ?? t.points.last!
         return VStack(alignment: .leading, spacing: 10) {
@@ -130,6 +132,19 @@ struct HistoryScreen: View {
                 }
             }
             .chartYScale(domain: lo...hi)
+            .chartXScale(domain: firstDate.addingTimeInterval(-pad)...lastDate.addingTimeInterval(pad))
+            .chartXAxis {
+                AxisMarks(values: .automatic(desiredCount: 4)) { _ in
+                    AxisGridLine().foregroundStyle(MyohmColor.hairline)
+                    AxisValueLabel(format: .dateTime.day().month(.abbreviated))
+                }
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading, values: .automatic(desiredCount: 4)) { _ in
+                    AxisGridLine().foregroundStyle(MyohmColor.hairline)
+                    AxisValueLabel()
+                }
+            }
             .chartXSelection(value: $selectedDate)
             .frame(height: 160)
             Text(t.unit == "%"
@@ -298,7 +313,9 @@ struct PeopleScreen: View {
                             HStack {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(item.0.myohmTitle).font(.system(size: 15, weight: .semibold)).foregroundStyle(MyohmColor.ink)
-                                    Text(L("Band \(String(item.0.bandMillimeters ?? 0)) mm · \(String(item.1)) measurements"))
+                                    Text(item.1 == 1
+                                         ? L("Band \(String(item.0.bandMillimeters ?? 0)) mm · 1 measurement")
+                                         : L("Band \(String(item.0.bandMillimeters ?? 0)) mm · \(String(item.1)) measurements"))
                                         .font(MyohmFont.caption).foregroundStyle(MyohmColor.muted)
                                 }
                                 Spacer()

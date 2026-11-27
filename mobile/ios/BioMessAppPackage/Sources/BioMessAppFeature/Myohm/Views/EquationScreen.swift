@@ -51,6 +51,8 @@ struct EquationScreen: View {
         }
     }
 
+    private func c(_ value: Double, _ digits: Int = 3) -> String { MyohmFormat.number(value, digits: digits) }
+
     private func terms(_ eq: BodyEquation, _ i: BodyInputs) -> [(String, Double)] {
         let h = MyohmFormat.number(i.heightCm, digits: 0)
         let r = MyohmFormat.number(i.r50, digits: 0)
@@ -60,23 +62,23 @@ struct EquationScreen: View {
         switch eq {
         case .geneva:
             return [
-                ("0.518 · \(h)² / \(r)", 0.518 * index),
-                ("0.231 · \(w)", 0.231 * i.weightKg),
-                ("0.130 · \(MyohmFormat.ohms(i.xc50))", 0.130 * i.xc50),
-                ("4.229 · \(sexLabel)", i.isMale ? 4.229 : 0),
+                ("\(c(0.518)) · \(h)² / \(r)", 0.518 * index),
+                ("\(c(0.231)) · \(w)", 0.231 * i.weightKg),
+                ("\(c(0.130)) · \(MyohmFormat.ohms(i.xc50))", 0.130 * i.xc50),
+                ("\(c(4.229)) · \(sexLabel)", i.isMale ? 4.229 : 0),
                 (L("Constant"), -4.104)
             ]
         case .athletes:
             return [
-                ("0.327 · \(h)² / \(r)", 0.327 * index),
-                ("0.525 · \(w)", 0.525 * i.weightKg),
-                ("5.462 · \(sexLabel)", i.isMale ? 5.462 : 0),
+                ("\(c(0.327)) · \(h)² / \(r)", 0.327 * index),
+                ("\(c(0.525)) · \(w)", 0.525 * i.weightKg),
+                ("\(c(5.462)) · \(sexLabel)", i.isMale ? 5.462 : 0),
                 (L("Constant"), -2.261)
             ]
         case .youth:
             return [
-                ("0.61 · \(h)² / \(r)", 0.61 * index),
-                ("0.25 · \(w)", 0.25 * i.weightKg),
+                ("\(c(0.61, 2)) · \(h)² / \(r)", 0.61 * index),
+                ("\(c(0.25, 2)) · \(w)", 0.25 * i.weightKg),
                 (L("Constant"), 1.31)
             ]
         }
@@ -98,7 +100,7 @@ struct EquationScreen: View {
             Text(L("With \(person?.firstName ?? "")'s data")).font(MyohmFont.headline).padding(.top, 4)
             VStack(spacing: 0) {
                 ForEach(Array(terms(eq, i).enumerated()), id: \.offset) { _, term in
-                    row(term.0, MyohmFormat.number(term.1, digits: 2))
+                    row(term.0, (term.1 < 0 ? "−" : "") + MyohmFormat.number(abs(term.1), digits: 2))
                 }
                 HStack {
                     Text(L("Fat-free mass")).font(.system(size: 15, weight: .bold))
