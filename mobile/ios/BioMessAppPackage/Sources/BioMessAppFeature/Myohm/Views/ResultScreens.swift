@@ -367,8 +367,11 @@ struct BodyResultView: View {
     private var sweep: SweepAnalysis? { measurement.impedanceData.flatMap(SweepAnalysis.init) }
     private var reference: SweepPoint? { sweep?.atReference }
     private var inputs: BodyInputs? {
-        guard let person, let reference else { return nil }
-        return MeasurementValue.bodyInputs(measurement: measurement, person: person, reference: reference)
+        guard let person, let reference,
+              var i = MeasurementValue.bodyInputs(measurement: measurement, person: person, reference: reference) else { return nil }
+        i.r0 = fit.parameters?.r0
+        i.rInf = fit.parameters?.rInf
+        return i
     }
     private var selection: EquationSelection? { inputs.map(BodyComposition.select) }
     private var automaticEquation: BodyEquation? { selection?.equation }
@@ -400,7 +403,7 @@ struct BodyResultView: View {
                 if inputs == nil {
                     missingData
                 } else {
-                    PillSegmented(options: [(0, L("Fat · 50 kHz")), (1, L("Water · spectrum"))], selection: $tab)
+                    PillSegmented(options: [(0, activeEquation?.usesSpectrum == true ? L("Fat · spectrum") : L("Fat · 50 kHz")), (1, L("Water · spectrum"))], selection: $tab)
                     if tab == 0 { fatCard } else { waterCard }
                     equationCard
                 }
@@ -467,6 +470,12 @@ struct BodyResultView: View {
             notice(L("No validated equation under 10 years"), L("Myohm shows only the phase angle for children under 10."))
         } else if chosenEquation == nil, selection == .highBMI {
             notice(L("BMI above 34"), L("Prediction equations are not valid with this BMI. Use the water view, calculated from the spectrum."))
+        } else if activeEquation?.usesSpectrum == true, inputs?.r0 == nil {
+            if fit.failed {
+                notice(L("Water not available"), L("The Cole model could not be fitted to this sweep."))
+            } else {
+                HStack { ProgressView(); Text(L("Fitting the spectrum…")).foregroundStyle(MyohmColor.muted) }.myohmCard()
+            }
         } else if let estimate {
             fatHero(estimate)
         } else {
@@ -493,9 +502,20 @@ struct BodyResultView: View {
                 )
                 .frame(width: 150, height: 150)
                 VStack(alignment: .leading, spacing: 0) {
-                    legendRow(MyohmColor.accentSoft, L("Fat mass"), MyohmFormat.kg(e.fatMassKg), L("weight − fat-free mass"))
+                    legendRow(MyohmColor.accentSoft, L("Fat mass"), MyohmFormat.kg(e.fatMassKg), e.tissues == nil ? L("weight − fat-free mass") : L("75 % of adipose tissue"))
                     legendRow(MyohmColor.leanOnDark, L("Fat-free mass"), MyohmFormat.kg(e.fatFreeMassKg), e.equation.standardErrorKg.map { "± " + MyohmFormat.kg($0) } ?? "")
                 }
+            }
+            if let t = e.tissues {
+                HStack(spacing: 8) {
+                    darkTile(L("Lean tissue"), MyohmFormat.kg(t.leanTissueKg))
+                    darkTile(L("Adipose tissue"), MyohmFormat.kg(t.adiposeTissueKg))
+                    darkTile(L("Excess fluid"), MyohmFormat.kg(t.excessFluidKg))
+                }
+                Text(t.excessFluidIsUnusual
+                     ? L("Unusual excess fluid. In a healthy person this usually means a poor spectrum; repeat the measurement before trusting the fat value.")
+                     : L("From R₀ and R∞ of the whole spectrum. Typical error not yet verified by Myohm."))
+                    .font(.system(size: 12)).foregroundStyle(.white.opacity(0.75))
             }
             if let err = e.fatPercentError {
                 ErrorBand(value: e.fatPercent, error: err)
@@ -738,6 +758,14 @@ enum EquationChecks {
             } else {
                 result.append(EquationCheck(id: "athlete", ok: true, short: L("Not an athlete"), label: L("Not an athlete"), detail: L("athletes use another equation")))
             }
+        }
+        if eq == .spectroscopy, let t = BodyComposition.estimate(inputs, using: eq)?.tissues {
+            let v = MyohmFormat.kg(t.excessFluidKg)
+            let ok = !t.excessFluidIsUnusual
+            result.append(EquationCheck(id: "fluid", ok: ok,
+                short: ok ? L("Excess fluid \(v)") : L("Excess fluid \(v) · unusual"),
+                label: L("Excess fluid"),
+                detail: ok ? v : L("\(v) · check the spectrum")))
         }
         if eq == .athletes {
             result.append(EquationCheck(id: "athlete", ok: inputs.isAthlete,

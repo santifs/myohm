@@ -8,6 +8,7 @@ struct EquationScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Query private var matches: [Measurement]
     @Query(sort: \Athlete.createdAt) private var people: [Athlete]
+    @StateObject private var fit = ColeFitLoader()
 
     init(measurementID: UUID, equation: BodyEquation? = nil) {
         self.measurementID = measurementID
@@ -19,8 +20,11 @@ struct EquationScreen: View {
     private var person: Athlete? { measurement.flatMap { m in people.first { $0.id == m.personID } } }
     private var inputs: BodyInputs? {
         guard let measurement, let person,
-              let ref = measurement.impedanceData.flatMap(SweepAnalysis.init)?.atReference else { return nil }
-        return MeasurementValue.bodyInputs(measurement: measurement, person: person, reference: ref)
+              let ref = measurement.impedanceData.flatMap(SweepAnalysis.init)?.atReference,
+              var i = MeasurementValue.bodyInputs(measurement: measurement, person: person, reference: ref) else { return nil }
+        i.r0 = fit.parameters?.r0
+        i.rInf = fit.parameters?.rInf
+        return i
     }
 
     var body: some View {
@@ -42,6 +46,7 @@ struct EquationScreen: View {
         }
         .background(MyohmColor.background.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
+        .onAppear { fit.load(measurement?.impedanceData.flatMap(SweepAnalysis.init)) }
     }
 
     private func formulaText(_ eq: BodyEquation) -> String {
@@ -52,6 +57,8 @@ struct EquationScreen: View {
             return L("FFM = −2.261\n+ 0.327 · height² / R\n+ 0.525 · weight\n+ 5.462 · sex")
         case .youth:
             return L("FFM = 0.61 · height² / R\n+ 0.25 · weight\n+ 1.31")
+        case .spectroscopy:
+            return L("ExF = 1.136 · ECW − 0.430 · ICW\n  − 0.114 · weight\nLT = 2.725 · ICW + 0.191 · ExF\n  − 0.191 · weight\nAT = weight − ExF − LT\nFat = 0.753 · AT")
         }
     }
 
@@ -85,12 +92,40 @@ struct EquationScreen: View {
                 ("\(c(0.25, 2)) · \(w)", 0.25 * i.weightKg),
                 (L("Constant"), 1.31)
             ]
+        case .spectroscopy:
+            guard let t = BodyComposition.estimate(i, using: eq)?.tissues else { return [] }
+            return [
+                ("R₀ · R∞", 0),
+                (L("Extracellular water (ECW)"), t.water.extracellularL * ChamneyTissues.waterDensity),
+                (L("Intracellular water (ICW)"), t.water.intracellularL * ChamneyTissues.waterDensity),
+                (L("Excess fluid (ExF)"), t.excessFluidKg),
+                (L("Lean tissue (LT)"), t.leanTissueKg),
+                (L("Adipose tissue (AT)"), t.adiposeTissueKg)
+            ]
         }
     }
 
+    @ViewBuilder
     private func formulaCard(_ eq: BodyEquation, _ i: BodyInputs) -> some View {
-        let estimate = BodyComposition.estimate(i, using: eq)
-        return VStack(alignment: .leading, spacing: 14) {
+        if let estimate = BodyComposition.estimate(i, using: eq) {
+            formulaCard(eq, i, estimate)
+        } else if fit.failed {
+            Text(L("The Cole model could not be fitted to this sweep.")).foregroundStyle(MyohmColor.muted).myohmCard(padding: 18)
+        } else {
+            HStack { ProgressView(); Text(L("Fitting the spectrum…")).foregroundStyle(MyohmColor.muted) }.myohmCard(padding: 18)
+        }
+    }
+
+    private func termValue(_ eq: BodyEquation, _ label: String, _ value: Double) -> String {
+        if eq.usesSpectrum {
+            if label == "R₀ · R∞" { return "" }
+            return (value < 0 ? "−" : "") + MyohmFormat.kg(abs(value))
+        }
+        return (value < 0 ? "−" : "") + MyohmFormat.number(abs(value), digits: 2)
+    }
+
+    private func formulaCard(_ eq: BodyEquation, _ i: BodyInputs, _ estimate: FatEstimate) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
             Text(formulaText(eq))
                 .font(.system(size: 15, weight: .semibold, design: .monospaced))
                 .foregroundStyle(MyohmColor.brand)
@@ -98,13 +133,19 @@ struct EquationScreen: View {
                 .padding(14)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(MyohmColor.background, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-            Text(L("FFM: fat-free mass (kg). Height in cm, weight in kg, R and Xc in Ω at 50 kHz. Sex: male = 1, female = 0."))
+            Text(eq.usesSpectrum
+                 ? L("ECW and ICW from R₀ and R∞ of the Cole fit (Moissl 2006), in kg (× 0.99371). LT: lean tissue, AT: adipose tissue, ExF: excess fluid. Weight in kg.")
+                 : L("FFM: fat-free mass (kg). Height in cm, weight in kg, R and Xc in Ω at 50 kHz. Sex: male = 1, female = 0."))
                 .font(.system(size: 12)).foregroundStyle(MyohmColor.muted)
 
             Text(L("With \(person?.firstName ?? "")'s data")).font(MyohmFont.headline).padding(.top, 4)
             VStack(spacing: 0) {
                 ForEach(Array(terms(eq, i).enumerated()), id: \.offset) { _, term in
-                    row(term.0, (term.1 < 0 ? "−" : "") + MyohmFormat.number(abs(term.1), digits: 2))
+                    if term.0 == "R₀ · R∞" {
+                        row("R₀ · R∞", (i.r0.map { MyohmFormat.ohms($0) } ?? "–") + " · " + (i.rInf.map { MyohmFormat.ohms($0) } ?? "–"))
+                    } else {
+                        row(term.0, termValue(eq, term.0, term.1))
+                    }
                 }
                 HStack {
                     Text(L("Fat-free mass")).font(.system(size: 15, weight: .bold))
@@ -113,7 +154,9 @@ struct EquationScreen: View {
                 }
                 .padding(.vertical, 10)
                 .overlay(alignment: .bottom) { Rectangle().fill(MyohmColor.hairline).frame(height: 1) }
-                row(L("Fat = \(MyohmFormat.number(i.weightKg)) − \(MyohmFormat.number(estimate.fatFreeMassKg))"),
+                row(eq.usesSpectrum
+                    ? L("Fat = 0.753 · \(MyohmFormat.number(estimate.tissues?.adiposeTissueKg ?? 0))")
+                    : L("Fat = \(MyohmFormat.number(i.weightKg)) − \(MyohmFormat.number(estimate.fatFreeMassKg))"),
                     MyohmFormat.kg(estimate.fatMassKg) + " · " + MyohmFormat.percent(estimate.fatPercent), last: true)
             }
         }
@@ -152,6 +195,7 @@ struct EquationScreen: View {
         case .geneva: return L("Typical error ± 1.72 kg of fat-free mass (r = 0.986), in 343 healthy adults compared with DXA.")
         case .athletes: return L("Developed in athletes against a 4-compartment model. Typical error not yet verified by Myohm.")
         case .youth: return L("Developed and cross-validated in children and adolescents. Typical error not yet verified by Myohm.")
+        case .spectroscopy: return L("Tissue hydrations from 104 healthy adults with isotope dilution and DXA. The sweep stops at 198 kHz, so R∞ is extrapolated. Typical error not yet verified by Myohm.")
         }
     }
 
@@ -162,7 +206,8 @@ struct EquationScreen: View {
             selectionRow(L("Athlete"), "Matias–Campa 2021", highlighted: current == .athletes)
             selectionRow(L("10–19 years"), "Houtkooper 1992", highlighted: current == .youth)
             selectionRow(L("Under 10 years"), L("No fat; phase only"), warning: true)
-            selectionRow(L("BMI above 34"), L("Water only (spectrum)"), warning: true, last: true)
+            selectionRow(L("BMI above 34"), L("Water only (spectrum)"), warning: true)
+            selectionRow(L("Whole spectrum, to compare"), "Moissl–Chamney 2007", highlighted: current == .spectroscopy, last: true)
             Text(L("Each measurement keeps the data used, so the calculation can be repeated."))
                 .font(.system(size: 12)).foregroundStyle(MyohmColor.muted).padding(.top, 8)
         }

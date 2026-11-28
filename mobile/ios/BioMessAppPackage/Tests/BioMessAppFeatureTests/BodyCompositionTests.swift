@@ -55,6 +55,25 @@ struct BodyCompositionTests {
         #expect(abs(w.intracellularL - 19.9) < 0.05)
     }
 
+    @Test func chamneyReferenceMan() {
+        // Chamney 2007: a 73 kg reference man with 17.2 L ECW and 24.7 L ICW has 14.6 kg fat.
+        let t = ChamneyTissues(water: BodyWater(extracellularL: 17.2, intracellularL: 24.7), weightKg: 73)
+        #expect(abs(t.fatMassKg - 14.6) < 0.2)
+        #expect(abs(t.excessFluidKg) < 1)
+        #expect(!t.excessFluidIsUnusual)
+    }
+
+    @Test func spectrumMethodNeedsColeFit() throws {
+        #expect(BodyComposition.estimate(ana, using: .spectroscopy) == nil)
+        var withFit = ana
+        withFit.r0 = 700
+        withFit.rInf = 470
+        let e = try #require(BodyComposition.checkedEstimate(withFit, using: .spectroscopy))
+        #expect(abs(e.fatPercent - 23.9) < 0.2)
+        #expect(e.tissues != nil)
+        #expect(abs(e.fatFreeMassKg + e.fatMassKg - withFit.weightKg) < 1e-9)
+    }
+
     @Test func sweepMedianAndReference() throws {
         func point(_ f: Float, _ r: Double, _ x: Double) -> ImpedanceData.MeasurementPoint {
             let mag = (r * r + x * x).squareRoot()

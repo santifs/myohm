@@ -4,6 +4,7 @@ import com.volumhealth.app.myohm.domain.BodyComposition
 import com.volumhealth.app.myohm.domain.BodyEquation
 import com.volumhealth.app.myohm.domain.BodyInputs
 import com.volumhealth.app.myohm.domain.BodyWater
+import com.volumhealth.app.myohm.domain.ChamneyTissues
 import com.volumhealth.app.myohm.domain.ColeFit
 import com.volumhealth.app.myohm.domain.EquationSelection
 import com.volumhealth.app.myohm.domain.LimbSide
@@ -62,6 +63,21 @@ class BodyCompositionTest {
     @Test fun manualEquationStillChecked() {
         assertEquals(BodyEquation.ATHLETES, BodyComposition.checkedEstimate(ana, BodyEquation.ATHLETES)?.equation)
         assertNull(BodyComposition.checkedEstimate(ana.copy(weightKg = 30.0), BodyEquation.ATHLETES))
+    }
+
+    @Test fun chamneyReferenceMan() {
+        // Chamney 2007: a 73 kg reference man with 17.2 L ECW and 24.7 L ICW has 14.6 kg fat.
+        val t = ChamneyTissues(BodyWater(17.2, 24.7), 73.0)
+        assertEquals(14.6, t.fatMassKg, 0.2)
+        assertTrue(kotlin.math.abs(t.excessFluidKg) < 1.0)
+        assertFalse(t.excessFluidIsUnusual)
+    }
+
+    @Test fun spectrumMethodNeedsColeFit() {
+        assertNull(BodyComposition.estimate(ana, BodyEquation.SPECTROSCOPY))
+        val e = BodyComposition.checkedEstimate(ana.copy(r0 = 700.0, rInf = 470.0), BodyEquation.SPECTROSCOPY)!!
+        assertEquals(23.9, e.fatPercent, 0.2)
+        assertEquals(61.6, e.fatFreeMassKg + e.fatMassKg, 1e-9)
     }
 
     @Test fun moisslWater() {
