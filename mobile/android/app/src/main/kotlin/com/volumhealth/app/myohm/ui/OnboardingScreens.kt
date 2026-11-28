@@ -76,6 +76,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isSpecified
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import com.volumhealth.app.myohm.data.MyohmViewModel
@@ -177,16 +178,20 @@ fun OneLineText(text: String, maxWidthDp: androidx.compose.ui.unit.Dp, style: Te
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
     val maxPx = with(density) { maxWidthDp.roundToPx() }
+    fun scaled(f: Float) = style.copy(
+        fontSize = style.fontSize * f,
+        letterSpacing = if (style.letterSpacing.isSpecified) style.letterSpacing * f else style.letterSpacing
+    )
     var factor = 1f
     while (factor > 0.7f) {
-        val s = style.copy(fontSize = style.fontSize * factor, letterSpacing = style.letterSpacing * factor)
+        val s = scaled(factor)
         val w = measurer.measure(text, s, maxLines = 1, softWrap = false, constraints = Constraints()).size.width
         if (w <= maxPx) break
         factor -= 0.03f
     }
     Text(
         text,
-        style = style.copy(fontSize = style.fontSize * factor, letterSpacing = style.letterSpacing * factor),
+        style = scaled(factor),
         maxLines = 1, softWrap = false, textAlign = TextAlign.Center
     )
 }
@@ -388,7 +393,11 @@ fun PersonFormScreen(vm: MyohmViewModel, personId: String?, onBack: () -> Unit, 
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         ScreenHeader(
-            kicker = if (personId == null) L("Before the first measurement") else null,
+            kicker = when {
+                personId != null -> null
+                people.isNullOrEmpty() -> L("Before the first measurement")
+                else -> L("New person")
+            },
             title = if (personId == null) L("Who are we measuring?") else L("Edit person"),
             back = onBack
         )

@@ -11,6 +11,10 @@ import androidx.compose.runtime.remember
 import androidx.core.content.ContextCompat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -87,7 +91,16 @@ fun MyohmApp() {
     if (list.isEmpty() || !(onboarded || vm.hasPairedDevice())) {
         OnboardingFlow(vm)
     } else {
-        MainTabs(vm)
+        Box(Modifier.fillMaxSize()) {
+            MainTabs(vm)
+            // Content scrolls under the transparent status bar; keep the clock readable.
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .windowInsetsTopHeight(WindowInsets.statusBars)
+                    .background(MyohmColor.background.copy(alpha = 0.94f))
+            )
+        }
     }
 }
 

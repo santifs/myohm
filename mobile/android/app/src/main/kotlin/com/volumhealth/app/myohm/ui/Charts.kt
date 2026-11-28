@@ -125,10 +125,18 @@ fun SpectrumChart(
             drawLine(MyohmColor.hairline, Offset(leftPad, y), Offset(w, y), 1.dp.toPx())
             label(measurer, MyohmFormat.number(t, 0) + if (phase) "°" else "", leftPad - 6.dp.toPx(), y, alignRight = true)
         }
+        // Labels that would touch the previous one are skipped (narrow screens); the grid line stays.
+        var lastRight = Float.NEGATIVE_INFINITY
         F_TICKS.forEach { f ->
             val x = xOf(f, w)
             drawLine(MyohmColor.hairline, Offset(x, 0f), Offset(x, plotBottom), 1.dp.toPx())
-            label(measurer, MyohmFormat.frequency(f), x, plotBottom + 10.dp.toPx(), center = f != 200_000.0, alignRight = f == 200_000.0)
+            val text = MyohmFormat.frequency(f)
+            val width = measurer.measure(text, axisStyle).size.width
+            val left = if (f == 200_000.0) x - width else x - width / 2f
+            if (left >= lastRight + 6.dp.toPx()) {
+                label(measurer, text, x, plotBottom + 10.dp.toPx(), center = f != 200_000.0, alignRight = f == 200_000.0)
+                lastRight = left + width
+            }
         }
 
         fun path(series: List<SweepPoint>): Path = Path().apply {

@@ -147,8 +147,11 @@ private fun ValidityCard(eq: BodyEquation, i: BodyInputs, person: Athlete) {
                     if (check.ok) Icons.Filled.CheckCircle else Icons.Outlined.ErrorOutline, null,
                     tint = if (check.ok) MyohmColor.success else MyohmColor.accent, modifier = Modifier.size(20.dp)
                 )
-                Text(check.label, style = TextStyle(fontSize = 14.sp, color = MyohmColor.ink), modifier = Modifier.weight(1f))
-                Text(check.detail, style = TextStyle(fontSize = 14.sp, color = MyohmColor.muted))
+                // Stacked so a long detail never squeezes the label into two lines.
+                Column(Modifier.weight(1f)) {
+                    Text(check.label, style = TextStyle(fontSize = 14.sp, color = MyohmColor.ink))
+                    Text(check.detail, style = TextStyle(fontSize = 13.sp, color = MyohmColor.muted))
+                }
             }
         }
         Text(

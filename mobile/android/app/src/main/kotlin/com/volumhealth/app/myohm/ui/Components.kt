@@ -285,7 +285,7 @@ fun ScreenHeader(
     trailing: (@Composable () -> Unit)? = null
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        if (back != null) CircleIconButton(backIcon, L("Back"), back)
+        if (back != null) CircleIconButton(backIcon, L("Go back"), back)
         Column(Modifier.weight(1f)) {
             if (kicker != null) Text(kicker, style = MyohmText.caption)
             Text(title, style = MyohmText.title())
