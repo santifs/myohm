@@ -192,8 +192,10 @@ fun NavHostController.switchTab(route: String) {
 
 /** Back to the tab root the user came from. */
 fun NavHostController.closeFlow() {
-    val tab = currentBackStack.value.lastOrNull { it.destination.route in Routes.tabs }?.destination?.route ?: Routes.HOME
-    popBackStack(tab, inclusive = false)
+    // Pop one screen at a time (public API) until the top is a tab root.
+    while (currentDestination?.route !in Routes.tabs) {
+        if (!popBackStack()) break
+    }
 }
 
 @Composable
