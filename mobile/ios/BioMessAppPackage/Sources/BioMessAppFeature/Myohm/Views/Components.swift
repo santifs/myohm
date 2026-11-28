@@ -30,7 +30,7 @@ extension Athlete {
 
     var profileSummary: String {
         var parts: [String] = []
-        if let sex = biologicalSex { parts.append(sex == .male ? L("Male") : L("Female")) }
+        if let sex = biologicalSex { parts.append(sex == .male ? L("Male") : L("Female")) } else { parts.append(L("sex not set")) }
         parts.append(L("\(String(age)) years"))
         parts.append(isAthlete == true ? L("athlete") : L("not an athlete"))
         return parts.joined(separator: " · ")
@@ -169,7 +169,9 @@ struct CheckRow: View {
 struct MeasurementValue {
     static func headline(for measurement: Measurement, person: Athlete?) -> String {
         guard let data = measurement.impedanceData, let sweep = SweepAnalysis(data), let ref = sweep.atReference else { return "—" }
-        if measurement.isWholeBody, let person, let estimate = bodyEstimate(measurement: measurement, person: person, reference: ref) {
+        if measurement.isWholeBody {
+            // Never fall back to the phase angle under a "Body fat" label.
+            guard let person, let estimate = bodyEstimate(measurement: measurement, person: person, reference: ref) else { return "—" }
             return MyohmFormat.percent(estimate.fatPercent)
         }
         return MyohmFormat.degrees(ref.phaseAngle)
@@ -185,6 +187,16 @@ struct MeasurementValue {
             isMale: sex == .male, isAthlete: person.isAthlete == true,
             r50: reference.resistance, xc50: reference.reactance
         )
+    }
+
+    /// Profile fields that body composition still needs, in the order the form shows them.
+    static func missingFields(person: Athlete?, measurement: Measurement) -> [String] {
+        guard let person else { return [L("person")] }
+        var missing: [String] = []
+        if person.biologicalSex == nil { missing.append(L("biological sex")) }
+        if person.effectiveHeightCm == nil { missing.append(L("height")) }
+        if measurement.bodyWeightKg == nil && person.effectiveWeightKg == nil { missing.append(L("weight")) }
+        return missing
     }
 
     static func bodyEstimate(measurement: Measurement, person: Athlete, reference: SweepPoint) -> FatEstimate? {

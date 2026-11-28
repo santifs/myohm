@@ -60,6 +60,7 @@ import com.volumhealth.app.myohm.domain.BodyComposition
 import com.volumhealth.app.myohm.domain.BodyEquation
 import com.volumhealth.app.myohm.domain.BodyInputs
 import com.volumhealth.app.myohm.domain.BodyWater
+import com.volumhealth.app.myohm.domain.WholeBodySignal
 import com.volumhealth.app.myohm.domain.ColeFit
 import com.volumhealth.app.myohm.domain.EquationSelection
 import com.volumhealth.app.myohm.domain.FatEstimate
@@ -77,8 +78,9 @@ fun ResultScreen(
     vm: MyohmViewModel,
     id: String,
     onClose: () -> Unit,
-    onEquation: (String) -> Unit,
-    onRepeat: (MeasurementKind) -> Unit
+    onEquation: (String, BodyEquation?) -> Unit,
+    onRepeat: (MeasurementKind) -> Unit,
+    onEditPerson: (String) -> Unit
 ) {
     val records by vm.records.collectAsState()
     val people by vm.people.collectAsState()
@@ -91,7 +93,7 @@ fun ResultScreen(
     }
     val person = people.orEmpty().firstOrNull { it.id == record.personId }
     if (record.isWholeBody) {
-        BodyResultScreen(record, person, onClose, onEquation)
+        BodyResultScreen(record, person, onClose, onEquation, onEditPerson)
     } else {
         LocalResultScreen(record, records, person, onClose, onRepeat)
     }
@@ -326,15 +328,28 @@ object CsvExport {
 // MARK: - Whole-body result
 
 @Composable
-private fun BodyResultScreen(record: MyohmRecord, person: Athlete?, onClose: () -> Unit, onEquation: (String) -> Unit) {
+private fun BodyResultScreen(
+    record: MyohmRecord,
+    person: Athlete?,
+    onClose: () -> Unit,
+    onEquation: (String, BodyEquation?) -> Unit,
+    onEditPerson: (String) -> Unit
+) {
     val context = LocalContext.current
     val sweep = record.sweep
     val reference = sweep?.atReference
-    val inputs = if (person != null && reference != null) MeasurementValue.bodyInputs(record, person, reference) else null
-    val selection = inputs?.let { BodyComposition.select(it) }
-    val estimate = inputs?.let { BodyComposition.estimate(it) }
     val (fit, failed) = rememberColeFit(sweep)
-    val water = if (fit != null && inputs != null) BodyWater.estimate(inputs.heightCm, inputs.weightKg, fit.r0, fit.rInf) else null
+    val inputs = if (person != null && reference != null) {
+        MeasurementValue.bodyInputs(record, person, reference)?.copy(r0 = fit?.r0, rInf = fit?.rInf)
+    } else null
+    val selection = inputs?.let { BodyComposition.select(it) }
+    // Equation picked by the user to compare; null uses the automatic choice.
+    var chosen by rememberSaveable { mutableStateOf<BodyEquation?>(null) }
+    val automatic = selection?.equation
+    val active = chosen ?: automatic
+    val signalOk = inputs != null && WholeBodySignal.isPlausible(inputs.r50, inputs.xc50)
+    val estimate = if (inputs != null && active != null) BodyComposition.checkedEstimate(inputs, active) else null
+    val water = if (fit != null && inputs != null && signalOk) BodyWater.estimate(inputs.heightCm, inputs.weightKg, fit.r0, fit.rInf) else null
     var tab by rememberSaveable { mutableIntStateOf(if (selection == EquationSelection.HighBmi) 1 else 0) }
 
     ResultColumn {
@@ -346,19 +361,33 @@ private fun BodyResultScreen(record: MyohmRecord, person: Athlete?, onClose: () 
         if (inputs == null) {
             CardColumn(spacing = 8.dp) {
                 Text(L("Missing data"), style = MyohmText.headline)
-                Text(L("Body composition needs height, weight and biological sex. Complete the profile in People."), style = MyohmText.body.copy(color = MyohmColor.muted))
+                val missing = MeasurementValue.missingFields(record, person).joinToString(", ")
+                Text(L("Body composition needs height, weight and biological sex. Missing: %s.", missing), style = MyohmText.body.copy(color = MyohmColor.muted))
+                if (person != null) {
+                    MyohmSecondaryButton(L("Complete profile"), Modifier.padding(top = 4.dp)) { onEditPerson(person.id) }
+                }
             }
         } else {
-            PillSegmented(listOf(0 to L("Fat · 50 kHz"), 1 to L("Water · spectrum")), tab) { tab = it }
+            PillSegmented(listOf(0 to (if (active?.usesSpectrum == true) L("Fat · spectrum") else L("Fat · 50 kHz")), 1 to L("Water · spectrum")), tab) { tab = it }
             if (tab == 0) {
-                when (selection) {
-                    EquationSelection.TooYoung -> Notice(L("No validated equation under 10 years"), L("Myohm shows only the phase angle for children under 10."))
-                    EquationSelection.HighBmi -> Notice(L("BMI above 34"), L("Prediction equations are not valid with this BMI. Use the water view, calculated from the spectrum."))
-                    else -> estimate?.let { FatHero(it, inputs) }
+                when {
+                    !signalOk -> Notice(L("Not calculated"), L("This reading is outside the range of living tissue, so Myohm does not estimate body composition from it. Repeat the measurement."))
+                    chosen == null && selection == EquationSelection.TooYoung -> Notice(L("No validated equation under 10 years"), L("Myohm shows only the phase angle for children under 10."))
+                    chosen == null && selection == EquationSelection.HighBmi -> Notice(L("BMI above 34"), L("Prediction equations are not valid with this BMI. Use the water view, calculated from the spectrum."))
+                    active?.usesSpectrum == true && inputs.r0 == null ->
+                        if (failed) Notice(L("Water not available"), L("The Cole model could not be fitted to this sweep."))
+                        else Row(Modifier.myohmCard(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                            CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp, color = MyohmColor.brand)
+                            Text(L("Fitting the spectrum…"), style = MyohmText.body.copy(color = MyohmColor.muted))
+                        }
+                    estimate != null -> FatHero(estimate, inputs)
+                    else -> Notice(L("Result out of range"), L("This equation gives an implausible value for this person. Try another equation or repeat the measurement."))
                 }
-                (selection as? EquationSelection.Equation)?.let { EquationCard(it.equation, inputs) { onEquation(record.id) } }
+                active?.let { EquationCard(it, inputs, byUser = chosen != null) { onEquation(record.id, chosen) } }
+                EquationPicker(active, automatic, inputs) { chosen = if (it == automatic) null else it }
             } else {
                 when {
+                    !signalOk -> Notice(L("Not calculated"), L("This reading is outside the range of living tissue, so Myohm does not estimate body composition from it. Repeat the measurement."))
                     water != null -> WaterHero(water)
                     failed -> Notice(L("Water not available"), L("The Cole model could not be fitted to this sweep."))
                     else -> Row(Modifier.myohmCard(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -423,9 +452,21 @@ private fun FatHero(e: FatEstimate, inputs: BodyInputs) {
                 Modifier.size(150.dp)
             )
             Column(Modifier.weight(1f)) {
-                LegendRow(MyohmColor.accentSoft, L("Fat mass"), MyohmFormat.kg(e.fatMassKg), L("weight − fat-free mass"))
+                LegendRow(MyohmColor.accentSoft, L("Fat mass"), MyohmFormat.kg(e.fatMassKg), if (e.tissues == null) L("weight − fat-free mass") else L("75 % of adipose tissue"))
                 LegendRow(MyohmColor.leanOnDark, L("Fat-free mass"), MyohmFormat.kg(e.fatFreeMassKg), e.equation.standardErrorKg?.let { "± " + MyohmFormat.kg(it) } ?: "")
             }
+        }
+        e.tissues?.let { t ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                DarkTile(L("Lean tissue"), MyohmFormat.kg(t.leanTissueKg), Modifier.weight(1f))
+                DarkTile(L("Adipose tissue"), MyohmFormat.kg(t.adiposeTissueKg), Modifier.weight(1f))
+                DarkTile(L("Excess fluid"), MyohmFormat.kg(t.excessFluidKg), Modifier.weight(1f))
+            }
+            Text(
+                if (t.excessFluidIsUnusual) L("Unusual excess fluid. In a healthy person this usually means a poor spectrum; repeat the measurement before trusting the fat value.")
+                else L("From R₀ and R∞ of the whole spectrum. Typical error not yet verified by Myohm."),
+                style = TextStyle(fontSize = 12.sp, color = onDark.copy(alpha = 0.75f))
+            )
         }
         e.fatPercentError?.let { err ->
             ErrorBand(e.fatPercent, err)
@@ -480,14 +521,32 @@ private fun LegendRow(color: Color, label: String, value: String, note: String) 
 }
 
 @Composable
-private fun EquationCard(eq: BodyEquation, inputs: BodyInputs, onClick: () -> Unit) {
+private fun EquationPicker(active: BodyEquation?, automatic: BodyEquation?, inputs: BodyInputs, onPick: (BodyEquation) -> Unit) {
+    Column(Modifier.padding(horizontal = 4.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(L("Compare with another equation"), style = MyohmText.micro)
+        FlowChips(6.dp) {
+            BodyEquation.entries.forEach { eq ->
+                ChipButton(
+                    if (eq == automatic) L("%s · automatic", eq.shortName) else eq.shortName,
+                    selected = eq == active
+                ) { onPick(eq) }
+            }
+        }
+        if (active != null && active != automatic && EquationChecks.checks(active, inputs).any { !it.ok }) {
+            Text(L("This equation was not validated for this person. Use it only to compare."), style = MyohmText.small.copy(color = MyohmColor.accentInk))
+        }
+    }
+}
+
+@Composable
+private fun EquationCard(eq: BodyEquation, inputs: BodyInputs, byUser: Boolean, onClick: () -> Unit) {
     Column(Modifier.myohmCard().pressable(onClick = onClick), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             Box(Modifier.size(36.dp).background(MyohmColor.brandSoft, RoundedCornerShape(10.dp)), contentAlignment = Alignment.Center) {
                 Icon(Icons.Filled.Functions, null, tint = MyohmColor.brand, modifier = Modifier.size(20.dp))
             }
             Column(Modifier.weight(1f)) {
-                Text(L("Equation chosen automatically"), style = MyohmText.micro)
+                Text(if (byUser) L("Equation chosen by you") else L("Equation chosen automatically"), style = MyohmText.micro)
                 Text("${eq.shortName} · ${eq.year}", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MyohmColor.ink))
             }
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MyohmColor.muted)
@@ -527,7 +586,31 @@ object EquationChecks {
         }
         if (eq == BodyEquation.GENEVA) {
             result += EquationCheck("side", true, L("Right side"), L("Right hand and foot"), L("as in the study"))
-            if (!inputs.isAthlete) result += EquationCheck("athlete", true, L("Not an athlete"), L("Not an athlete"), L("athletes use another equation"))
+            result += if (inputs.isAthlete) {
+                EquationCheck("athlete", false, L("Athlete · not the target"), L("Athlete"), L("developed in non-athletes"))
+            } else {
+                EquationCheck("athlete", true, L("Not an athlete"), L("Not an athlete"), L("athletes use another equation"))
+            }
+        }
+        if (eq == BodyEquation.SPECTROSCOPY) {
+            BodyComposition.estimate(inputs, eq)?.tissues?.let { t ->
+                val v = MyohmFormat.kg(t.excessFluidKg)
+                val ok = !t.excessFluidIsUnusual
+                result += EquationCheck(
+                    "fluid", ok,
+                    if (ok) L("Excess fluid %s", v) else L("Excess fluid %s · unusual", v),
+                    L("Excess fluid"),
+                    if (ok) v else L("%s · check the spectrum", v)
+                )
+            }
+        }
+        if (eq == BodyEquation.ATHLETES) {
+            result += EquationCheck(
+                "athlete", inputs.isAthlete,
+                if (inputs.isAthlete) L("Athlete") else L("Not an athlete · not the target"),
+                if (inputs.isAthlete) L("Athlete") else L("Not an athlete"),
+                L("developed in athletes")
+            )
         }
         eq.standardErrorKg?.let { see ->
             result += EquationCheck("see", true, L("Typical error ± %s", MyohmFormat.kg(see)), L("Typical error"), "± " + MyohmFormat.kg(see))

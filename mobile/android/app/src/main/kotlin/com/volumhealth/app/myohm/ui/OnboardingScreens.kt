@@ -356,7 +356,8 @@ fun PersonFormScreen(vm: MyohmViewModel, personId: String?, onBack: () -> Unit, 
     val today = remember { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date }
 
     var name by rememberSaveable { mutableStateOf("") }
-    var male by rememberSaveable { mutableStateOf(false) }
+    // Null until chosen: a pre-selected default hid profiles that never stored it.
+    var sex by rememberSaveable { mutableStateOf<BiologicalSex?>(null) }
     var birthEpochDay by rememberSaveable { mutableStateOf(today.minus(DatePeriod(years = 30)).toEpochDays()) }
     var height by rememberSaveable { mutableStateOf("") }
     var weight by rememberSaveable { mutableStateOf("") }
@@ -368,7 +369,7 @@ fun PersonFormScreen(vm: MyohmViewModel, personId: String?, onBack: () -> Unit, 
         if (!loaded && person != null) {
             loaded = true
             name = person.fullName
-            male = person.biologicalSex == BiologicalSex.MALE
+            sex = person.biologicalSex
             birthEpochDay = person.dateOfBirth.toEpochDays()
             athlete = person.isAthlete == true
             person.heightCm?.let { height = MyohmFormat.number(it, if (Math.rint(it) == it) 0 else 1) }
@@ -378,7 +379,7 @@ fun PersonFormScreen(vm: MyohmViewModel, personId: String?, onBack: () -> Unit, 
 
     val heightValue = height.replace(",", ".").toDoubleOrNull()
     val weightValue = weight.replace(",", ".").toDoubleOrNull()
-    val valid = name.isNotBlank() && heightValue != null && heightValue in 50.0..250.0 && weightValue != null && weightValue in 10.0..300.0
+    val valid = name.isNotBlank() && sex != null && heightValue != null && heightValue in 50.0..250.0 && weightValue != null && weightValue in 10.0..300.0
     val birth = LocalDate.fromEpochDays(birthEpochDay)
 
     Column(
@@ -407,7 +408,7 @@ fun PersonFormScreen(vm: MyohmViewModel, personId: String?, onBack: () -> Unit, 
             }
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(L("Biological sex"), style = MyohmText.micro)
-                PillSegmented(listOf(false to L("Female"), true to L("Male")), male) { male = it }
+                PillSegmented(listOf<Pair<BiologicalSex?, String>>(BiologicalSex.FEMALE to L("Female"), BiologicalSex.MALE to L("Male")), sex) { sex = it }
                 Text(L("Body-composition equations need it."), style = MyohmText.small)
             }
             Row(
@@ -450,7 +451,7 @@ fun PersonFormScreen(vm: MyohmViewModel, personId: String?, onBack: () -> Unit, 
             val updated = base.copy(
                 fullName = name.trim(),
                 dateOfBirth = birth,
-                biologicalSex = if (male) BiologicalSex.MALE else BiologicalSex.FEMALE,
+                biologicalSex = sex,
                 isAthlete = athlete,
                 heightCm = heightValue,
                 weightKg = weightValue,

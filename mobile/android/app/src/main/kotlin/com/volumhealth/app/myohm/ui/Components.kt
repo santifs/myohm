@@ -93,7 +93,11 @@ fun Athlete.ageYears(at: Instant = Clock.System.now()): Double {
 val Athlete.profileSummary: String
     get() {
         val parts = mutableListOf<String>()
-        biologicalSex?.let { parts += if (it == BiologicalSex.MALE) L("Male") else L("Female") }
+        parts += when (biologicalSex) {
+            BiologicalSex.MALE -> L("Male")
+            BiologicalSex.FEMALE -> L("Female")
+            null -> L("sex not set")
+        }
         parts += L("%s years", age.toString())
         parts += if (isAthlete == true) L("athlete") else L("not an athlete")
         return parts.joinToString(" · ")
@@ -129,10 +133,22 @@ val MyohmRecord.myohmTitle: String
 object MeasurementValue {
     fun headline(record: MyohmRecord, person: Athlete?): String {
         val ref = record.sweep?.atReference ?: return "—"
-        if (record.isWholeBody && person != null) {
-            bodyEstimate(record, person, ref)?.let { return MyohmFormat.percent(it.fatPercent) }
+        if (record.isWholeBody) {
+            // Never fall back to the phase angle under a "Body fat" label.
+            val estimate = person?.let { bodyEstimate(record, it, ref) } ?: return "—"
+            return MyohmFormat.percent(estimate.fatPercent)
         }
         return MyohmFormat.degrees(ref.phaseAngle)
+    }
+
+    /** Profile fields that body composition still needs, in the order the form shows them. */
+    fun missingFields(record: MyohmRecord, person: Athlete?): List<String> {
+        if (person == null) return listOf(L("person"))
+        return buildList {
+            if (person.biologicalSex == null) add(L("biological sex"))
+            if (person.heightCm == null) add(L("height"))
+            if (record.bodyWeightKg == null && person.weightKg == null) add(L("weight"))
+        }
     }
 
     fun bodyInputs(record: MyohmRecord, person: Athlete, reference: SweepPoint): BodyInputs? {

@@ -32,23 +32,35 @@ import com.volumhealth.app.myohm.data.MyohmViewModel
 import com.volumhealth.app.myohm.domain.BodyComposition
 import com.volumhealth.app.myohm.domain.BodyEquation
 import com.volumhealth.app.myohm.domain.BodyInputs
-import com.volumhealth.app.myohm.domain.EquationSelection
+import com.volumhealth.app.myohm.domain.ChamneyTissues
+import com.volumhealth.app.myohm.domain.FatEstimate
+import com.volumhealth.app.myohm.domain.WholeBodySignal
 import com.volumhealth.core.model.Athlete
 
 @Composable
-fun EquationScreen(vm: MyohmViewModel, id: String, onBack: () -> Unit) {
+fun EquationScreen(vm: MyohmViewModel, id: String, equation: BodyEquation?, onBack: () -> Unit) {
     val records by vm.records.collectAsState()
     val people by vm.people.collectAsState()
     val record = records.firstOrNull { it.id == id }
     val person = record?.let { r -> people.orEmpty().firstOrNull { it.id == r.personId } }
     val ref = record?.sweep?.atReference
-    val inputs = if (record != null && person != null && ref != null) MeasurementValue.bodyInputs(record, person, ref) else null
-    val eq = (inputs?.let { BodyComposition.select(it) } as? EquationSelection.Equation)?.equation
+    val (fit, failed) = rememberColeFit(record?.sweep)
+    val inputs = if (record != null && person != null && ref != null) {
+        MeasurementValue.bodyInputs(record, person, ref)?.copy(r0 = fit?.r0, rInf = fit?.rInf)
+    } else null
+    // The equation the user picked, or the automatic one.
+    val eq = equation ?: inputs?.let { BodyComposition.select(it) }?.equation
 
     ResultColumn {
         if (inputs != null && eq != null && person != null) {
             ScreenHeader(L("How it was calculated"), L("%s equation", eq.shortName), back = onBack)
-            FormulaCard(eq, inputs, person)
+            if (!WholeBodySignal.isPlausible(inputs.r50, inputs.xc50)) ContactWarning()
+            val estimate = BodyComposition.estimate(inputs, eq)
+            when {
+                estimate != null -> FormulaCard(eq, inputs, person, estimate)
+                failed -> CardColumn(padding = 18.dp) { Text(L("The Cole model could not be fitted to this sweep."), style = MyohmText.body.copy(color = MyohmColor.muted)) }
+                else -> CardColumn(padding = 18.dp) { Text(L("Fitting the spectrum…"), style = MyohmText.body.copy(color = MyohmColor.muted)) }
+            }
             ValidityCard(eq, inputs, person)
             SelectionCard(eq)
             Reference(eq)
@@ -63,6 +75,7 @@ private fun formulaText(eq: BodyEquation) = when (eq) {
     BodyEquation.GENEVA -> L("FFM = −4.104\n+ 0.518 · height² / R\n+ 0.231 · weight\n+ 0.130 · Xc\n+ 4.229 · sex")
     BodyEquation.ATHLETES -> L("FFM = −2.261\n+ 0.327 · height² / R\n+ 0.525 · weight\n+ 5.462 · sex")
     BodyEquation.YOUTH -> L("FFM = 0.61 · height² / R\n+ 0.25 · weight\n+ 1.31")
+    BodyEquation.SPECTROSCOPY -> L("ExF = 1.136 · ECW − 0.430 · ICW\n  − 0.114 · weight\nLT = 2.725 · ICW + 0.191 · ExF\n  − 0.191 · weight\nAT = weight − ExF − LT\nFat = 0.753 · AT")
 }
 
 private fun c(value: Double, digits: Int = 3) = MyohmFormat.number(value, digits)
@@ -92,23 +105,36 @@ private fun terms(eq: BodyEquation, i: BodyInputs): List<Pair<String, Double>> {
             "${c(0.25, 2)} · $w" to 0.25 * i.weightKg,
             L("Constant") to 1.31
         )
+        BodyEquation.SPECTROSCOPY -> emptyList()
     }
 }
 
 @Composable
-private fun FormulaCard(eq: BodyEquation, i: BodyInputs, person: Athlete) {
-    val estimate = BodyComposition.estimate(i, eq)
+private fun FormulaCard(eq: BodyEquation, i: BodyInputs, person: Athlete, estimate: FatEstimate) {
     CardColumn(padding = 18.dp, spacing = 14.dp) {
         Text(
             formulaText(eq),
             style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.SemiBold, fontFamily = FontFamily.Monospace, color = MyohmColor.brand, lineHeight = 24.sp),
             modifier = Modifier.fillMaxWidth().background(MyohmColor.background, RoundedCornerShape(14.dp)).padding(14.dp)
         )
-        Text(L("FFM: fat-free mass (kg). Height in cm, weight in kg, R and Xc in Ω at 50 kHz. Sex: male = 1, female = 0."), style = MyohmText.small)
+        Text(
+            if (eq.usesSpectrum) L("ECW and ICW from R₀ and R∞ of the Cole fit (Moissl 2006), in kg (× 0.99371). LT: lean tissue, AT: adipose tissue, ExF: excess fluid. Weight in kg.")
+            else L("FFM: fat-free mass (kg). Height in cm, weight in kg, R and Xc in Ω at 50 kHz. Sex: male = 1, female = 0."),
+            style = MyohmText.small
+        )
         Text(L("With %s's data", person.firstName), style = MyohmText.headline, modifier = Modifier.padding(top = 4.dp))
         Column {
             terms(eq, i).forEach { (label, value) ->
                 TermRow(label, (if (value < 0) "−" else "") + MyohmFormat.number(kotlin.math.abs(value), 2))
+            }
+            estimate.tissues?.let { t ->
+                fun kg(v: Double) = (if (v < 0) "−" else "") + MyohmFormat.kg(kotlin.math.abs(v))
+                TermRow("R₀ · R∞", (i.r0?.let { MyohmFormat.ohms(it) } ?: "–") + " · " + (i.rInf?.let { MyohmFormat.ohms(it) } ?: "–"))
+                TermRow(L("Extracellular water (ECW)"), kg(t.water.extracellularL * ChamneyTissues.WATER_DENSITY))
+                TermRow(L("Intracellular water (ICW)"), kg(t.water.intracellularL * ChamneyTissues.WATER_DENSITY))
+                TermRow(L("Excess fluid (ExF)"), kg(t.excessFluidKg))
+                TermRow(L("Lean tissue (LT)"), kg(t.leanTissueKg))
+                TermRow(L("Adipose tissue (AT)"), kg(t.adiposeTissueKg))
             }
             Column {
                 Row(Modifier.padding(vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -118,7 +144,8 @@ private fun FormulaCard(eq: BodyEquation, i: BodyInputs, person: Athlete) {
                 HairlineDivider()
             }
             TermRow(
-                L("Fat = %s − %s", MyohmFormat.number(i.weightKg), MyohmFormat.number(estimate.fatFreeMassKg)),
+                estimate.tissues?.let { L("Fat = 0.753 · %s", MyohmFormat.number(it.adiposeTissueKg)) }
+                    ?: L("Fat = %s − %s", MyohmFormat.number(i.weightKg), MyohmFormat.number(estimate.fatFreeMassKg)),
                 MyohmFormat.kg(estimate.fatMassKg) + " · " + MyohmFormat.percent(estimate.fatPercent),
                 last = true
             )
@@ -159,6 +186,7 @@ private fun ValidityCard(eq: BodyEquation, i: BodyInputs, person: Athlete) {
                 BodyEquation.GENEVA -> L("Typical error ± 1.72 kg of fat-free mass (r = 0.986), in 343 healthy adults compared with DXA.")
                 BodyEquation.ATHLETES -> L("Developed in athletes against a 4-compartment model. Typical error not yet verified by Myohm.")
                 BodyEquation.YOUTH -> L("Developed and cross-validated in children and adolescents. Typical error not yet verified by Myohm.")
+                BodyEquation.SPECTROSCOPY -> L("Tissue hydrations from 104 healthy adults with isotope dilution and DXA. The sweep stops at 198 kHz, so R∞ is extrapolated. Typical error not yet verified by Myohm.")
             },
             style = MyohmText.caption, modifier = Modifier.padding(top = 4.dp)
         )
@@ -173,7 +201,8 @@ private fun SelectionCard(current: BodyEquation) {
         SelectionRow(L("Athlete"), "Matias–Campa 2021", highlighted = current == BodyEquation.ATHLETES)
         SelectionRow(L("10–19 years"), "Houtkooper 1992", highlighted = current == BodyEquation.YOUTH)
         SelectionRow(L("Under 10 years"), L("No fat; phase only"), warning = true)
-        SelectionRow(L("BMI above 34"), L("Water only (spectrum)"), warning = true, last = true)
+        SelectionRow(L("BMI above 34"), L("Water only (spectrum)"), warning = true)
+        SelectionRow(L("Whole spectrum, to compare"), "Moissl–Chamney 2007", highlighted = current == BodyEquation.SPECTROSCOPY, last = true)
         Text(L("Each measurement keeps the data used, so the calculation can be repeated."), style = MyohmText.small, modifier = Modifier.padding(top = 8.dp))
     }
 }

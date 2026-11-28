@@ -29,10 +29,49 @@ struct BodyCompositionTests {
         #expect(BodyComposition.estimate(heavy) == nil)
     }
 
+    /// The 28 Nov 2026 reading with a loose electrode (R 6513 Ω, Xc 140174 Ω) gave −25 959 % fat.
+    @Test func rejectsReadingsOutsideTissue() {
+        var bad = ana
+        bad.r50 = 6513
+        bad.xc50 = 140_174
+        #expect(!WholeBodySignal.isPlausible(r50: bad.r50, xc50: bad.xc50))
+        #expect(BodyComposition.estimate(bad) == nil)
+        #expect(BodyComposition.checkedEstimate(bad, using: .geneva) == nil)
+        #expect(WholeBodySignal.isPlausible(r50: ana.r50, xc50: ana.xc50))
+    }
+
+    @Test func manualEquationStillChecked() throws {
+        // Any equation can be picked to compare; implausible results are withheld.
+        let athletes = try #require(BodyComposition.checkedEstimate(ana, using: .athletes))
+        #expect(athletes.equation == .athletes)
+        var tiny = ana
+        tiny.weightKg = 30
+        #expect(BodyComposition.checkedEstimate(tiny, using: .athletes) == nil)
+    }
+
     @Test func moisslWater() throws {
         let w = try #require(BodyWater.estimate(heightCm: 168, weightKg: 61.6, r0: 700, rInf: 470))
         #expect(abs(w.extracellularL - 13.8) < 0.05)
         #expect(abs(w.intracellularL - 19.9) < 0.05)
+    }
+
+    @Test func chamneyReferenceMan() {
+        // Chamney 2007: a 73 kg reference man with 17.2 L ECW and 24.7 L ICW has 14.6 kg fat.
+        let t = ChamneyTissues(water: BodyWater(extracellularL: 17.2, intracellularL: 24.7), weightKg: 73)
+        #expect(abs(t.fatMassKg - 14.6) < 0.2)
+        #expect(abs(t.excessFluidKg) < 1)
+        #expect(!t.excessFluidIsUnusual)
+    }
+
+    @Test func spectrumMethodNeedsColeFit() throws {
+        #expect(BodyComposition.estimate(ana, using: .spectroscopy) == nil)
+        var withFit = ana
+        withFit.r0 = 700
+        withFit.rInf = 470
+        let e = try #require(BodyComposition.checkedEstimate(withFit, using: .spectroscopy))
+        #expect(abs(e.fatPercent - 23.9) < 0.2)
+        #expect(e.tissues != nil)
+        #expect(abs(e.fatFreeMassKg + e.fatMassKg - withFit.weightKg) < 1e-9)
     }
 
     @Test func sweepMedianAndReference() throws {

@@ -46,6 +46,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.volumhealth.app.myohm.data.MyohmViewModel
+import com.volumhealth.app.myohm.domain.BodyEquation
 import com.volumhealth.app.myohm.domain.MeasurementKind
 import com.volumhealth.app.ui.screens.measurement.FrequencyConfigurationScreen
 import com.volumhealth.app.ui.screens.measurement.MeasurementScreen
@@ -58,7 +59,7 @@ object Routes {
     const val PLACEMENT = "placement"
     const val MEASURING = "measuring/{kind}"
     const val RESULT = "result/{id}"
-    const val EQUATION = "equation/{id}"
+    const val EQUATION = "equation/{id}?eq={eq}"
     const val PERSON_FORM = "person?id={id}"
     const val PAIRING = "pairing"
     const val SETTINGS = "settings"
@@ -67,7 +68,7 @@ object Routes {
 
     fun measuring(kind: MeasurementKind) = "measuring/${kind.encode()}"
     fun result(id: String) = "result/$id"
-    fun equation(id: String) = "equation/$id"
+    fun equation(id: String, eq: BodyEquation? = null) = if (eq == null) "equation/$id" else "equation/$id?eq=${eq.name}"
     fun personForm(id: String?) = if (id == null) "person" else "person?id=$id"
 
     val tabs = listOf(HOME, PEOPLE, HISTORY)
@@ -246,15 +247,23 @@ private fun MyohmNavHost(nav: NavHostController, vm: MyohmViewModel) {
                 vm,
                 id = e.arguments?.getString("id").orEmpty(),
                 onClose = { nav.closeFlow() },
-                onEquation = { nav.navigate(Routes.equation(it)) },
+                onEquation = { id, eq -> nav.navigate(Routes.equation(id, eq)) },
                 onRepeat = { kind ->
                     nav.closeFlow()
                     nav.navigate(Routes.measuring(kind))
-                }
+                },
+                onEditPerson = { nav.navigate(Routes.personForm(it)) }
             )
         }
-        composable(Routes.EQUATION, arguments = listOf(navArgument("id") { type = NavType.StringType })) { e ->
-            EquationScreen(vm, e.arguments?.getString("id").orEmpty(), onBack = { nav.popBackStack() })
+        composable(
+            Routes.EQUATION,
+            arguments = listOf(
+                navArgument("id") { type = NavType.StringType },
+                navArgument("eq") { type = NavType.StringType; nullable = true; defaultValue = null }
+            )
+        ) { e ->
+            val eq = e.arguments?.getString("eq")?.let { name -> BodyEquation.entries.firstOrNull { it.name == name } }
+            EquationScreen(vm, e.arguments?.getString("id").orEmpty(), eq, onBack = { nav.popBackStack() })
         }
         composable(
             Routes.PERSON_FORM,

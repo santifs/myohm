@@ -6,7 +6,7 @@ enum MeasureRoute: Hashable {
     case placement
     case measuring(MeasurementKind)
     case result(UUID)
-    case equation(UUID)
+    case equation(UUID, BodyEquation?)
 }
 
 struct HomeScreen: View {
@@ -142,8 +142,8 @@ struct HomeScreen: View {
             }
         case .result(let id):
             ResultScreen(measurementID: id, path: $path)
-        case .equation(let id):
-            EquationScreen(measurementID: id)
+        case .equation(let id, let eq):
+            EquationScreen(measurementID: id, equation: eq)
         }
     }
 
