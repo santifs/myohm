@@ -78,7 +78,8 @@ fun ResultScreen(
     id: String,
     onClose: () -> Unit,
     onEquation: (String) -> Unit,
-    onRepeat: (MeasurementKind) -> Unit
+    onRepeat: (MeasurementKind) -> Unit,
+    onEditPerson: (String) -> Unit
 ) {
     val records by vm.records.collectAsState()
     val people by vm.people.collectAsState()
@@ -91,7 +92,7 @@ fun ResultScreen(
     }
     val person = people.orEmpty().firstOrNull { it.id == record.personId }
     if (record.isWholeBody) {
-        BodyResultScreen(record, person, onClose, onEquation)
+        BodyResultScreen(record, person, onClose, onEquation, onEditPerson)
     } else {
         LocalResultScreen(record, records, person, onClose, onRepeat)
     }
@@ -326,7 +327,13 @@ object CsvExport {
 // MARK: - Whole-body result
 
 @Composable
-private fun BodyResultScreen(record: MyohmRecord, person: Athlete?, onClose: () -> Unit, onEquation: (String) -> Unit) {
+private fun BodyResultScreen(
+    record: MyohmRecord,
+    person: Athlete?,
+    onClose: () -> Unit,
+    onEquation: (String) -> Unit,
+    onEditPerson: (String) -> Unit
+) {
     val context = LocalContext.current
     val sweep = record.sweep
     val reference = sweep?.atReference
@@ -346,7 +353,11 @@ private fun BodyResultScreen(record: MyohmRecord, person: Athlete?, onClose: () 
         if (inputs == null) {
             CardColumn(spacing = 8.dp) {
                 Text(L("Missing data"), style = MyohmText.headline)
-                Text(L("Body composition needs height, weight and biological sex. Complete the profile in People."), style = MyohmText.body.copy(color = MyohmColor.muted))
+                val missing = MeasurementValue.missingFields(record, person).joinToString(", ")
+                Text(L("Body composition needs height, weight and biological sex. Missing: %s.", missing), style = MyohmText.body.copy(color = MyohmColor.muted))
+                if (person != null) {
+                    MyohmSecondaryButton(L("Complete profile"), Modifier.padding(top = 4.dp)) { onEditPerson(person.id) }
+                }
             }
         } else {
             PillSegmented(listOf(0 to L("Fat · 50 kHz"), 1 to L("Water · spectrum")), tab) { tab = it }

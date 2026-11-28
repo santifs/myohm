@@ -359,6 +359,7 @@ struct BodyResultView: View {
     let person: Athlete?
     @Binding var path: [MeasureRoute]
     @StateObject private var fit = ColeFitLoader()
+    @State private var editingProfile = false
     @State var tab = 0
 
     private var sweep: SweepAnalysis? { measurement.impedanceData.flatMap(SweepAnalysis.init) }
@@ -435,8 +436,17 @@ struct BodyResultView: View {
     private var missingData: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(L("Missing data")).font(MyohmFont.headline)
-            Text(L("Body composition needs height, weight and biological sex. Complete the profile in People."))
+            let missing = MeasurementValue.missingFields(person: person, measurement: measurement)
+            Text(L("Body composition needs height, weight and biological sex. Missing: \(missing.joined(separator: ", "))."))
                 .font(MyohmFont.body).foregroundStyle(MyohmColor.muted)
+            if let person {
+                Button(L("Complete profile")) { editingProfile = true }
+                    .buttonStyle(MyohmSecondaryButton())
+                    .padding(.top, 4)
+                    .sheet(isPresented: $editingProfile) {
+                        NavigationStack { PersonFormView(person: person) { _ in editingProfile = false } }
+                    }
+            }
         }
         .myohmCard()
     }

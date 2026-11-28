@@ -150,7 +150,8 @@ struct PersonFormView: View {
     var onSaved: (Athlete) -> Void
 
     @State private var name = ""
-    @State private var sex: BiologicalSex = .female
+    /// Nil until chosen: a pre-selected default hid profiles that never stored it.
+    @State private var sex: BiologicalSex? = nil
     @State private var birth = Calendar.current.date(byAdding: .year, value: -30, to: Date()) ?? Date()
     @State private var height = ""
     @State private var weight = ""
@@ -161,6 +162,7 @@ struct PersonFormView: View {
     private var weightValue: Double? { Double(weight.replacingOccurrences(of: ",", with: ".")) }
     private var isValid: Bool {
         !name.trimmingCharacters(in: .whitespaces).isEmpty
+            && sex != nil
             && (heightValue.map { (50...250).contains($0) } ?? false)
             && (weightValue.map { (10...300).contains($0) } ?? false)
     }
@@ -180,7 +182,7 @@ struct PersonFormView: View {
                     }
                     VStack(alignment: .leading, spacing: 6) {
                         Text(L("Biological sex")).font(MyohmFont.micro).foregroundStyle(MyohmColor.muted)
-                        PillSegmented(options: [(BiologicalSex.female, L("Female")), (.male, L("Male"))], selection: $sex)
+                        PillSegmented(options: [(BiologicalSex?.some(.female), L("Female")), (.some(.male), L("Male"))], selection: $sex)
                         Text(L("Body-composition equations need it."))
                             .font(.system(size: 12)).foregroundStyle(MyohmColor.muted)
                     }
@@ -249,7 +251,7 @@ struct PersonFormView: View {
         loaded = true
         guard let person else { return }
         name = person.fullName
-        sex = person.biologicalSex ?? .female
+        sex = person.biologicalSex
         birth = person.dateOfBirth
         athlete = person.isAthlete == true
         if let h = person.effectiveHeightCm { height = MyohmFormat.number(h, digits: h.rounded() == h ? 0 : 1) }

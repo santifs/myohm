@@ -240,3 +240,10 @@
 "Profile migrated" = "Profile migrated";
 "Your previous profile (%@) has been moved to People." = "Your previous profile (%@) has been moved to People.";
 "Your previous profile has been moved to People." = "Your previous profile has been moved to People.";
+"Body composition needs height, weight and biological sex. Missing: %@." = "Body composition needs height, weight and biological sex. Missing: %@.";
+"Complete profile" = "Complete profile";
+"sex not set" = "sex not set";
+"biological sex" = "biological sex";
+"height" = "height";
+"weight" = "weight";
+"person" = "person";

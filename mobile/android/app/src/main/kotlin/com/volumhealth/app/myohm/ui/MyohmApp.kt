@@ -250,7 +250,8 @@ private fun MyohmNavHost(nav: NavHostController, vm: MyohmViewModel) {
                 onRepeat = { kind ->
                     nav.closeFlow()
                     nav.navigate(Routes.measuring(kind))
-                }
+                },
+                onEditPerson = { nav.navigate(Routes.personForm(it)) }
             )
         }
         composable(Routes.EQUATION, arguments = listOf(navArgument("id") { type = NavType.StringType })) { e ->
