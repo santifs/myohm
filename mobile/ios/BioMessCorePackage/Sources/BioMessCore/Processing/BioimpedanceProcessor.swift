@@ -65,9 +65,9 @@ public final class BioimpedanceProcessor: @unchecked Sendable {
         let signalQuality = assessSignalQuality(data)
         let convergence = ConvergenceMetrics(
             iterations: 0,
-            residualError: 0,
-            parameterErrors: ParameterErrors(reError: 0, riError: 0, cmError: 0, fcError: 0, alphaError: 0),
-            converged: true
+            residualError: nil,
+            parameterErrors: nil,
+            converged: false
         )
         let stability = assessStability(data)
         
@@ -192,6 +192,15 @@ private extension BioimpedanceProcessor {
         // Extract frequencies and complex impedances
         let frequencies = data.frequencies
         let complexImpedances = data.complexImpedances
+        guard Set(frequencies).count >= 3,
+              frequencies.allSatisfy({ $0.isFinite && $0 > 0 }),
+              data.magnitudes.allSatisfy({ $0.isFinite && $0 > 0 }),
+              data.phases.allSatisfy({ $0.isFinite }),
+              data.magnitudes.min() != data.magnitudes.max(),
+              complexImpedances.contains(where: { $0.imaginary < 0 }) else {
+            throw ProcessingError.optimizationFailed
+        }
+
         
         // Validate frequency range (should be 1kHz to ~438kHz for BioMess)
         guard frequencies.first ?? 0 > 500 && frequencies.last ?? 0 < 500000 else {
@@ -236,7 +245,7 @@ private extension BioimpedanceProcessor {
             Cm: result.Cm,
             fc: result.fc,
             alpha: result.alpha,
-            error: result.error,
+            error: 100 * result.error / (calibratedImpedances.map { $0.magnitude }.reduce(0, +) / Float(calibratedImpedances.count)),
             processingTier: tier,
             quality: updatedQuality
         )
@@ -284,7 +293,7 @@ private extension BioimpedanceProcessor {
         let error: Float
         let iterations: Int
         let converged: Bool
-        let parameterErrors: ParameterErrors
+        let parameterErrors: ParameterErrors?
     }
     
     func fitColeModel(frequencies: [Float], impedances: [Complex], config: ProcessingConfig) async throws -> FitResult {
@@ -319,7 +328,7 @@ private extension BioimpedanceProcessor {
             }
             
             // Early termination for excellent fits
-            if config.useEarlyTermination && result.error < config.convergenceThreshold {
+            if config.useEarlyTermination && result.converged && result.error < config.convergenceThreshold {
                 logger.debug("Early termination at start \(startIndex)")
                 break
             }
@@ -393,13 +402,13 @@ private extension BioimpedanceProcessor {
         
         var params = initialParams
         var lambda: Float = 0.001  // Initial damping factor
-        var lastError = Float.infinity
+        var converged = false
         var iteration = 0
         let maxIterations = config.maxIterations
         let numParams = params.count
         
         for iter in 0..<maxIterations {
-            iteration = iter
+            iteration = iter + 1
             
             // Calculate residuals and Jacobian
             let (residuals, jacobian) = calculateResidualsAndJacobian(
@@ -409,11 +418,6 @@ private extension BioimpedanceProcessor {
             )
             
             let error = sqrt(residuals.map { $0 * $0 }.reduce(0, +) / Float(residuals.count))
-            
-            // Check convergence
-            if abs(lastError - error) < config.convergenceThreshold {
-                break
-            }
             
             // Calculate JtJ (J transpose times J) and JtR (J transpose times residuals)
             let JtJ = calculateJtJ(jacobian: jacobian)
@@ -433,7 +437,7 @@ private extension BioimpedanceProcessor {
             // Try new parameters
             var newParams = [Float]()
             for i in 0..<numParams {
-                newParams.append(params[i] + delta[i])
+                newParams.append(params[i] - delta[i])
             }
             newParams = applyParameterConstraints(newParams, frequencies: frequencies, impedances: impedances)
             
@@ -446,11 +450,18 @@ private extension BioimpedanceProcessor {
             let newError = sqrt(newResiduals.map { $0 * $0 }.reduce(0, +) / Float(newResiduals.count))
             
             // Accept or reject step and update lambda
+            if error <= config.convergenceThreshold {
+                converged = true
+                break
+            }
             if newError < error {
                 // Accept step
                 params = newParams
                 lambda *= 0.1  // Decrease damping (move towards Gauss-Newton)
-                lastError = newError
+                if error - newError < config.convergenceThreshold {
+                    converged = true
+                    break
+                }
             } else {
                 // Reject step  
                 lambda *= 10.0  // Increase damping (move towards gradient descent)
@@ -487,7 +498,7 @@ private extension BioimpedanceProcessor {
         let parameterErrors = calculateParameterUncertainties(
             jacobian: finalJacobian,
             residuals: finalResiduals,
-            params: [Re, Ri, Cm, fc, alpha]  // Convert to final parameter space
+            params: params  // Convert to final parameter space
         )
         
         return FitResult(
@@ -496,9 +507,9 @@ private extension BioimpedanceProcessor {
             Cm: Cm,
             fc: fc,
             alpha: alpha,
-            error: lastError,
+            error: sqrt(finalResiduals.map { $0 * $0 }.reduce(0, +) / Float(finalResiduals.count)),
             iterations: iteration,
-            converged: iteration < maxIterations,
+            converged: converged && R0 > Rinf && Rinf > 0,
             parameterErrors: parameterErrors
         )
     }
@@ -513,12 +524,13 @@ private extension BioimpedanceProcessor {
         
         var params = initialParams
         var lastError = Float.infinity
+        var converged = false
         var iteration = 0
         let maxIterations = config.maxIterations
         var stepSize: Float = 0.1
         
         for iter in 0..<maxIterations {
-            iteration = iter
+            iteration = iter + 1
             
             let (error, gradient) = calculateErrorAndGradient(
                 params: params,
@@ -527,6 +539,7 @@ private extension BioimpedanceProcessor {
             )
             
             if abs(lastError - error) < config.convergenceThreshold {
+                converged = true
                 break
             }
             
@@ -570,7 +583,7 @@ private extension BioimpedanceProcessor {
         let parameterErrors = calculateParameterUncertainties(
             jacobian: finalJacobian,
             residuals: finalResiduals,
-            params: [Re, Ri, Cm, fc, alpha]
+            params: params
         )
         
         return FitResult(
@@ -579,9 +592,9 @@ private extension BioimpedanceProcessor {
             Cm: Cm,
             fc: fc,
             alpha: alpha,
-            error: lastError,
+            error: sqrt(finalResiduals.map { $0 * $0 }.reduce(0, +) / Float(finalResiduals.count)),
             iterations: iteration,
-            converged: iteration < maxIterations,
+            converged: converged && R0 > Rinf && Rinf > 0,
             parameterErrors: parameterErrors
         )
     }
@@ -631,7 +644,6 @@ private extension BioimpedanceProcessor {
         let residuals = calculateResiduals(params: params, frequencies: frequencies, impedances: impedances)
         
         // Calculate Jacobian using finite differences
-        let epsilon: Float = 1e-6
         let numParams = params.count
         let numMeasurements = residuals.count
         
@@ -640,6 +652,7 @@ private extension BioimpedanceProcessor {
         for paramIndex in 0..<numParams {
             // Forward difference
             var paramsPlus = params
+            let epsilon = max(abs(params[paramIndex]), 1e-7) * sqrt(Float.ulpOfOne)
             paramsPlus[paramIndex] += epsilon
             let residualsPlus = calculateResiduals(params: paramsPlus, frequencies: frequencies, impedances: impedances)
             
@@ -749,77 +762,37 @@ private extension BioimpedanceProcessor {
         jacobian: [[Float]],
         residuals: [Float],
         params: [Float]
-    ) -> ParameterErrors {
-        
-        let numParams = jacobian[0].count
-        let numMeasurements = jacobian.count
-        
-        // Calculate residual sum of squares
-        let rss = residuals.map { $0 * $0 }.reduce(0, +)
-        
-        // Degrees of freedom (measurements - parameters)
-        let dof = max(1, numMeasurements - numParams)
-        
-        // Mean squared error (variance of residuals)
-        let mse = rss / Float(dof)
-        
-        // Calculate covariance matrix: Cov = MSE * inv(J^T * J)
-        let JtJ = calculateJtJ(jacobian: jacobian)
-        
-        // Try to invert JtJ using eigenvalue decomposition for numerical stability
-        let parameterVariances = calculateParameterVariances(JtJ: JtJ, mse: mse)
-        
-        // Standard errors are square roots of variances
-        let standardErrors = parameterVariances.map { sqrt(max(0, $0)) }
-        
-        // Convert parameter errors as percentages relative to parameter values
-        let reErrorPercent = params[0] > 0 ? (standardErrors[0] / params[0]) * 100 : 0
-        let riErrorPercent = params[1] > 0 ? (standardErrors[1] / params[1]) * 100 : 0
-        let cmErrorPercent = params[2] > 0 ? (standardErrors[2] / params[2]) * 100 : 0
-        let fcErrorPercent = params[3] > 0 ? (standardErrors[3] / params[3]) * 100 : 0
-        let alphaErrorPercent = params[4] > 0 ? (standardErrors[4] / params[4]) * 100 : 0
-        
-        return ParameterErrors(
-            reError: reErrorPercent,
-            riError: riErrorPercent,
-            cmError: cmErrorPercent,
-            fcError: fcErrorPercent,
-            alphaError: alphaErrorPercent
-        )
-    }
-    
-    /// Calculate parameter variances from JtJ matrix and MSE
-    func calculateParameterVariances(JtJ: [[Float]], mse: Float) -> [Float] {
-        let n = JtJ.count
-        
-        // Try to invert JtJ matrix using Gaussian elimination
-        // For numerical stability, add small regularization to diagonal
-        var augmentedMatrix = JtJ.map { row in row }
-        for i in 0..<n {
-            augmentedMatrix[i][i] += 1e-10  // Small regularization
+    ) -> ParameterErrors? {
+        let dof = residuals.count - params.count
+        let r0 = params[0], rinf = params[1], tau = params[2], alpha = params[3]
+        let gap = r0 - rinf
+        guard dof > 0, gap > 0, rinf > 0, tau > 0, alpha > 0,
+              let inverse = calculateMatrixInverse(matrix: calculateJtJ(jacobian: jacobian)) else {
+            return nil
         }
-        
-        // Calculate inverse of JtJ
-        if let invJtJ = calculateMatrixInverse(matrix: augmentedMatrix) {
-            // Parameter variances are MSE times diagonal elements of inv(JtJ)
-            var variances = [Float]()
-            for i in 0..<n {
-                variances.append(mse * invJtJ[i][i])
+        let mse = residuals.map { $0 * $0 }.reduce(0, +) / Float(dof)
+        // Delta method using gradients of log(Re), log(Ri), log(Cm), log(fc), log(alpha).
+        // Ri = R0*Rinf/gap and Cm = tau*gap/R0².
+        let gradients: [[Float]] = [
+            [1/r0, 0, 0, 0], [1/r0 - 1/gap, 1/rinf + 1/gap, 0, 0],
+            [1/gap - 2/r0, -1/gap, 1/tau, 0], [0, 0, -1/tau, 0], [0, 0, 0, 1/alpha]
+        ]
+        var errors: [Float] = []
+        for gradient in gradients {
+            var variance: Float = 0
+            for i in gradient.indices {
+                for j in gradient.indices {
+                    variance += gradient[i] * inverse[i][j] * gradient[j]
+                }
             }
-            return variances
-        } else {
-            // Fallback: use simplified estimate based on diagonal elements
-            var variances = [Float]()
-            for i in 0..<n {
-                let diagonalElement = JtJ[i][i]
-                let variance = diagonalElement > 0 ? mse / diagonalElement : mse
-                variances.append(variance)
-            }
-            return variances
+            let percent = 100 * sqrt(mse * variance)
+            guard percent.isFinite else { return nil }
+            errors.append(percent)
         }
+        return ParameterErrors(reError: errors[0], riError: errors[1], cmError: errors[2],
+                               fcError: errors[3], alphaError: errors[4])
     }
-    
-    /// Calculate matrix inverse using Gauss-Jordan elimination
+
     func calculateMatrixInverse(matrix: [[Float]]) -> [[Float]]? {
         let n = matrix.count
         guard matrix.allSatisfy({ $0.count == n }) else { return nil }
@@ -892,11 +865,11 @@ private extension BioimpedanceProcessor {
         let error = sqrt(residuals.map { $0 * $0 }.reduce(0, +) / Float(residuals.count))
         
         // Simple finite difference gradients for fallback method
-        let epsilon: Float = 1e-6
         var gradients = Array(repeating: Float(0), count: params.count)
         
         for i in 0..<params.count {
             var paramsPlus = params
+            let epsilon = max(abs(params[i]), 1e-7) * sqrt(Float.ulpOfOne)
             paramsPlus[i] += epsilon
             let residualsPlus = calculateResiduals(params: paramsPlus, frequencies: frequencies, impedances: impedances)
             let errorPlus = sqrt(residualsPlus.map { $0 * $0 }.reduce(0, +) / Float(residualsPlus.count))

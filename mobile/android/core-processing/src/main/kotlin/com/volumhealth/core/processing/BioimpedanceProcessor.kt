@@ -4,7 +4,6 @@ import com.volumhealth.core.model.ColeParameters
 import com.volumhealth.core.model.Complex
 import com.volumhealth.core.model.ImpedanceData
 import com.volumhealth.core.model.MeasurementType
-import com.volumhealth.core.model.ParameterErrors
 import com.volumhealth.core.model.ProcessingTier
 import com.volumhealth.core.model.QualityMetrics
 import javax.inject.Inject
@@ -74,22 +73,27 @@ class BioimpedanceProcessor @Inject constructor(
         val rinf = rinfHighFreqMag * cos(rinfHighFreqPhase)
 
         val ri = rinf2ri(re, rinf)
-        val minPhaseIndex = phases.indices.minByOrNull { phases[it] } ?: 0
-        val fcFreq = frequencies[minPhaseIndex].coerceAtLeast(1f)
+        val impedances = data.complexImpedances
+        val peak = impedances.indices.minBy { impedances[it].imaginary }
+        require(re > rinf && rinf > 0 && impedances[peak].imaginary < 0 && frequencies[peak] > 0) {
+            "A capacitive dispersion is required for a Cole estimate"
+        }
+        val fcFreq = frequencies[peak]
         val fc = fcFreq / 1000f
 
         val tau = 1f / (2f * PI.toFloat() * fcFreq)
-        val cm = (tau / (re + ri)).coerceAtLeast(1e-10f)
+        val cm = tau / (re + ri)
 
         val alpha = 0.8f
 
         return ColeParameters(
             Re = re,
             Ri = ri,
-            Cm = (cm * 1e9f).coerceAtLeast(0.1f),
+            Cm = cm * 1e9f,
             fc = fc,
             alpha = alpha,
-            error = 15f,
+            error = 100f * calculateError(floatArrayOf(re, rinf, tau, alpha), frequencies, impedances) /
+                magnitudes.average().toFloat(),
             processingTier = ProcessingTier.IMMEDIATE,
             quality = createQuickQualityMetrics(data),
             measurementType = detectMeasurementType(data),
@@ -107,6 +111,11 @@ class BioimpedanceProcessor @Inject constructor(
         val frequencies = data.frequencies
         val impedances = data.complexImpedances
 
+        require(frequencies.distinct().size >= 3 && frequencies.all { it.isFinite() && it > 0 } &&
+            data.magnitudes.all { it.isFinite() && it > 0 } && data.phases.all { it.isFinite() } &&
+            data.magnitudes.minOrNull() != data.magnitudes.maxOrNull() && impedances.any { it.imaginary < 0 }) {
+            "A finite spectrum with a measurable capacitive dispersion is required"
+        }
         require(frequencies.first() > 500 && frequencies.last() < 500_000) {
             "Invalid frequency range"
         }
@@ -117,10 +126,10 @@ class BioimpedanceProcessor @Inject constructor(
         ColeParameters(
             Re = fitResult.Re,
             Ri = fitResult.Ri,
-            Cm = (fitResult.Cm * 1e9f).coerceAtLeast(0.1f),
+            Cm = fitResult.Cm * 1e9f,
             fc = fitResult.fc,
             alpha = fitResult.alpha,
-            error = fitResult.error,
+            error = 100f * fitResult.error / data.magnitudes.average().toFloat(),
             processingTier = tier,
             quality = quality,
             measurementType = detectMeasurementType(data),
@@ -151,7 +160,7 @@ class BioimpedanceProcessor @Inject constructor(
                 bestResult = result
             }
 
-            if (config.useEarlyTermination && result.error < config.convergenceThreshold) {
+            if (config.useEarlyTermination && result.converged && result.error < config.convergenceThreshold) {
                 return result
             }
         }
@@ -430,12 +439,11 @@ class BioimpedanceProcessor @Inject constructor(
 
     private fun createQualityMetrics(result: FitResult, data: ImpedanceData): QualityMetrics {
         val base = qualityAssessment.assessQuality(data)
-        val parameterErrors = ParameterErrors(0f, 0f, 0f, 0f, 0f)
         val convergence = base.convergence.copy(
             iterations = result.iterations,
             residualError = result.error,
             converged = result.converged,
-            parameterErrors = parameterErrors
+            parameterErrors = null
         )
         return base.copy(convergence = convergence)
     }

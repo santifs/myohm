@@ -12,6 +12,19 @@ class BioimpedanceProcessorTest {
     private val processor = BioimpedanceProcessor(QualityAssessment())
 
     @Test
+    fun `quick estimate uses the reactance peak without claiming convergence`() = runTest {
+        val points = listOf(
+            MeasurementPoint(frequency = 5000f, magnitude = 100f, phase = -5f),
+            MeasurementPoint(frequency = 50000f, magnitude = 80f, phase = -15f),
+            MeasurementPoint(frequency = 100000f, magnitude = 40f, phase = -20f)
+        )
+        val result = processor.processQuick(ImpedanceData.fromSingleRepetition(points))
+        assertTrue(result.fc == 50f)
+        assertTrue(!result.quality.convergence.converged)
+        assertTrue(result.quality.convergence.parameterErrors == null)
+    }
+
+    @Test
     fun `test Nelder-Mead with synthetic Cole data`() = runTest {
         val trueR0 = 40f
         val trueRinf = 22f

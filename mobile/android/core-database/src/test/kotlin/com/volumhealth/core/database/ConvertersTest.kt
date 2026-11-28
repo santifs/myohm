@@ -98,5 +98,12 @@ class ConvertersTest {
         assertEquals(parameters.Re, decoded!!.Re, 0.0001f)
         assertEquals(parameters.quality.signalQuality.snr, decoded.quality.signalQuality.snr, 0.0001f)
         assertEquals(parameters.patient?.name, decoded.patient?.name)
+        assertEquals(quality.convergence, decoded.quality.convergence)
+
+        val unavailable = ConvergenceMetrics(iterations = 0, residualError = null,
+            parameterErrors = null, converged = false)
+        val quick = parameters.copy(quality = quality.copy(convergence = unavailable))
+        val restored = Serialization.decodeColeParameters(Serialization.encodeColeParameters(quick))
+        assertEquals(unavailable, restored?.quality?.convergence)
     }
 }

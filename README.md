@@ -6,6 +6,10 @@ Research and teaching platform for bioimpedance measurement: nRF5340, AD5941 and
 
 **Research instrument, not a medical device. It has not been assessed against IEC 60601-1; measure people only within an ethics-approved research protocol, on battery power, after reading [Safety](#safety). Original hardware is licensed under CERN-OHL-S-2.0 and original software under Apache-2.0; bench data under CC-BY-4.0. Third-party libraries, models and vendor code keep their original terms; see [licence scope](LICENSE.md).**
 
+| Component side | Rear silkscreen |
+| :---: | :---: |
+| ![Component side of the Myohm main board](reports/pcb-top.png) | ![Rear of the Myohm main board with its silkscreen logo](reports/pcb-bottom.png) |
+
 ## Start here
 
 - [Licence scope](LICENSE.md)
@@ -30,6 +34,25 @@ Research and teaching platform for bioimpedance measurement: nRF5340, AD5941 and
 | Nodal model of contact-impedance errors | `tools/bench/mismatch_model.py` |
 | Sweep quality control, R/Xc and Cole fitting | `tools/analysis/myohm_spectra.py` |
 | Android and iOS clients | `mobile/` |
+
+## Interpreting a Cole fit
+
+The Python analysis fits the real and imaginary parts of the aggregated impedance together.
+Frequencies are in Hz, resistances are in ohms, and `tau_s` is in seconds.
+In the denominator `1 + (j 2π f τ)^p`, use `p = cole_exponent`.
+This is the exponent called alpha in the mobile models and the [Swarthmore MATLAB implementation](https://github.com/santifs/swarthmore/blob/2d40aa04922a031763f097dffae03454ec257618/matlab/Helpers%20Across%20Projects/fitColeColeModelMultiStartLevMar.m).
+The Python field `alpha` retains the BioMess dispersion convention, so `p = 1 - alpha`.
+
+Read `quality_flag` for repeat-sweep consistency, `success` for solver termination, and
+`accepted` for the fit decision. A converged fit can still fail the acceptance criteria.
+`rmse_pct` is 100 times the RMS complex residual divided by mean measured magnitude.
+`cost_spread` is the range of solver costs across starts. It is not a parameter uncertainty.
+The mobile optimizers use magnitude residuals. New mobile fit error percentages use the RMS
+magnitude residual divided by mean measured magnitude, multiplied by 100. Older mobile
+records can contain an ohm-valued residual in the percentage field. The quick mobile estimate
+uses the sampled reactance peak and assumes an exponent of 0.8.
+
+An unavailable Python estimate is JSON `null`; `failure_reason` explains a rejected fit.
 
 ## Safety
 

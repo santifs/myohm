@@ -83,11 +83,13 @@ public final class BioimpedanceProcessor: Sendable {
         // Calculate Ri using rinf2ri formula: Ri = Re * Rinf / (Re - Rinf)
         let Ri = rinf2ri(Re, Rinf)
 
-        // fc (characteristic frequency) ≈ frequency where phase is most negative
-        var fcFreq: Float = 50000 // Default 50kHz
-        if let minPhaseIndex = phases.enumerated().min(by: { $0.element < $1.element })?.offset {
-            fcFreq = frequencies[minPhaseIndex]
+        let impedances = data.complexImpedances
+        guard Re > Rinf, Rinf > 0,
+              let peak = impedances.indices.min(by: { impedances[$0].imaginary < impedances[$1].imaginary }),
+              impedances[peak].imaginary < 0, frequencies[peak] > 0 else {
+            throw ProcessingError.optimizationFailed
         }
+        let fcFreq = frequencies[peak]
         let fc = fcFreq / 1000.0 // Convert to kHz
 
         // Calculate tau from fc
@@ -100,40 +102,11 @@ public final class BioimpedanceProcessor: Sendable {
         // Alpha (dispersion parameter) - default biological value
         let alpha: Float = 0.8
 
-        // Simple error estimate
-        let error: Float = 15.0 // Assume ~15% error for quick processing
+        let residual = try calculateErrorAndGradient(params: [Re, Rinf, tau, alpha],
+                                                     frequencies: frequencies, impedances: impedances).error
+        let error = 100 * residual / (magnitudes.reduce(0, +) / Float(magnitudes.count))
 
-        // Create quality metrics (simplified)
-        let quality = QualityMetrics(
-            score: 0.7, // Quick processing = 70% confidence
-            contactQuality: ContactQuality(
-                electrodeImpedance: 5000.0,
-                mismatchPercentage: 5.0
-            ),
-            signalQuality: SignalQuality(
-                snr: 40.0,
-                phaseStability: 1.0,
-                frequencyResponse: .good
-            ),
-            convergence: ConvergenceMetrics(
-                iterations: 1,
-                residualError: 0.15,
-                parameterErrors: ParameterErrors(
-                    reError: 0.1,
-                    riError: 0.15,
-                    cmError: 0.2,
-                    fcError: 0.1,
-                    alphaError: 0.1
-                ),
-                converged: true
-            ),
-            stabilityMetrics: StabilityMetrics(
-                movementDetected: false,
-                quaternionStability: 0.95,
-                impedanceStability: 0.90,
-                interferenceLevel: .low
-            )
-        )
+        let quality = assessQuality(data)
 
         // Determine measurement type (simplified)
         let avgMagnitude = magnitudes.reduce(0, +) / Float(magnitudes.count)
@@ -142,7 +115,7 @@ public final class BioimpedanceProcessor: Sendable {
         let result = ColeParameters(
             Re: Re,
             Ri: Ri,
-            Cm: max(Cm, 0.1), // Ensure positive capacitance
+            Cm: Cm,
             fc: fc,
             alpha: alpha,
             error: error,
@@ -166,15 +139,15 @@ public final class BioimpedanceProcessor: Sendable {
     }
     
     /// Assess measurement quality
-    public func assessQuality(_ data: ImpedanceData) -> QualityMetrics {
+    public func assessQuality(_ data: ImpedanceData, fit: ConvergenceMetrics? = nil) -> QualityMetrics {
         
         let contactQuality = assessContactQuality(data)
         let signalQuality = assessSignalQuality(data)
-        let convergence = ConvergenceMetrics(
+        let convergence = fit ?? ConvergenceMetrics(
             iterations: 0,
-            residualError: 0,
-            parameterErrors: ParameterErrors(reError: 0, riError: 0, cmError: 0, fcError: 0, alphaError: 0),
-            converged: true
+            residualError: nil,
+            parameterErrors: nil,
+            converged: false
         )
         let stability = assessStability(data)
         
@@ -213,6 +186,15 @@ private extension BioimpedanceProcessor {
         // Extract frequencies and complex impedances
         let frequencies = data.frequencies
         let complexImpedances = data.complexImpedances
+        guard Set(frequencies).count >= 3,
+              frequencies.allSatisfy({ $0.isFinite && $0 > 0 }),
+              data.magnitudes.allSatisfy({ $0.isFinite && $0 > 0 }),
+              data.phases.allSatisfy({ $0.isFinite }),
+              data.magnitudes.min() != data.magnitudes.max(),
+              complexImpedances.contains(where: { $0.imaginary < 0 }) else {
+            throw ProcessingError.optimizationFailed
+        }
+
 
         // Log measurement data characteristics
         let magnitudes = data.magnitudes
@@ -253,12 +235,15 @@ private extension BioimpedanceProcessor {
         logger.info("  Ri: \(String(format: "%.2f", result.Ri))Ω")
         logger.info("  fc: \(String(format: "%.3f", result.fc))kHz")
         logger.info("  α: \(String(format: "%.3f", result.alpha))")
-        logger.info("  Error: \(String(format: "%.2f", result.error))%")
+        logger.info("  Error: \(String(format: "%.2f", result.error)) Ω RMS")
         logger.info("  Converged: \(result.converged) (iterations: \(result.iterations))")
 
         // Quality assessment
         logger.debug("📈 Assessing measurement quality...")
-        let quality = assessQuality(data)
+        let quality = assessQuality(data, fit: ConvergenceMetrics(
+            iterations: result.iterations, residualError: result.error,
+            parameterErrors: nil, converged: result.converged
+        ))
         logger.info("📊 Quality score: \(String(format: "%.3f", quality.score))")
 
         let processingTime = Date().timeIntervalSince(startTime)
@@ -270,7 +255,7 @@ private extension BioimpedanceProcessor {
             Cm: result.Cm * 1e9,  // Convert from Farads to nanoFarads for display
             fc: result.fc,
             alpha: result.alpha,
-            error: result.error,
+            error: 100 * result.error / (calibratedImpedances.map { $0.magnitude }.reduce(0, +) / Float(calibratedImpedances.count)),
             processingTier: tier,
             quality: quality,
             patient: nil,
@@ -755,7 +740,7 @@ private extension BioimpedanceProcessor {
             }
             
             // Early termination for excellent fits
-            if config.useEarlyTermination && result.error < config.convergenceThreshold {
+            if config.useEarlyTermination && result.converged && result.error < config.convergenceThreshold {
                 logger.debug("Early termination at start \(startIndex)")
                 break
             }

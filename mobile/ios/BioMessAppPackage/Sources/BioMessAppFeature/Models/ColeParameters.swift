@@ -292,15 +292,15 @@ public struct ConvergenceMetrics: Sendable, Equatable, Codable {
     public let iterations: Int
     
     /// Final residual error
-    public let residualError: Float
+    public let residualError: Float?
     
     /// Parameter standard errors
-    public let parameterErrors: ParameterErrors
+    public let parameterErrors: ParameterErrors?
     
     /// Did the optimization converge?
     public let converged: Bool
     
-    public init(iterations: Int, residualError: Float, parameterErrors: ParameterErrors, converged: Bool) {
+    public init(iterations: Int, residualError: Float?, parameterErrors: ParameterErrors?, converged: Bool) {
         self.iterations = iterations
         self.residualError = residualError
         self.parameterErrors = parameterErrors

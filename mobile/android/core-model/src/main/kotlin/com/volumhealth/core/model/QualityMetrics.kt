@@ -33,8 +33,8 @@ enum class FrequencyResponseQuality { EXCELLENT, GOOD, FAIR, POOR }
 
 data class ConvergenceMetrics(
     val iterations: Int,
-    val residualError: Float,
-    val parameterErrors: ParameterErrors,
+    val residualError: Float?,
+    val parameterErrors: ParameterErrors?,
     val converged: Boolean
 )
 

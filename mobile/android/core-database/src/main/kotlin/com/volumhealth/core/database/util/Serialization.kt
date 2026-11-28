@@ -243,18 +243,18 @@ internal object Serialization {
     private fun convergenceToJson(convergence: ConvergenceMetrics): JSONObject {
         val obj = JSONObject()
         obj.put("iterations", convergence.iterations)
-        obj.put("residualError", convergence.residualError.toDouble())
+        obj.put("residualError", convergence.residualError?.toDouble() ?: JSONObject.NULL)
         obj.put("converged", convergence.converged)
-        obj.put("parameterErrors", parameterErrorsToJson(convergence.parameterErrors))
+        obj.put("parameterErrors", convergence.parameterErrors?.let(::parameterErrorsToJson) ?: JSONObject.NULL)
         return obj
     }
 
     private fun jsonToConvergence(obj: JSONObject): ConvergenceMetrics {
         return ConvergenceMetrics(
             iterations = obj.getInt("iterations"),
-            residualError = obj.getDouble("residualError").toFloat(),
+            residualError = if (obj.isNull("residualError")) null else obj.getDouble("residualError").toFloat(),
             converged = obj.getBoolean("converged"),
-            parameterErrors = jsonToParameterErrors(obj.getJSONObject("parameterErrors"))
+            parameterErrors = obj.optJSONObject("parameterErrors")?.let(::jsonToParameterErrors)
         )
     }
 

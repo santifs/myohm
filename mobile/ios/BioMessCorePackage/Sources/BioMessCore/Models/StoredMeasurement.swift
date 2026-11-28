@@ -29,8 +29,11 @@ public final class StoredMeasurement {
     public var signalToNoiseRatio: Float       // dB
     public var phaseStability: Float           // degrees
     public var frequencyResponseQuality: String // excellent/good/fair/poor
+    public var fitConverged: Bool?
+    public var fitParameterErrors: Data?
     public var convergenceIterations: Int      // number of iterations
-    public var residualError: Float            // final error
+    public var residualError: Float?            // final error
+    public var impedanceStability: Float?
     public var movementDetected: Bool          // movement during measurement
     public var interferenceLevel: String       // minimal/low/moderate/high
     
@@ -81,8 +84,11 @@ public final class StoredMeasurement {
         self.signalToNoiseRatio = parameters.quality.signalQuality.snr
         self.phaseStability = parameters.quality.signalQuality.phaseStability
         self.frequencyResponseQuality = parameters.quality.signalQuality.frequencyResponse.rawValue
+        self.fitConverged = parameters.quality.convergence.converged
+        self.fitParameterErrors = parameters.quality.convergence.parameterErrors.flatMap { try? JSONEncoder().encode($0) }
         self.convergenceIterations = parameters.quality.convergence.iterations
         self.residualError = parameters.quality.convergence.residualError
+        self.impedanceStability = parameters.quality.stabilityMetrics.impedanceStability
         self.movementDetected = parameters.quality.stabilityMetrics.movementDetected
         self.interferenceLevel = parameters.quality.stabilityMetrics.interferenceLevel.rawValue
         
@@ -109,21 +115,19 @@ public final class StoredMeasurement {
             frequencyResponse: FrequencyResponseQuality(rawValue: frequencyResponseQuality) ?? .fair
         )
         
-        let parameterErrors = ParameterErrors(
-            reError: 0.5, riError: 0.8, cmError: 1.2, fcError: 1.0, alphaError: 0.3
-        )
-        
+        let parameterErrors = fitParameterErrors.flatMap { try? JSONDecoder().decode(ParameterErrors.self, from: $0) }
+
         let convergenceMetrics = ConvergenceMetrics(
             iterations: convergenceIterations,
             residualError: residualError,
             parameterErrors: parameterErrors,
-            converged: true
+            converged: fitConverged ?? false
         )
         
         let stabilityMetrics = StabilityMetrics(
             movementDetected: movementDetected,
             quaternionStability: movementDetected ? 0.05 : 0.001,
-            impedanceStability: residualError,
+            impedanceStability: impedanceStability ?? residualError ?? 0,
             interferenceLevel: InterferenceLevel(rawValue: interferenceLevel) ?? .minimal
         )
         

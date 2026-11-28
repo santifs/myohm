@@ -6,7 +6,6 @@ import com.volumhealth.core.model.ConvergenceMetrics
 import com.volumhealth.core.model.FrequencyResponseQuality
 import com.volumhealth.core.model.ImpedanceData
 import com.volumhealth.core.model.InterferenceLevel
-import com.volumhealth.core.model.ParameterErrors
 import com.volumhealth.core.model.QualityMetrics
 import com.volumhealth.core.model.SignalQuality
 import com.volumhealth.core.model.StabilityMetrics
@@ -37,9 +36,9 @@ class QualityAssessment @Inject constructor() {
             signalQuality = signalQuality,
             convergence = ConvergenceMetrics(
                 iterations = 0,
-                residualError = 0f,
-                parameterErrors = ParameterErrors(0f, 0f, 0f, 0f, 0f),
-                converged = true
+                residualError = null,
+                parameterErrors = null,
+                converged = false
             ),
             stabilityMetrics = stability
         )
