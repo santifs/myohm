@@ -3,12 +3,15 @@ import SwiftData
 
 struct EquationScreen: View {
     let measurementID: UUID
+    /// Equation picked by the user; nil shows the automatic choice.
+    var equation: BodyEquation? = nil
     @Environment(\.dismiss) private var dismiss
     @Query private var matches: [Measurement]
     @Query(sort: \Athlete.createdAt) private var people: [Athlete]
 
-    init(measurementID: UUID) {
+    init(measurementID: UUID, equation: BodyEquation? = nil) {
         self.measurementID = measurementID
+        self.equation = equation
         _matches = Query(filter: #Predicate<Measurement> { $0.id == measurementID })
     }
 
@@ -23,8 +26,9 @@ struct EquationScreen: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                if let inputs, case .equation(let eq) = BodyComposition.select(for: inputs) {
+                if let inputs, let eq = equation ?? BodyComposition.select(for: inputs).equation {
                     ScreenHeader(kicker: L("How it was calculated"), title: L("\(eq.shortName) equation"), back: { dismiss() })
+                    if !WholeBodySignal.isPlausible(r50: inputs.r50, xc50: inputs.xc50) { ContactWarning() }
                     formulaCard(eq, inputs)
                     validityCard(eq, inputs)
                     selectionCard(eq)

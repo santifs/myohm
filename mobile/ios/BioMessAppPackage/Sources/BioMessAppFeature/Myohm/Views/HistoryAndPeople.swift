@@ -90,7 +90,7 @@ struct HistoryScreen: View {
             .navigationDestination(for: MeasureRoute.self) { route in
                 switch route {
                 case .result(let id): ResultScreen(measurementID: id, path: $path)
-                case .equation(let id): EquationScreen(measurementID: id)
+                case .equation(let id, let eq): EquationScreen(measurementID: id, equation: eq)
                 default: EmptyView()
                 }
             }
@@ -247,7 +247,7 @@ struct PeopleScreen: View {
             .navigationDestination(for: MeasureRoute.self) { route in
                 switch route {
                 case .result(let id): ResultScreen(measurementID: id, path: $path)
-                case .equation(let id): EquationScreen(measurementID: id)
+                case .equation(let id, let eq): EquationScreen(measurementID: id, equation: eq)
                 default: EmptyView()
                 }
             }

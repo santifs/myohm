@@ -360,6 +360,8 @@ struct BodyResultView: View {
     @Binding var path: [MeasureRoute]
     @StateObject private var fit = ColeFitLoader()
     @State private var editingProfile = false
+    /// Equation picked by the user to compare; nil uses the automatic choice.
+    @State private var chosenEquation: BodyEquation?
     @State var tab = 0
 
     private var sweep: SweepAnalysis? { measurement.impedanceData.flatMap(SweepAnalysis.init) }
@@ -369,9 +371,15 @@ struct BodyResultView: View {
         return MeasurementValue.bodyInputs(measurement: measurement, person: person, reference: reference)
     }
     private var selection: EquationSelection? { inputs.map(BodyComposition.select) }
-    private var estimate: FatEstimate? { inputs.flatMap { BodyComposition.estimate($0) } }
+    private var automaticEquation: BodyEquation? { selection?.equation }
+    private var activeEquation: BodyEquation? { chosenEquation ?? automaticEquation }
+    private var signalOK: Bool { inputs.map { WholeBodySignal.isPlausible(r50: $0.r50, xc50: $0.xc50) } ?? false }
+    private var estimate: FatEstimate? {
+        guard let inputs, let eq = activeEquation else { return nil }
+        return BodyComposition.checkedEstimate(inputs, using: eq)
+    }
     private var water: BodyWater? {
-        guard let p = fit.parameters, let inputs else { return nil }
+        guard let p = fit.parameters, let inputs, signalOK else { return nil }
         return BodyWater.estimate(heightCm: inputs.heightCm, weightKg: inputs.weightKg, r0: p.r0, rInf: p.rInf)
     }
 
@@ -453,13 +461,16 @@ struct BodyResultView: View {
 
     @ViewBuilder
     private var fatCard: some View {
-        switch selection {
-        case .tooYoung:
+        if !signalOK {
+            notice(L("Not calculated"), L("This reading is outside the range of living tissue, so Myohm does not estimate body composition from it. Repeat the measurement."))
+        } else if chosenEquation == nil, selection == .tooYoung {
             notice(L("No validated equation under 10 years"), L("Myohm shows only the phase angle for children under 10."))
-        case .highBMI:
+        } else if chosenEquation == nil, selection == .highBMI {
             notice(L("BMI above 34"), L("Prediction equations are not valid with this BMI. Use the water view, calculated from the spectrum."))
-        default:
-            if let estimate { fatHero(estimate) }
+        } else if let estimate {
+            fatHero(estimate)
+        } else {
+            notice(L("Result out of range"), L("This equation gives an implausible value for this person. Try another equation or repeat the measurement."))
         }
     }
 
@@ -559,8 +570,8 @@ struct BodyResultView: View {
 
     @ViewBuilder
     private var equationCard: some View {
-        if tab == 0, case .equation(let eq) = selection, let inputs {
-            Button { path.append(.equation(measurement.id)) } label: {
+        if tab == 0, let eq = activeEquation, let inputs {
+            Button { path.append(.equation(measurement.id, chosenEquation)) } label: {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 10) {
                         Image(systemName: "function")
@@ -568,7 +579,8 @@ struct BodyResultView: View {
                             .frame(width: 36, height: 36)
                             .background(MyohmColor.brandSoft, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                         VStack(alignment: .leading, spacing: 0) {
-                            Text(L("Equation chosen automatically")).font(MyohmFont.micro).foregroundStyle(MyohmColor.muted)
+                            Text(chosenEquation == nil ? L("Equation chosen automatically") : L("Equation chosen by you"))
+                                .font(MyohmFont.micro).foregroundStyle(MyohmColor.muted)
                             Text("\(eq.shortName) · \(String(eq.year))").font(.system(size: 16, weight: .bold)).foregroundStyle(MyohmColor.ink)
                         }
                         Spacer()
@@ -587,6 +599,9 @@ struct BodyResultView: View {
                 .myohmCard()
             }
             .buttonStyle(MyohmPlainButton())
+            equationPicker
+        } else if tab == 0, inputs != nil {
+            equationPicker
         } else if tab == 1 {
             VStack(alignment: .leading, spacing: 4) {
                 Text(L("Spectroscopy model")).font(MyohmFont.micro).foregroundStyle(MyohmColor.muted)
@@ -596,6 +611,37 @@ struct BodyResultView: View {
             }
             .myohmCard()
         }
+    }
+}
+
+extension BodyResultView {
+    /// Lets the user compare equations; the automatic one stays marked.
+    var equationPicker: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(L("Compare with another equation")).font(MyohmFont.micro).foregroundStyle(MyohmColor.muted)
+            FlowLayout(spacing: 6) {
+                ForEach(BodyEquation.allCases, id: \.self) { eq in
+                    let isActive = eq == activeEquation
+                    let isAuto = eq == automaticEquation
+                    Button {
+                        withAnimation(.snappy(duration: 0.2)) { chosenEquation = isAuto ? nil : eq }
+                    } label: {
+                        Text(isAuto ? L("\(eq.shortName) · automatic") : eq.shortName)
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(isActive ? .white : MyohmColor.ink)
+                            .padding(.horizontal, 12).frame(minHeight: 36)
+                            .background(isActive ? MyohmColor.brand : .white, in: Capsule())
+                            .overlay(Capsule().stroke(MyohmColor.hairline, lineWidth: isActive ? 0 : 1))
+                    }
+                    .buttonStyle(MyohmPlainButton())
+                }
+            }
+            if let eq = chosenEquation, let inputs, EquationChecks.checks(eq, inputs).contains(where: { !$0.ok }) {
+                Text(L("This equation was not validated for this person. Use it only to compare."))
+                    .font(.system(size: 12)).foregroundStyle(MyohmColor.accentInk)
+            }
+        }
+        .padding(.horizontal, 4)
     }
 }
 
@@ -687,9 +733,17 @@ enum EquationChecks {
         }
         if eq == .geneva {
             result.append(EquationCheck(id: "side", ok: true, short: L("Right side"), label: L("Right hand and foot"), detail: L("as in the study")))
-            if inputs.isAthlete == false {
+            if inputs.isAthlete {
+                result.append(EquationCheck(id: "athlete", ok: false, short: L("Athlete · not the target"), label: L("Athlete"), detail: L("developed in non-athletes")))
+            } else {
                 result.append(EquationCheck(id: "athlete", ok: true, short: L("Not an athlete"), label: L("Not an athlete"), detail: L("athletes use another equation")))
             }
+        }
+        if eq == .athletes {
+            result.append(EquationCheck(id: "athlete", ok: inputs.isAthlete,
+                short: inputs.isAthlete ? L("Athlete") : L("Not an athlete · not the target"),
+                label: inputs.isAthlete ? L("Athlete") : L("Not an athlete"),
+                detail: L("developed in athletes")))
         }
         if let see = eq.standardErrorKg {
             result.append(EquationCheck(id: "see", ok: true, short: L("Typical error ± \(MyohmFormat.kg(see))"), label: L("Typical error"), detail: "± " + MyohmFormat.kg(see)))

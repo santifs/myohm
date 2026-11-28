@@ -89,7 +89,9 @@ data class BodyInputs(
 }
 
 sealed interface EquationSelection {
-    data class Equation(val equation: BodyEquation) : EquationSelection
+    val equation: BodyEquation? get() = (this as? Equation)?.equation
+
+    data class Equation(override val equation: BodyEquation) : EquationSelection
     /** Under 10 years: no validated equation; show phase angle only. */
     data object TooYoung : EquationSelection
     /** BMI above 34: prediction equations are not valid; show water from the spectrum only. */
@@ -105,8 +107,29 @@ data class FatEstimate(
     val fatPercentError: Double?
 )
 
+/**
+ * Sanity gates for a whole-body (wrist–ankle) reading before any composition is computed.
+ *
+ * Deliberately wide app limits, not published reference ranges: adult NHANES Xitron data
+ * (R0 ≈ 600–700 Ω) and phase-angle norms (≈ 5–7°) sit well inside them. Values outside
+ * mean a loose cable or an electrode without contact, and a regression fed with them
+ * returns nonsense (for example negative body fat).
+ */
+object WholeBodySignal {
+    val resistance = 250.0..1100.0
+    val reactance = 15.0..130.0
+    val phaseAngle = 2.0..14.0
+
+    fun isPlausible(r50: Double, xc50: Double): Boolean {
+        val phase = Math.toDegrees(kotlin.math.atan2(xc50, r50))
+        return r50 in resistance && xc50 in reactance && phase in phaseAngle
+    }
+}
+
 object BodyComposition {
     const val MAX_BMI = 34.0
+    /** Fat percentages outside this range are reported as not computable. */
+    val plausibleFatPercent = 3.0..65.0
 
     fun select(inputs: BodyInputs): EquationSelection = when {
         inputs.ageYears < 10 -> EquationSelection.TooYoung
@@ -128,8 +151,15 @@ object BodyComposition {
         )
     }
 
+    /** Automatic choice, or null when the population or the signal does not allow one. */
     fun estimate(inputs: BodyInputs): FatEstimate? =
-        (select(inputs) as? EquationSelection.Equation)?.let { estimate(inputs, it.equation) }
+        select(inputs).equation?.let { checkedEstimate(inputs, it) }
+
+    /** Estimate with a given equation, or null when the reading or the result is implausible. */
+    fun checkedEstimate(inputs: BodyInputs, equation: BodyEquation): FatEstimate? {
+        if (!WholeBodySignal.isPlausible(inputs.r50, inputs.xc50)) return null
+        return estimate(inputs, equation).takeIf { it.fatPercent in plausibleFatPercent }
+    }
 }
 
 /**

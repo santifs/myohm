@@ -247,3 +247,15 @@
 "height" = "altura";
 "weight" = "peso";
 "person" = "persona";
+"Not calculated" = "No calculado";
+"This reading is outside the range of living tissue, so Myohm does not estimate body composition from it. Repeat the measurement." = "Esta lectura está fuera del rango del tejido vivo, así que Myohm no estima la composición corporal con ella. Repite la medida.";
+"Result out of range" = "Resultado fuera de rango";
+"This equation gives an implausible value for this person. Try another equation or repeat the measurement." = "Esta ecuación da un valor imposible para esta persona. Prueba otra ecuación o repite la medida.";
+"Equation chosen by you" = "Ecuación elegida por ti";
+"Compare with another equation" = "Comparar con otra ecuación";
+"%@ · automatic" = "%@ · automática";
+"This equation was not validated for this person. Use it only to compare." = "Esta ecuación no se validó para esta persona. Úsala solo para comparar.";
+"Athlete · not the target" = "Deportista · fuera de su población";
+"developed in non-athletes" = "desarrollada en no deportistas";
+"Not an athlete · not the target" = "No deportista · fuera de su población";
+"developed in athletes" = "desarrollada en deportistas";

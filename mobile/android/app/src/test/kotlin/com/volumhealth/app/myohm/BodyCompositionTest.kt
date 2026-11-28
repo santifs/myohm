@@ -11,6 +11,7 @@ import com.volumhealth.app.myohm.domain.MeasurementKind
 import com.volumhealth.app.myohm.domain.MyohmMuscle
 import com.volumhealth.app.myohm.domain.SweepAnalysis
 import com.volumhealth.app.myohm.domain.SweepPoint
+import com.volumhealth.app.myohm.domain.WholeBodySignal
 import com.volumhealth.core.model.ImpedanceData
 import com.volumhealth.core.model.MeasurementPoint
 import kotlinx.datetime.Clock
@@ -47,6 +48,20 @@ class BodyCompositionTest {
         val heavy = ana.copy(weightKg = 100.0)
         assertEquals(EquationSelection.HighBmi, BodyComposition.select(heavy))
         assertNull(BodyComposition.estimate(heavy))
+    }
+
+    /** The 28 Nov 2026 reading with a loose electrode (R 6513 Ω, Xc 140174 Ω) gave −25 959 % fat. */
+    @Test fun rejectsReadingsOutsideTissue() {
+        val bad = ana.copy(r50 = 6513.0, xc50 = 140_174.0)
+        assertFalse(WholeBodySignal.isPlausible(bad.r50, bad.xc50))
+        assertNull(BodyComposition.estimate(bad))
+        assertNull(BodyComposition.checkedEstimate(bad, BodyEquation.GENEVA))
+        assertTrue(WholeBodySignal.isPlausible(ana.r50, ana.xc50))
+    }
+
+    @Test fun manualEquationStillChecked() {
+        assertEquals(BodyEquation.ATHLETES, BodyComposition.checkedEstimate(ana, BodyEquation.ATHLETES)?.equation)
+        assertNull(BodyComposition.checkedEstimate(ana.copy(weightKg = 30.0), BodyEquation.ATHLETES))
     }
 
     @Test fun moisslWater() {

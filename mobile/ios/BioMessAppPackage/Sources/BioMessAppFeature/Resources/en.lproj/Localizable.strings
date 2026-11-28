@@ -247,3 +247,15 @@
 "height" = "height";
 "weight" = "weight";
 "person" = "person";
+"Not calculated" = "Not calculated";
+"This reading is outside the range of living tissue, so Myohm does not estimate body composition from it. Repeat the measurement." = "This reading is outside the range of living tissue, so Myohm does not estimate body composition from it. Repeat the measurement.";
+"Result out of range" = "Result out of range";
+"This equation gives an implausible value for this person. Try another equation or repeat the measurement." = "This equation gives an implausible value for this person. Try another equation or repeat the measurement.";
+"Equation chosen by you" = "Equation chosen by you";
+"Compare with another equation" = "Compare with another equation";
+"%@ · automatic" = "%@ · automatic";
+"This equation was not validated for this person. Use it only to compare." = "This equation was not validated for this person. Use it only to compare.";
+"Athlete · not the target" = "Athlete · not the target";
+"developed in non-athletes" = "developed in non-athletes";
+"Not an athlete · not the target" = "Not an athlete · not the target";
+"developed in athletes" = "developed in athletes";

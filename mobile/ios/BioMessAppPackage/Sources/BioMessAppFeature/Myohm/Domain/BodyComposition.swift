@@ -119,6 +119,11 @@ public enum EquationSelection: Sendable, Equatable {
     case tooYoung
     /// BMI above 34: prediction equations are not valid; show water from the spectrum only.
     case highBMI
+
+    public var equation: BodyEquation? {
+        if case .equation(let e) = self { return e }
+        return nil
+    }
 }
 
 public struct FatEstimate: Sendable, Equatable {
@@ -130,8 +135,27 @@ public struct FatEstimate: Sendable, Equatable {
     public let fatPercentError: Double?
 }
 
+/// Sanity gates for a whole-body (wrist–ankle) reading before any composition is computed.
+///
+/// These are deliberately wide app limits, not published reference ranges: adult NHANES
+/// Xitron data (R0 ≈ 600–700 Ω) and phase-angle norms (≈ 5–7°) sit well inside them.
+/// Values outside mean a loose cable or an electrode without contact, and a regression
+/// fed with them returns nonsense (for example negative body fat).
+public enum WholeBodySignal {
+    public static let resistance: ClosedRange<Double> = 250...1100
+    public static let reactance: ClosedRange<Double> = 15...130
+    public static let phaseAngle: ClosedRange<Double> = 2...14
+
+    public static func isPlausible(r50: Double, xc50: Double) -> Bool {
+        let phase = atan2(xc50, r50) * 180 / .pi
+        return resistance.contains(r50) && reactance.contains(xc50) && phaseAngle.contains(phase)
+    }
+}
+
 public enum BodyComposition {
     public static let maxBMI = 34.0
+    /// Fat percentages outside this range are reported as not computable.
+    public static let plausibleFatPercent: ClosedRange<Double> = 3...65
 
     public static func select(for inputs: BodyInputs) -> EquationSelection {
         if inputs.ageYears < 10 { return .tooYoung }
@@ -157,9 +181,17 @@ public enum BodyComposition {
         )
     }
 
+    /// Automatic choice, or nil when the population or the signal does not allow one.
     public static func estimate(_ inputs: BodyInputs) -> FatEstimate? {
         guard case .equation(let equation) = select(for: inputs) else { return nil }
-        return estimate(inputs, using: equation)
+        return checkedEstimate(inputs, using: equation)
+    }
+
+    /// Estimate with a given equation, or nil when the reading or the result is implausible.
+    public static func checkedEstimate(_ inputs: BodyInputs, using equation: BodyEquation) -> FatEstimate? {
+        guard WholeBodySignal.isPlausible(r50: inputs.r50, xc50: inputs.xc50) else { return nil }
+        let e = estimate(inputs, using: equation)
+        return plausibleFatPercent.contains(e.fatPercent) ? e : nil
     }
 }
 

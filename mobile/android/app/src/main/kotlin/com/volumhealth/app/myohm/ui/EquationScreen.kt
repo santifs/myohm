@@ -32,22 +32,24 @@ import com.volumhealth.app.myohm.data.MyohmViewModel
 import com.volumhealth.app.myohm.domain.BodyComposition
 import com.volumhealth.app.myohm.domain.BodyEquation
 import com.volumhealth.app.myohm.domain.BodyInputs
-import com.volumhealth.app.myohm.domain.EquationSelection
+import com.volumhealth.app.myohm.domain.WholeBodySignal
 import com.volumhealth.core.model.Athlete
 
 @Composable
-fun EquationScreen(vm: MyohmViewModel, id: String, onBack: () -> Unit) {
+fun EquationScreen(vm: MyohmViewModel, id: String, equation: BodyEquation?, onBack: () -> Unit) {
     val records by vm.records.collectAsState()
     val people by vm.people.collectAsState()
     val record = records.firstOrNull { it.id == id }
     val person = record?.let { r -> people.orEmpty().firstOrNull { it.id == r.personId } }
     val ref = record?.sweep?.atReference
     val inputs = if (record != null && person != null && ref != null) MeasurementValue.bodyInputs(record, person, ref) else null
-    val eq = (inputs?.let { BodyComposition.select(it) } as? EquationSelection.Equation)?.equation
+    // The equation the user picked, or the automatic one.
+    val eq = equation ?: inputs?.let { BodyComposition.select(it) }?.equation
 
     ResultColumn {
         if (inputs != null && eq != null && person != null) {
             ScreenHeader(L("How it was calculated"), L("%s equation", eq.shortName), back = onBack)
+            if (!WholeBodySignal.isPlausible(inputs.r50, inputs.xc50)) ContactWarning()
             FormulaCard(eq, inputs, person)
             ValidityCard(eq, inputs, person)
             SelectionCard(eq)
