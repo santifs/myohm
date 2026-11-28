@@ -12,6 +12,11 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>es</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
@@ -21,7 +26,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Conectar con Myohm para realizar medidas de bioimpedancia.</string>
+	<string>Myohm uses Bluetooth to connect to your device and take bioimpedance measurements.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

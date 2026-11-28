@@ -29,13 +29,16 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "volum-health.db")
+        if (com.volumhealth.app.myohm.data.MyohmDemo.isEnabled(context)) {
+            Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        } else Room.databaseBuilder(context, AppDatabase::class.java, "volum-health.db")
             .addMigrations(
                 AppDatabase.MIGRATION_3_4,
                 AppDatabase.MIGRATION_4_5,
                 AppDatabase.MIGRATION_5_6,
                 AppDatabase.MIGRATION_6_7,
-                AppDatabase.MIGRATION_7_8
+                AppDatabase.MIGRATION_7_8,
+                AppDatabase.MIGRATION_8_9
             )
             .build()
 

@@ -63,6 +63,15 @@ public final class Athlete {
     /// Sync error message if failed
     public var syncError: String?
 
+    /// Trains regularly at a competitive level; selects athlete-specific equations.
+    public var isAthlete: Bool?
+
+    /// Height used for body-composition equations (cm).
+    public var heightCm: Double?
+
+    /// Most recent body weight entered for this person (kg).
+    public var weightKg: Double?
+
     // MARK: - Relationships
 
     /// Anthropometric measurements history

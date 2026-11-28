@@ -27,6 +27,9 @@ let package = Package(
             ],
             exclude: [
                 "Views/MeasurementDetailView.swift.backup"
+            ],
+            resources: [
+                .process("Resources")
             ]
         ),
         .testTarget(

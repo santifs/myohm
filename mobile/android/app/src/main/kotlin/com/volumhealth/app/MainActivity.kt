@@ -13,7 +13,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.volumhealth.app.locale.LanguageManager
-import com.volumhealth.app.ui.navigation.VolumApp
+import android.graphics.Color
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
+import com.volumhealth.app.myohm.ui.MyohmApp
+import com.volumhealth.app.myohm.ui.MyohmColor
 import com.volumhealth.app.ui.theme.VolumHealthTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,13 +32,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         languageManager.initializeLanguage()
 
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.light(Color.WHITE, Color.WHITE)
+        )
+
         setContent {
-            VolumHealthTheme {
+            VolumHealthTheme(useDarkTheme = false) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MyohmColor.background
                 ) {
-                    VolumApp()
+                    MyohmApp()
                 }
             }
         }

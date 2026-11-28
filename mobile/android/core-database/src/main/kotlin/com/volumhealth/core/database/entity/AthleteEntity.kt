@@ -53,6 +53,9 @@ data class AthleteEntity(
     @ColumnInfo(name = "weight_kg")
     val weightKg: Double? = null,
 
+    @ColumnInfo(name = "is_athlete")
+    val isAthlete: Boolean? = null,
+
     @ColumnInfo(name = "right_thigh_length")
     val rightThighLength: Double? = null,
 

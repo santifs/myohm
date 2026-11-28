@@ -31,6 +31,9 @@ struct BioMess: View {
 
     // SwiftData model container for all app models
     @State private var modelContainer: ModelContainer = {
+        #if DEBUG
+        if ReviewTour.isEnabled { return ReviewTour.makeContainer() }
+        #endif
         do {
             return try ModelContainer(
                 for: Athlete.self,
@@ -50,7 +53,7 @@ struct BioMess: View {
 
     @ViewBuilder
     private var mainContent: some View {
-        MainView()
+        rootView
             .environment(bleManager)
             .environment(processor)
             .environment(patientInfo)
@@ -71,15 +74,28 @@ struct BioMess: View {
                 // Perform PatientInfo -> Athlete migration if needed
                 performMigrationIfNeeded()
             }
-            .alert("Perfil migrado", isPresented: $showMigrationAlert) {
+            .alert(L("Profile migrated"), isPresented: $showMigrationAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
                 if let name = migratedAthleteName {
-                    Text("Hemos migrado tu perfil anterior (\(name)) al nuevo sistema de atletas.")
+                    Text(L("Your previous profile (\(name)) has been moved to People."))
                 } else {
-                    Text("Hemos migrado tu perfil anterior al nuevo sistema de atletas.")
+                    Text(L("Your previous profile has been moved to People."))
                 }
             }
+    }
+
+    @ViewBuilder
+    private var rootView: some View {
+        #if DEBUG
+        if ReviewTour.isEnabled {
+            ReviewTourHost()
+        } else {
+            MyohmRootView()
+        }
+        #else
+        MyohmRootView()
+        #endif
     }
 
     // MARK: - Migration
